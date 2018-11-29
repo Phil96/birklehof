@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+
+        #renderCanvas {
+            width: 80%;
+            height: 100%;
+            touch-action: none;
+            float: left;
+        }
+
+        #form{
+            width: 20%;
+            height: 100%;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <div id="form">
+            <form action="/action_page.php">
+                <fieldset>
+                  <legend>Persönliche Daten:</legend>
+                  Vorname:<br>
+                  <input type="text" name="firstname" value="">
+                  <br>
+                  Nachname:<br>
+                  <input type="text" name="lastname" value="">
+                  <br>
+                  E-Mail:<br>
+                  <input type="email" name="e-mail" value="">
+                  <br>
+                </fieldset>
+                <fieldset>
+                        <legend>Objekte:</legend>
+                        <select name="objects">
+                                <option value="Eingangstür">Eingangstür</option>
+                                <option value="Kücheneinrichtung">Kücheneinrichtung</option>
+                                <option value="Herrgottswinkel">Herrgottswinkel</option>
+                                <option value="Außenbalkon">Außenbalkon</option>
+                                <option value="Kachelofen">Kachelofen</option>
+                                <option value="Tor">Tor</option>
+                                <option value="Außentür">Außentür</option>
+                                <option value="Bett">Bett</option>
+                                <option value="Fußboden">Fußboden</option>
+                                <option value="Fensterfläche">Fensterfläche</option>
+                                <option value="Innentüre">Innentüre</option>
+                                <option value="Fensterladen">Fensterladen</option>
+                                <option value="Treppenstufe">Treppenstufe</option>
+                                <option value="Dachbalken">Dachbalken</option>
+                                <option value="Dachschindel">Dachschindel</option>
+                              </select>
+                      </fieldset>
+                      <fieldset>
+                            <legend>Zahlungsinformationen:</legend>
+                            IBAN:<br>
+                            <input type="text" name="iban" value="">
+                            <br>
+                            Summe (in Euro):<br>
+                            <input type="number" name="summe" value="">
+                            Einzugsermächtigung:<br>
+                            <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs über die oben genannten Summe.
+                            <br><br>
+                            <input type="submit" value="Spenden!">
+                            <br>
+                          </fieldset>
+              </form>
+    </div>
+    <script src="dist/index.js"></script>
+</body>
+
+</html>

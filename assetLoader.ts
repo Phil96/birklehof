@@ -1,0 +1,2 @@
+import 'babylonjs-loaders';
+
