@@ -40,7 +40,7 @@ function createScene(): BABYLON.Scene {
 
         //advancedTexture.addControl(text1);
         //container.addControl(text);
-        
+        /*
         var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
         var button = BABYLON.GUI.Button.CreateSimpleButton("but", "Raum 1");
@@ -53,6 +53,7 @@ function createScene(): BABYLON.Scene {
     button.onPointerUpObservable.add(function(){
         scene.activeCamera = camera1
     });
+    */
 
 
     var light1: BABYLON.HemisphericLight = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
