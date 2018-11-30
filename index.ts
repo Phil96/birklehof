@@ -79,7 +79,7 @@ function createScene(): BABYLON.Scene {
 
     //addLabelToMesh(sphere);
 
-    BABYLON.SceneLoader.Append("./birkle_assets/","birkle_test.babylon",scene, function (scene) {
+    BABYLON.SceneLoader.Append("./birkle_assets/new/","birkle_test_02.babylon",scene, function (scene) {
         // do something with the scene
     });
 
