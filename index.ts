@@ -40,6 +40,7 @@ function createScene(): BABYLON.Scene {
 
         //advancedTexture.addControl(text1);
         //container.addControl(text);
+        
         /*
         var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
