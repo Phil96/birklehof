@@ -18,7 +18,7 @@ export function addLabelToMesh(mesh: AbstractMesh): void {
     label.background = "black";
     label.height = "50px";
     label.alpha = 0.5;
-    label.width = "200px";
+    label.width = "250px";
     label.cornerRadius = 20;
     label.thickness = 1;
     label.linkOffsetY = 30;

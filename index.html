@@ -14,8 +14,7 @@
         }
 
         #renderCanvas {
-            width: 80%;
-            height: 100%;
+            width: 500px;
             touch-action: none;
             float: left;
         }
@@ -32,6 +31,14 @@
     <canvas id="renderCanvas"></canvas>
     <div id="form">
             <form action="/action_page.php">
+                <fieldset id="overview">
+                    <legend>Verfügbare Objekte:</legend>
+                    <div id="overviewObjects"></div>
+                  </fieldset>
+                <fieldset id="objects">
+                    <legend>Ausgewählte Objekte:</legend>
+                    <div id="dynObjects"></div>
+                  </fieldset>
                 <fieldset>
                   <legend>Persönliche Daten:</legend>
                   Vorname:<br>
@@ -78,6 +85,14 @@
                             <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs über die oben genannten Summe.
                             <br><br>
                             <input type="submit" value="Spenden!">
+                            <br>
+                          </fieldset>
+                          <fieldset id="bearbeitung">
+                            <legend>Bearbeitung:</legend>
+                            Meshname:<br>
+                            <input id="mName" type="text" name="mName" value="">
+                            <br>
+                            <button id="hide" type="button">Hide</button><button id="show" type="button">Show</button>
                             <br>
                           </fieldset>
               </form>
