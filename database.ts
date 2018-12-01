@@ -47,6 +47,9 @@
             },
             {
                 "name": "Fensterfläche",
+                "meshs": {  "01":"Fenster_001",
+                            "02":"Fenster_002",
+                        },
                 "price": 100,
                 "pieces": 10
             },

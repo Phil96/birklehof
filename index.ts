@@ -56,7 +56,18 @@ function objectSelected(selectedMeseh:string){
     referenceToOverview.getElementsByTagName("input")[0].checked = true;
 
     referenceToMesh.material = pickMaterial;
+}
 
+function objectDeselected(selectedMeseh:string){
+    let referenceToOverview: Element = overview.querySelector("#" + selectedMeseh);
+    let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMeseh);
+    let referenceToMesh = scene.getMeshByID(selectedMeseh);
+
+    referenceToOverview.getElementsByTagName("input")[0].checked = false;
+
+    referenceToCheckout.remove();
+
+    referenceToMesh.material = saveMaterial;
 }
 
 function manipulateCheckout(_event: MouseEvent) {
@@ -102,7 +113,8 @@ function chooseObject(_event: MouseEvent) {
 
     }
     if (target.id == "_01" && reference.getElementsByTagName("input")[0].checked == false) {
-        referenceToCheckout.remove();
+        objectDeselected(target.parentElement.id);
+        //referenceToCheckout.remove();
     }
     if (target.id == "_02") {
         for (let i = 0; i < scene.meshes.length; i++) {
