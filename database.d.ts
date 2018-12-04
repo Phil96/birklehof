@@ -1,7 +1,16 @@
 export declare let data: {
-    "objects": {
+    "objects": ({
         "name": string;
         "price": number;
         "pieces": number;
-    }[];
+        "meshs"?: undefined;
+    } | {
+        "name": string;
+        "meshs": {
+            "01": string;
+            "02": string;
+        };
+        "price": number;
+        "pieces": number;
+    })[];
 };

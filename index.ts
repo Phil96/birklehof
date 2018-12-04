@@ -32,7 +32,7 @@ function setMeshVisibility(_meshName: string, _visibility: boolean) {
     }
 }
 
-function objectSelected(selectedMeseh:string){
+function objectSelected(selectedMeseh: string) {
     let referenceToOverview: Element = overview.querySelector("#" + selectedMeseh);
     let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMeseh);
     let referenceToMesh = scene.getMeshByID(selectedMeseh);
@@ -44,7 +44,7 @@ function objectSelected(selectedMeseh:string){
     newInput.type = "checkbox";
     newInput.id = "_01";
     newInput.checked = true;
- 
+
     let newLabel = document.createElement("label");
     newLabel.innerText = selectedMeseh;
     newLabel.id = "_02";
@@ -58,7 +58,7 @@ function objectSelected(selectedMeseh:string){
     referenceToMesh.material = pickMaterial;
 }
 
-function objectDeselected(selectedMeseh:string){
+function objectDeselected(selectedMeseh: string) {
     let referenceToOverview: Element = overview.querySelector("#" + selectedMeseh);
     let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMeseh);
     let referenceToMesh = scene.getMeshByID(selectedMeseh);
@@ -219,46 +219,48 @@ function createScene(): BABYLON.Scene {
             return;
         }
         //pointerinfo.pickInfo.pickedMesh.visibility = 1;
+        if (scene.pick(scene.pointerX, scene.pointerY) != null) {
+            var pickResult = scene.pick(scene.pointerX, scene.pointerY);
 
-        var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+            scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
+            //hideMesh(pickResult.pickedMesh.name);
 
-        //scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
-        //hideMesh(pickResult.pickedMesh.name);
+            scene.meshes.forEach(function (m) {
+                //text1.text = "none";
+            });
+            if (pickResult.pickedMesh) {
 
-        scene.meshes.forEach(function (m) {
-            //text1.text = "none";
-        });
-        if (pickResult.pickedMesh) {
+                bearbeitung.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
+                console.log("Picked material: " + pickResult.pickedMesh.material);
+                console.log(pickResult.pickedMesh._cache.parent._children);
 
-            bearbeitung.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
-            console.log("Picked material: " + pickResult.pickedMesh.material);
-
-            saveMaterial = pickResult.pickedMesh.material;
-            pickResult.pickedMesh.material = pickMaterial;
+                saveMaterial = pickResult.pickedMesh.material;
+                pickResult.pickedMesh.material = pickMaterial;
 
 
-            let newDiv = document.createElement("div");
-            newDiv.id = pickResult.pickedMesh.name;
-            //newDiv.setAttribute("price",target.parentElement.price);
+                let newDiv = document.createElement("div");
+                newDiv.id = pickResult.pickedMesh.name;
+                //newDiv.setAttribute("price",target.parentElement.price);
 
-            let newInput = document.createElement("input");
-            newInput.type = "checkbox";
-            //newInput.id = currentObject.name + "_01";
-            newInput.id = "_01";
-            newInput.checked = true;
-            //newInput.value = pickResult.pickedMesh.name;
+                let newInput = document.createElement("input");
+                newInput.type = "checkbox";
+                //newInput.id = currentObject.name + "_01";
+                newInput.id = "_01";
+                newInput.checked = true;
+                //newInput.value = pickResult.pickedMesh.name;
 
-            let newLabel = document.createElement("label");
-            newLabel.innerText = pickResult.pickedMesh.name;
-            newLabel.id = "_02";
+                let newLabel = document.createElement("label");
+                newLabel.innerText = pickResult.pickedMesh.name;
+                newLabel.id = "_02";
 
-            newDiv.append(newInput);
-            newDiv.append(newLabel);
-            objectsHTML.append(newDiv);
+                newDiv.append(newInput);
+                newDiv.append(newLabel);
+                objectsHTML.append(newDiv);
 
-            addLabelToMesh(pickResult.pickedMesh);
+                addLabelToMesh(pickResult.pickedMesh);
 
-            //text1.text = pickResult.pickedMesh.name;
+                //text1.text = pickResult.pickedMesh.name;
+            }
         }
     });
 
@@ -277,7 +279,14 @@ function createScene(): BABYLON.Scene {
 
     //addLabelToMesh(sphere);
 
+    //loads old scene (test)
+    /*
     BABYLON.SceneLoader.Append("./birkle_assets/new/", "birkle_test_03.babylon", scene, function (scene) {
+        // do something with the scene
+    });
+    */
+
+    BABYLON.SceneLoader.Append("./assets/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
     });
 
