@@ -192,14 +192,6 @@ function createScene(): BABYLON.Scene {
     camera1.setTarget(BABYLON.Vector3.Zero());
     camera1.attachControl(canvas, true);
 
-    var camera2 = new BABYLON.FreeCamera('camera2', new BABYLON.Vector3(5, 1, 139), scene);
-    camera2.setTarget(BABYLON.Vector3.Zero());
-    camera2.attachControl(canvas, true);
-
-    var camera3 = new BABYLON.FreeCamera('camera3', new BABYLON.Vector3(15, 1, 147), scene);
-    camera3.setTarget(BABYLON.Vector3.Zero());
-    camera3.attachControl(canvas, true);
-
     var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
     var container = new GUI.StackPanel();
@@ -221,8 +213,12 @@ function createScene(): BABYLON.Scene {
         //pointerinfo.pickInfo.pickedMesh.visibility = 1;
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+            console.log(pickResult);
+            let pickParent = pickResult.pickedMesh._cache.parent;
 
             scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
+            //pickResult.pickedMesh._cache.parent.isVisible = false;
+
             //hideMesh(pickResult.pickedMesh.name);
 
             scene.meshes.forEach(function (m) {
@@ -232,7 +228,18 @@ function createScene(): BABYLON.Scene {
 
                 bearbeitung.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
                 console.log("Picked material: " + pickResult.pickedMesh.material);
-                console.log(pickResult.pickedMesh._cache.parent._children);
+                console.log("Cache Parent: ");
+                console.log(pickParent);
+                console.log("Cache: ");
+                console.log(pickResult.pickedMesh._cache);
+                console.log("Parent: ");
+                console.log(pickResult.pickedMesh.parent);
+                console.log("Picked Mesh: ")
+                console.log(pickResult.pickedMesh);
+
+                for(let i = 0; pickParent._children.length > i; i++){
+                    //pickParent._children[i].isVisible = false;
+                }
 
                 saveMaterial = pickResult.pickedMesh.material;
                 pickResult.pickedMesh.material = pickMaterial;
@@ -280,15 +287,17 @@ function createScene(): BABYLON.Scene {
     //addLabelToMesh(sphere);
 
     //loads old scene (test)
-    /*
-    BABYLON.SceneLoader.Append("./birkle_assets/new/", "birkle_test_03.babylon", scene, function (scene) {
+    
+    BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
     });
-    */
+    
 
+    /*
     BABYLON.SceneLoader.Append("./assets/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
     });
+    */
 
     return scene;
 }
