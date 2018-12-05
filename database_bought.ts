@@ -1,6 +1,6 @@
 export interface purchase{
     name:string,
-    objects: string[]
+    object_ids: string[]
 }
 
 export interface purchases{
@@ -10,7 +10,7 @@ export interface purchases{
 export let purchases:purchases = {
     "purchase":[{
         "name":"",
-        "objects":[""]
+        "object_ids":[""]
     }
     ]
 }
