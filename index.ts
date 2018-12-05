@@ -3,6 +3,7 @@ import { addLabelToMesh } from "./gui";
 import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
 import * as DATA from "./database";
+import * as DATA_CATEGORY from "./database_category";
 import { Checkbox } from 'babylonjs-gui';
 
 
@@ -19,8 +20,12 @@ var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
 
+
+//Materials
+
 let pickMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 pickMaterial.diffuseColor = BABYLON.Color3.Red();
+pickMaterial.alpha = 0.5;
 
 let saveMaterial;
 
@@ -176,6 +181,20 @@ function initData() {
 function createScene(): BABYLON.Scene {
 
     console.log(DATA);
+    console.log(DATA_CATEGORY);
+
+    let income = 0;
+
+    for(let i = 0;i<DATA_CATEGORY.categorys.categorys.length;i++){
+        console.log("erste schleife");
+        for(let j = 0; j<DATA_CATEGORY.categorys.categorys[i].items.length;j++){
+            console.log("zweite schleife");
+            income = DATA_CATEGORY.categorys.categorys[i].items[j].price + income;
+        }
+    }
+
+    console.log("income: " + income);
+
     initData();
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
@@ -207,6 +226,10 @@ function createScene(): BABYLON.Scene {
 
 
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
+
+        //mousewheel
+        
+
         if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOWN) {
             return;
         }
@@ -214,9 +237,18 @@ function createScene(): BABYLON.Scene {
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
             console.log(pickResult);
-            let pickParent = pickResult.pickedMesh._cache.parent;
+            //let pickParent = pickResult.pickedMesh._cache.parent;
 
-            scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
+            if(pickResult.pickedMesh.parent == null){
+                pickResult.pickedMesh.isVisible = false;
+            } else{
+                console.log(pickResult.pickedMesh.parent.getChildren());
+                for(let i=0;i<pickResult.pickedMesh.parent.getChildren().length;i++){
+                   let child =  <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
+                   child.isVisible = false;
+                }
+            }
+            //scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
             //pickResult.pickedMesh._cache.parent.isVisible = false;
 
             //hideMesh(pickResult.pickedMesh.name);
@@ -227,7 +259,7 @@ function createScene(): BABYLON.Scene {
             if (pickResult.pickedMesh) {
 
                 bearbeitung.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
-                console.log("Picked material: " + pickResult.pickedMesh.material);
+                /* console.log("Picked material: " + pickResult.pickedMesh.material);
                 console.log("Cache Parent: ");
                 console.log(pickParent);
                 console.log("Cache: ");
@@ -235,11 +267,19 @@ function createScene(): BABYLON.Scene {
                 console.log("Parent: ");
                 console.log(pickResult.pickedMesh.parent);
                 console.log("Picked Mesh: ")
-                console.log(pickResult.pickedMesh);
+                console.log(pickResult.pickedMesh); */
 
-                for(let i = 0; pickParent._children.length > i; i++){
-                    //pickParent._children[i].isVisible = false;
+                if (pickResult.pickedMesh.parent != null) {
+                    console.log("Picked Parent: ")
+                    console.log(pickResult.pickedMesh.parent);
+                } else {
+                    console.log("Picked Mesh: ")
+                    console.log(pickResult.pickedMesh);
                 }
+
+                /* for(let i = 0; pickParent._children.length > i; i++){
+                    //pickParent._children[i].isVisible = false;
+                } */
 
                 saveMaterial = pickResult.pickedMesh.material;
                 pickResult.pickedMesh.material = pickMaterial;
@@ -287,11 +327,20 @@ function createScene(): BABYLON.Scene {
     //addLabelToMesh(sphere);
 
     //loads old scene (test)
-    
+
     BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
+
+        //test database export
+        /* for(let i =0;i<DATA_TEST.boden.items.length;i++){
+            scene.getMeshByID(DATA_TEST.boden.items[i].id).isVisible = false;
+        } */
+
+        scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0,1.0);
+        scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
     });
-    
+
+
 
     /*
     BABYLON.SceneLoader.Append("./assets/", "birklehof.babylon", scene, function (scene) {
