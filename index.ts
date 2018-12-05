@@ -4,6 +4,7 @@ import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
 import * as DATA from "./database";
 import * as DATA_CATEGORY from "./database_category";
+//import * as DATA_BOUGHT from "./dat
 import { Checkbox } from 'babylonjs-gui';
 
 
@@ -153,7 +154,11 @@ function toggle(_event: MouseEvent) {
     }
 }
 
-function initData() {
+function initData(){
+
+}
+
+function initData_old() {
     for (let i = 0; i < DATA.data.objects.length; i++) {
         let currentObject = DATA.data.objects[i];
         let newDiv = document.createElement("div");
@@ -311,30 +316,12 @@ function createScene(): BABYLON.Scene {
         }
     });
 
-
-    /*
-    scene.onPointerObservable = function (evt:BABYLON.Observable<BABYLON.PointerInfo>) {
-        var pickResult = scene.pick(scene.pointerX, scene.pointerY);
-        scene.meshes.forEach(function (m) {
-            //text1.text = "none";
-        });
-        if (pickResult.pickedMesh) {
-            addLabelToMesh(pickResult.pickedMesh);
-            //text1.text = pickResult.pickedMesh.name;
-        }
-    }*/
-
     //addLabelToMesh(sphere);
 
     //loads old scene (test)
 
     BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
-
-        //test database export
-        /* for(let i =0;i<DATA_TEST.boden.items.length;i++){
-            scene.getMeshByID(DATA_TEST.boden.items[i].id).isVisible = false;
-        } */
 
         scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0,1.0);
         scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);

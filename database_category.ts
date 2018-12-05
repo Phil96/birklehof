@@ -2145,6 +2145,16 @@ let structur: Category = {
         },
     ]
 }
+let balken: Category = {
+    "name": "Balken",
+    "items": [
+        {
+            "name": "Balken",
+            "id": "Balken",
+            "price": 0
+        }, 
+    ]
+}
 
 export let categorys={
     "categorys":[

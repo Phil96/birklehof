@@ -28,7 +28,13 @@ export function addLabelToMesh(mesh: AbstractMesh): void {
     advancedTexture.addControl(label);
 
     const text1: TextBlock = new TextBlock();
-    text1.text = mesh.name;
+
+    if(mesh.parent != null){
+      text1.text = mesh.parent.name;  
+    } else {
+        text1.text = mesh.name
+    }
+    
     text1.color = "white";
     label.addControl(text1);
   
