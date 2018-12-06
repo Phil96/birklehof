@@ -30,9 +30,7 @@
             height: 100px;
             overflow: auto;
         }
-        #buy{
-            float: right;
-        }
+        
     </style>
 </head>
 
@@ -42,8 +40,8 @@
         <form action="">
             <div id="display">
                 <h4>Anzeige:</h4>
-                <button id="showAll" type="button">Show all</button>
-                <button id="showBought" type="button">Show bought</button>
+                <button id="showAll" type="button">Alle anzeigen</button>
+                <button id="showBought" type="button">Spenden anzeigen</button>
             </div>
             <h4>Übersicht:</h4>
             <div id="overview">
@@ -52,7 +50,7 @@
             <br>
             <div id="objects">
                 <h4>Ausgewählte Objekte:</h4>
-                <div><span>Summe in €:</span><label id="sum">0</label><button id="buy" type="button">Buy</button></div>
+                <div><span>Summe in €:</span><label id="sum">0</label></div>
             </div>
             <br>
             <div>
@@ -77,7 +75,7 @@
                 <br>
             </div>
             <br>
-            <div>
+            <div id="donation">
                 <h4>Zahlungsinformationen:</h4>
                 IBAN:<br>
                 <input type="text" name="iban" value="">
@@ -88,6 +86,7 @@
                 <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
                 über die oben genannten Summe.
                 <br>
+                <button id="buy" type="button">Spenden</button>
             </div>
             <br>
         </form>

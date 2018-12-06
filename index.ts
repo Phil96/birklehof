@@ -124,6 +124,16 @@ function buyObjects(_event: MouseEvent) {
     buys.purchase.push(newBuy);
     console.log(buys);
 
+    let newSum = 0;
+
+    objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+
+    let cartObjs = objectsHTML.getElementsByTagName("div");
+
+    for(let i = 1; i<cartObjs.length;i++){
+        objectDeselected(cartObjs[i].id);
+    }
+
     //console.log(actBuy);
 
     /* //var meshName: string = bearbeitung.getElementsByTagName("div");
