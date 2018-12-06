@@ -20,14 +20,21 @@ objectsHTML.addEventListener("click", manipulateCheckout);
 let overview = document.getElementById("overview");
 overview.addEventListener("click", chooseObject);
 
-let categorys = document.getElementById("categorys");
-categorys.addEventListener("click", chooseCategory);
+/* let categorys = document.getElementById("categorys");
+categorys.addEventListener("click", chooseCategory); */
 
 var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
 
+let hl = new BABYLON.HighlightLayer("hl1", scene);
+
 let actBuy = new DATA_BOUGHT.purchase;
+actBuy.name = "Max Mustermann";
+actBuy.object_ids = [];
+
+let buys = new DATA_BOUGHT.purchases;
+buys.purchase = [];
 
 /* let bought: DATA_BOUGHT.purchase;
 bought.name = "Max Mustermann";
@@ -53,6 +60,34 @@ function setBoughtMat(_meshID: string, ) {
     }
 }
 
+function showBought() {
+    for (let i = 0; i < scene.meshes.length; i++) {
+        scene.meshes[i].isVisible = false;
+    }
+    for (let i = 0; i < buys.purchase.length; i++) {
+        let currObjects = buys.purchase[i];
+        for (let j = 0; j < currObjects.object_ids.length; j++) {
+            let currMeshID = currObjects.object_ids[j];
+            let currMesh = <BABYLON.Mesh>scene.getMeshByID(currMeshID);
+
+
+            if (currMesh.getChildMeshes().length != 0) {
+                for (let k = 0; k < currMesh.getChildMeshes().length; k++) {
+                    let child = <BABYLON.Mesh>currMesh.getChildMeshes()[k];
+                    child.isVisible = true;
+                }
+            } else {
+                currMesh.isVisible = true;
+            }
+
+
+
+        }
+    }
+    scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
+}
+
+
 function setMeshVisibility(_meshID: string, _visibility: boolean) {
     let mesh = scene.getMeshByID(_meshID);
 
@@ -66,25 +101,28 @@ function setMeshVisibility(_meshID: string, _visibility: boolean) {
 
 function buyObjects(_event: MouseEvent) {
 
-    actBuy.name = "Max Mustermann";
-    actBuy.object_ids = [];
+    let newBuy = new DATA_BOUGHT.purchase;
+    newBuy.name = "Max Mustermann";
+    newBuy.object_ids = [];
 
     for (let i = 0; i < objectsHTML.getElementsByTagName("div").length; i++) {
         let data = objectsHTML.getElementsByTagName("div")[i].id;
-        actBuy.object_ids.push(data);
+        newBuy.object_ids.push(data);
     }
 
     var targetID = (<HTMLElement>_event.target).id;
     //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
     if (targetID == "buy") {
-        for (let i = 0; i < actBuy.object_ids.length; i++) {
-            setBoughtMat(actBuy.object_ids[i]);
+        for (let i = 0; i < newBuy.object_ids.length; i++) {
+            setBoughtMat(newBuy.object_ids[i]);
             //setMeshVisibility(actBuy.object_ids[i],false);
-            console.log(actBuy.object_ids[i]);
+            console.log(newBuy.object_ids[i]);
         }
 
-        console.log(actBuy);
+        console.log(newBuy);
     }
+    buys.purchase.push(newBuy);
+    console.log(buys);
 
     //console.log(actBuy);
 
@@ -96,13 +134,13 @@ function buyObjects(_event: MouseEvent) {
     } */
 }
 
-function objectSelected(selectedMeseh: string) {
-    let referenceToOverview: Element = overview.querySelector("#" + selectedMeseh);
-    let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMeseh);
-    let referenceToMesh = scene.getMeshByID(selectedMeseh);
+function objectSelected(selectedMesh: string) {
+    let referenceToOverview: Element = overview.querySelector("#" + selectedMesh);
+    let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
+    let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
 
     let newDiv = document.createElement("div");
-    newDiv.id = selectedMeseh;
+    newDiv.id = selectedMesh;
 
     let newInput = document.createElement("input");
     newInput.type = "checkbox";
@@ -110,7 +148,7 @@ function objectSelected(selectedMeseh: string) {
     newInput.checked = true;
 
     let newLabel = document.createElement("label");
-    newLabel.innerText = selectedMeseh;
+    newLabel.innerText = selectedMesh;
     newLabel.id = "_02";
 
     newDiv.append(newInput);
@@ -119,7 +157,15 @@ function objectSelected(selectedMeseh: string) {
 
     referenceToOverview.getElementsByTagName("input")[0].checked = true;
 
-    referenceToMesh.material = pickMaterial;
+    //referenceToMesh.material = pickMaterial;
+    if (referenceToMesh.getChildMeshes() != null) {
+        let childs = referenceToMesh.getChildMeshes();
+        for (let i = 0; i < childs.length; i++) {
+            let child = <BABYLON.Mesh>childs[i];
+            hl.addMesh(child, BABYLON.Color3.Green());
+        }
+    }
+    //hl.addMesh(referenceToMesh,BABYLON.Color3.Green());
 }
 
 function objectDeselected(selectedMeseh: string) {
@@ -131,7 +177,16 @@ function objectDeselected(selectedMeseh: string) {
 
     referenceToCheckout.remove();
 
-    referenceToMesh.material = saveMaterial;
+    if (referenceToMesh.getChildMeshes() != null) {
+        let childs = referenceToMesh.getChildMeshes();
+        for (let i = 0; i < childs.length; i++) {
+            let child = <BABYLON.Mesh>childs[i];
+            hl.removeMesh(child);
+            //hl.addMesh(child,BABYLON.Color3.Green());
+        }
+    }
+
+    //referenceToMesh.material = saveMaterial;
 }
 
 function manipulateCheckout(_event: MouseEvent) {
@@ -156,7 +211,7 @@ function chooseObject(_event: MouseEvent) {
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].style.display == "none") {
                 elements[i].style.display = "block";
-            } else{
+            } else {
                 elements[i].style.display = "none";
             }
         }
@@ -201,23 +256,26 @@ function chooseObject(_event: MouseEvent) {
 }
 
 function toggle(_event: MouseEvent) {
-    var meshName: string = displayObjects.getElementsByTagName("input")[0].value;
+    //var meshName: string = displayObjects.getElementsByTagName("input")[0].value;
     var targetID = (<HTMLElement>_event.target).id;
-    console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
-    if (targetID == "hide") {
+    //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
+    /* if (targetID == "hide") {
         setMeshVisibility(meshName, false);
     }
     if (targetID == "show") {
         setMeshVisibility(meshName, true);
-    }
+    } */
     if (targetID == "showAll") {
-        console.log(scene.meshes);
+        //console.log(scene.meshes);
         for (let i = 0; i < scene.meshes.length; i++) {
             let curr = scene.meshes[i];
-            console.log(i);
+            //console.log(i);
             curr.isVisible = true;
         }
         //scene.render();
+    }
+    if (targetID == "showBought") {
+        showBought();
     }
 }
 

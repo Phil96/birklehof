@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         html,
         body {
@@ -34,27 +35,24 @@
 <body>
     <canvas id="renderCanvas"></canvas>
     <div id="form">
-        <form action="/action_page.php">
-
+        <form action="">
+            <div id="display">
+                <h4>Anzeige:</h4>
+                <button id="showAll" type="button">Show all</button>
+                <button id="showBought" type="button">Show bought</button>
+            </div>
+            <h4>Übersicht:</h4>
             <div id="overview">
-                
-                
-            </div>
 
-            <div id="categorys">
-                <legend>Kategorien:</legend>
-                <div id="categoryObjects"></div>
             </div>
-            <br>
-            
             <br>
             <div id="objects">
-                <legend>Ausgewählte Objekte:</legend>
-                <button id="buy" type="button">Buy</button>
+                <h4>Ausgewählte Objekte:</h4>
+                <button id="buy" type="button">Buy</button><label id="sum"></label>
             </div>
-            <br><br>
+            <br>
             <div>
-                <legend>Persönliche Daten:</legend>
+                <h4>Persönliche Daten:</h4>
                 Vorname:<br>
                 <input type="text" name="firstname" value="">
                 <br>
@@ -68,7 +66,7 @@
                 <input type="text" name="anschrift" value="">
                 <br>
                 PLZ:<br>
-                <input type="number" name="anschrift" value="">
+                <input type="text" name="anschrift" value="">
                 <br>
                 Ort:<br>
                 <input type="text" name="anschrift" value="">
@@ -76,7 +74,7 @@
             </div>
             <br>
             <div>
-                <legend>Zahlungsinformationen:</legend>
+                <h4>Zahlungsinformationen:</h4>
                 IBAN:<br>
                 <input type="text" name="iban" value="">
                 <br>
@@ -85,21 +83,9 @@
                 Einzugsermächtigung:<br>
                 <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
                 über die oben genannten Summe.
-                <br><br>
-                <input type="submit" value="Spenden!">
                 <br>
             </div>
             <br>
-            <div id="display">
-                <legend>Anzeige:</legend>
-                Meshname:<br>
-                <input id="mName" type="text" name="mName" value="">
-                <br>
-                <button id="hide" type="button">Hide</button><button id="show" type="button">Show</button>
-                <button id="showAll" type="button">Show all</button>
-
-                <br>
-            </div>
         </form>
     </div>
     <script src="dist/index.js"></script>
