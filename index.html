@@ -5,7 +5,7 @@
     <style>
         html,
         body {
-            overflow: hidden;
+            overflow: auto;
             width: 100%;
             height: 100%;
             margin: 0;
@@ -14,7 +14,7 @@
         }
 
         #renderCanvas {
-            width: 800px;
+            width: 79%;
             touch-action: none;
             float: left;
         }
@@ -34,72 +34,73 @@
 <body>
     <canvas id="renderCanvas"></canvas>
     <div id="form">
-            <form action="/action_page.php">
-                <fieldset id="overview">
-                    <legend>Verfügbare Objekte:</legend>
-                    <div id="overviewObjects"></div>
-                  </fieldset>
-                <fieldset id="objects">
-                    <legend>Ausgewählte Objekte:</legend>
-                    <div id="dynObjects"></div>
-                  </fieldset>
-                <fieldset>
-                  <legend>Persönliche Daten:</legend>
-                  Vorname:<br>
-                  <input type="text" name="firstname" value="">
-                  <br>
-                  Nachname:<br>
-                  <input type="text" name="lastname" value="">
-                  <br>
-                  E-Mail:<br>
-                  <input type="email" name="e-mail" value="">
-                  <br>
-                  Anschrift:<br>
-                  <input type="anschrift" name="anschrift" value="">
-                  <br>
-                </fieldset>
-                <fieldset>
-                        <legend>Ich möchte spenden für:</legend>
-                        <select name="objects">
-                                <option value="Eingangstür">Eingangstür</option>
-                                <option value="Kücheneinrichtung">Kücheneinrichtung</option>
-                                <option value="Herrgottswinkel">Herrgottswinkel</option>
-                                <option value="Außenbalkon">Außenbalkon</option>
-                                <option value="Kachelofen">Kachelofen</option>
-                                <option value="Tor">Tor</option>
-                                <option value="Außentür">Außentür</option>
-                                <option value="Bett">Bett</option>
-                                <option value="Fußboden">Fußboden</option>
-                                <option value="Fensterfläche">Fensterfläche</option>
-                                <option value="Innentüre">Innentüre</option>
-                                <option value="Fensterladen">Fensterladen</option>
-                                <option value="Treppenstufe">Treppenstufe</option>
-                                <option value="Dachbalken">Dachbalken</option>
-                                <option value="Dachschindel">Dachschindel</option>
-                              </select>
-                      </fieldset>
-                      <fieldset>
-                            <legend>Zahlungsinformationen:</legend>
-                            IBAN:<br>
-                            <input type="text" name="iban" value="">
-                            <br>
-                            Summe (in Euro):<br>
-                            <input type="number" name="summe" value="">
-                            Einzugsermächtigung:<br>
-                            <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs über die oben genannten Summe.
-                            <br><br>
-                            <input type="submit" value="Spenden!">
-                            <br>
-                          </fieldset>
-                          <fieldset id="bearbeitung">
-                            <legend>Bearbeitung:</legend>
-                            Meshname:<br>
-                            <input id="mName" type="text" name="mName" value="">
-                            <br>
-                            <button id="hide" type="button">Hide</button><button id="show" type="button">Show</button>
-                            <br>
-                          </fieldset>
-              </form>
+        <form action="/action_page.php">
+
+            <div id="overview">
+                
+                
+            </div>
+
+            <div id="categorys">
+                <legend>Kategorien:</legend>
+                <div id="categoryObjects"></div>
+            </div>
+            <br>
+            
+            <br>
+            <div id="objects">
+                <legend>Ausgewählte Objekte:</legend>
+                <button id="buy" type="button">Buy</button>
+            </div>
+            <br><br>
+            <div>
+                <legend>Persönliche Daten:</legend>
+                Vorname:<br>
+                <input type="text" name="firstname" value="">
+                <br>
+                Nachname:<br>
+                <input type="text" name="lastname" value="">
+                <br>
+                E-Mail:<br>
+                <input type="email" name="e-mail" value="">
+                <br>
+                Adresse:<br>
+                <input type="text" name="anschrift" value="">
+                <br>
+                PLZ:<br>
+                <input type="number" name="anschrift" value="">
+                <br>
+                Ort:<br>
+                <input type="text" name="anschrift" value="">
+                <br>
+            </div>
+            <br>
+            <div>
+                <legend>Zahlungsinformationen:</legend>
+                IBAN:<br>
+                <input type="text" name="iban" value="">
+                <br>
+                Summe (in Euro):<br>
+                <input type="number" name="summe" value=""><br>
+                Einzugsermächtigung:<br>
+                <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
+                über die oben genannten Summe.
+                <br><br>
+                <input type="submit" value="Spenden!">
+                <br>
+            </div>
+            <br>
+            <div id="display">
+                <legend>Anzeige:</legend>
+                Meshname:<br>
+                <input id="mName" type="text" name="mName" value="">
+                <br>
+                <button id="hide" type="button">Hide</button><button id="show" type="button">Show</button>
+                <button id="showAll" type="button">Show all</button>
+
+                <br>
+            </div>
+        </form>
     </div>
     <script src="dist/index.js"></script>
 </body>

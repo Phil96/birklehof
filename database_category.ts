@@ -2162,7 +2162,7 @@ export let categorys={
     chairs,couches,cupboards,
     doorsIn,doorsOut,
     electronics,
-    floor,
+    floor,fronts,
     gutter,
     herrgott,
     kitchens,
@@ -2170,5 +2170,5 @@ export let categorys={
     roof,
     shelves,showers,sinks,stairs,steps,
     tables,tenne,
-    walls]
+    walls,windows]
 }

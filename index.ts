@@ -4,12 +4,15 @@ import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
 import * as DATA from "./database";
 import * as DATA_CATEGORY from "./database_category";
-//import * as DATA_BOUGHT from "./dat
+import * as DATA_BOUGHT from "./database_bought";
 import { Checkbox } from 'babylonjs-gui';
 
 
-var bearbeitung = document.getElementById("bearbeitung");
-bearbeitung.addEventListener("click", toggle);
+let buy = document.getElementById("buy");
+buy.addEventListener("click", buyObjects);
+
+var displayObjects = document.getElementById("display");
+displayObjects.addEventListener("click", toggle);
 
 let objectsHTML = document.getElementById("objects");
 objectsHTML.addEventListener("click", manipulateCheckout);
@@ -17,10 +20,18 @@ objectsHTML.addEventListener("click", manipulateCheckout);
 let overview = document.getElementById("overview");
 overview.addEventListener("click", chooseObject);
 
+let categorys = document.getElementById("categorys");
+categorys.addEventListener("click", chooseCategory);
+
 var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
 
+let actBuy = new DATA_BOUGHT.purchase;
+
+/* let bought: DATA_BOUGHT.purchase;
+bought.name = "Max Mustermann";
+bought.object_ids = ["Fassade_001", "Fassade_002", "Fassade_003"]; */
 
 //Materials
 
@@ -30,12 +41,59 @@ pickMaterial.alpha = 0.5;
 
 let saveMaterial;
 
-function setMeshVisibility(_meshName: string, _visibility: boolean) {
-    let mesh = scene.getMeshByName(_meshName);
+function setBoughtMat(_meshID: string, ) {
+    let mesh = scene.getMeshByID(_meshID);
 
     if (mesh) {
-        mesh.isVisible = _visibility;
+        for (let i = 0; i < mesh.getChildren().length; i++) {
+            let child = <BABYLON.Mesh>mesh.getChildren()[i];
+            child.material = pickMaterial;
+            //child.material.alpha = 0.3;
+        }
     }
+}
+
+function setMeshVisibility(_meshID: string, _visibility: boolean) {
+    let mesh = scene.getMeshByID(_meshID);
+
+    if (mesh) {
+        for (let i = 0; i < mesh.getChildren().length; i++) {
+            let child = <BABYLON.Mesh>mesh.getChildren()[i];
+            child.isVisible = _visibility;
+        }
+    }
+}
+
+function buyObjects(_event: MouseEvent) {
+
+    actBuy.name = "Max Mustermann";
+    actBuy.object_ids = [];
+
+    for (let i = 0; i < objectsHTML.getElementsByTagName("div").length; i++) {
+        let data = objectsHTML.getElementsByTagName("div")[i].id;
+        actBuy.object_ids.push(data);
+    }
+
+    var targetID = (<HTMLElement>_event.target).id;
+    //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
+    if (targetID == "buy") {
+        for (let i = 0; i < actBuy.object_ids.length; i++) {
+            setBoughtMat(actBuy.object_ids[i]);
+            //setMeshVisibility(actBuy.object_ids[i],false);
+            console.log(actBuy.object_ids[i]);
+        }
+
+        console.log(actBuy);
+    }
+
+    //console.log(actBuy);
+
+    /* //var meshName: string = bearbeitung.getElementsByTagName("div");
+    var targetID = (<HTMLElement>_event.target).id;
+    console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
+    if (targetID == "buy") {
+        setMeshVisibility(meshName, false);
+    } */
 }
 
 function objectSelected(selectedMeseh: string) {
@@ -92,30 +150,22 @@ function chooseObject(_event: MouseEvent) {
     let referenceToCheckout: Element = objectsHTML.querySelector("#" + target.parentElement.id);
     console.log(target.id);
 
+    if (target.className == "category") {
+        let elements = target.getElementsByTagName("div");
+        console.log("clicked category" + target.id);
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].style.display == "none") {
+                elements[i].style.display = "block";
+            } else{
+                elements[i].style.display = "none";
+            }
+        }
+
+    }
+
     if (target.id == "_01" && reference.getElementsByTagName("input")[0].checked == true) {
 
         objectSelected(target.parentElement.id);
-
-        /*
-        let newDiv = document.createElement("div");
-        newDiv.id = target.parentElement.id;
-        //newDiv.setAttribute("price",target.parentElement.price);
-
-        let newInput = document.createElement("input");
-        newInput.type = "checkbox";
-        //newInput.id = currentObject.name + "_01";
-        newInput.id = "_01";
-        newInput.checked = true;
-        //newInput.value = pickResult.pickedMesh.name;
-
-        let newLabel = document.createElement("label");
-        newLabel.innerText = target.parentElement.id;
-        newLabel.id = "_02";
-
-        newDiv.append(newInput);
-        newDiv.append(newLabel);
-        objectsHTML.append(newDiv);
-        */
 
     }
     if (target.id == "_01" && reference.getElementsByTagName("input")[0].checked == false) {
@@ -127,6 +177,14 @@ function chooseObject(_event: MouseEvent) {
             scene.meshes[i].isVisible = false;
         }
         console.log(target.parentElement.id);
+
+        if (scene.getMeshByID(target.parentElement.id) != null) {
+            let parent = <BABYLON.Mesh>scene.getMeshByID(target.parentElement.id);
+            for (let i = 0; i < parent.getChildren().length; i++) {
+                let child = parent.getChildMeshes()[i];
+                child.isVisible = true;
+            }
+        }
         scene.getMeshByID(target.parentElement.id).isVisible = true;
 
         scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true; //untergrund bleibt sichtbar
@@ -143,7 +201,7 @@ function chooseObject(_event: MouseEvent) {
 }
 
 function toggle(_event: MouseEvent) {
-    var meshName: string = bearbeitung.getElementsByTagName("input")[0].value;
+    var meshName: string = displayObjects.getElementsByTagName("input")[0].value;
     var targetID = (<HTMLElement>_event.target).id;
     console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
     if (targetID == "hide") {
@@ -152,18 +210,120 @@ function toggle(_event: MouseEvent) {
     if (targetID == "show") {
         setMeshVisibility(meshName, true);
     }
+    if (targetID == "showAll") {
+        console.log(scene.meshes);
+        for (let i = 0; i < scene.meshes.length; i++) {
+            let curr = scene.meshes[i];
+            console.log(i);
+            curr.isVisible = true;
+        }
+        //scene.render();
+    }
 }
 
-function initData(){
+function resetField(_field: HTMLElement) {
+    let field = _field
+    let elements = field.getElementsByTagName("div");
+    for (let i = 0; i < elements.length; i++) {
+        elements[i]
+    }
+}
+
+function chooseCategory(_event: MouseEvent) {
+    resetField(overview);
+    var targetID = (<HTMLElement>_event.target).id;
+    initData(targetID);
 
 }
 
-function initData_old() {
-    for (let i = 0; i < DATA.data.objects.length; i++) {
-        let currentObject = DATA.data.objects[i];
+function initCategorys() {
+    for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
+        let currentCat = DATA_CATEGORY.categorys.categorys[i];
+        let newDiv = document.createElement("div");
+        newDiv.id = currentCat.name;
+        newDiv.className = "category";
+        newDiv.innerText = currentCat.name;
+
+        /* let newLabelP = document.createElement("label");
+            newLabelP.innerText = currentCat.name;
+            newDiv.append(newLabelP); */
+
+        for (let j = 0; j < currentCat.items.length; j++) {
+            let newDivChild = document.createElement("div");
+            let currentObject = currentCat.items[j];
+            newDivChild.id = currentObject.id
+            newDivChild.setAttribute("price", currentObject.price.toString());
+
+            let newInput = document.createElement("input");
+            newInput.type = "checkbox";
+            newInput.id = "_01";
+
+            let newLabel = document.createElement("label");
+            newLabel.innerText = currentObject.name;
+            newLabel.id = "_02";
+
+            newDivChild.append(newInput);
+            newDivChild.append(newLabel);
+            newDivChild.style.display = "none";
+            newDiv.append(newDivChild);
+        }
+        overview.append(newDiv);
+
+        /* let newButton = document.createElement("button");
+        newButton.innerText = currentObject.name;
+        newButton.id = currentObject.name;
+        newButton.type = "button";
+        //newDiv.setAttribute("price", currentObject.price.toString());
+
+        let newInput = document.createElement("input");
+         newInput.type = "checkbox"; 
+        //newInput.id = currentObject.name + "_01";
+         newInput.id = "_01"; 
+        //newInput.checked = true;
+        //newInput.value = pickResult.pickedMesh.name;
+
+        let newLabel = document.createElement("label");
+        newLabel.innerText = currentObject.name;
+        newLabel.id = "_02"; */
+
+        //newDiv.append(newInput);
+        //newDiv.append(newLabel);
+        //categorys.append(newButton);
+
+    }
+}
+
+
+function initData(category: string) {
+    for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
+
+        if (DATA_CATEGORY.categorys.categorys[i].name == category) {
+            let currCat = DATA_CATEGORY.categorys.categorys[i];
+            for (let j = 0; j < currCat.items.length; j++) {
+                let currentObject = currCat.items[j];
+
+                let newDiv = document.createElement("div");
+                newDiv.id = currentObject.id;
+                newDiv.setAttribute("price", currentObject.price.toString());
+
+                let newInput = document.createElement("input");
+                newInput.type = "checkbox";
+                newInput.id = "_01";
+
+                let newLabel = document.createElement("label");
+                newLabel.innerText = currentObject.name;
+                newLabel.id = "_02";
+
+                newDiv.append(newInput);
+                newDiv.append(newLabel);
+                overview.append(newDiv);
+            }
+        }
+
+        /* let currentObject = DATA_CATEGORY.categorys.categorys[i];
         let newDiv = document.createElement("div");
         newDiv.id = currentObject.name;
-        newDiv.setAttribute("price", currentObject.price.toString());
+        //newDiv.setAttribute("price", currentObject.price.toString());
 
         let newInput = document.createElement("input");
         newInput.type = "checkbox";
@@ -178,7 +338,7 @@ function initData_old() {
 
         newDiv.append(newInput);
         newDiv.append(newLabel);
-        overview.append(newDiv);
+        overview.append(newDiv); */
 
     }
 }
@@ -187,30 +347,33 @@ function createScene(): BABYLON.Scene {
 
     console.log(DATA);
     console.log(DATA_CATEGORY);
+    console.log(DATA_BOUGHT);
 
-    let income = 0;
+    /* let income = 0;
 
-    for(let i = 0;i<DATA_CATEGORY.categorys.categorys.length;i++){
+    /* for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
         console.log("erste schleife");
-        for(let j = 0; j<DATA_CATEGORY.categorys.categorys[i].items.length;j++){
+        for (let j = 0; j < DATA_CATEGORY.categorys.categorys[i].items.length; j++) {
             console.log("zweite schleife");
             income = DATA_CATEGORY.categorys.categorys[i].items[j].price + income;
         }
-    }
+    } */
 
-    console.log("income: " + income);
+    // console.log("income: " + income);
 
-    initData();
+    //initData();
+    initCategorys();
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
-    var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(10, 2, 100), scene);
+    var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     camera.keysUp.push(87);    //W
     camera.keysDown.push(83)   //D
     camera.keysLeft.push(65);  //A
     camera.keysRight.push(68); //S
+
 
     var camera1 = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(24, 1, 139), scene);
     camera1.setTarget(BABYLON.Vector3.Zero());
@@ -233,7 +396,7 @@ function createScene(): BABYLON.Scene {
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
 
         //mousewheel
-        
+
 
         if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOWN) {
             return;
@@ -244,13 +407,16 @@ function createScene(): BABYLON.Scene {
             console.log(pickResult);
             //let pickParent = pickResult.pickedMesh._cache.parent;
 
-            if(pickResult.pickedMesh.parent == null){
-                pickResult.pickedMesh.isVisible = false;
-            } else{
+            if (pickResult.pickedMesh.parent == null) {
+                if ("Stadtplanung Flurstücke" != pickResult.pickedMesh.parent.id) {
+                    pickResult.pickedMesh.isVisible = false;
+                }
+
+            } else {
                 console.log(pickResult.pickedMesh.parent.getChildren());
-                for(let i=0;i<pickResult.pickedMesh.parent.getChildren().length;i++){
-                   let child =  <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
-                   child.isVisible = false;
+                for (let i = 0; i < pickResult.pickedMesh.parent.getChildren().length; i++) {
+                    let child = <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
+                    child.isVisible = false;
                 }
             }
             //scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
@@ -263,7 +429,7 @@ function createScene(): BABYLON.Scene {
             });
             if (pickResult.pickedMesh) {
 
-                bearbeitung.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
+                displayObjects.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
                 /* console.log("Picked material: " + pickResult.pickedMesh.material);
                 console.log("Cache Parent: ");
                 console.log(pickParent);
@@ -289,8 +455,10 @@ function createScene(): BABYLON.Scene {
                 saveMaterial = pickResult.pickedMesh.material;
                 pickResult.pickedMesh.material = pickMaterial;
 
+                objectSelected(pickResult.pickedMesh.parent.id);
 
-                let newDiv = document.createElement("div");
+
+                /* let newDiv = document.createElement("div");
                 newDiv.id = pickResult.pickedMesh.name;
                 //newDiv.setAttribute("price",target.parentElement.price);
 
@@ -309,7 +477,7 @@ function createScene(): BABYLON.Scene {
                 newDiv.append(newLabel);
                 objectsHTML.append(newDiv);
 
-                addLabelToMesh(pickResult.pickedMesh);
+                addLabelToMesh(pickResult.pickedMesh); */
 
                 //text1.text = pickResult.pickedMesh.name;
             }
@@ -323,7 +491,7 @@ function createScene(): BABYLON.Scene {
     BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
 
-        scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0,1.0);
+        scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0, 1.0);
         scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
     });
 
@@ -339,6 +507,6 @@ function createScene(): BABYLON.Scene {
 }
 
 engine.runRenderLoop(() => {
-    //console.log("Kameraposition: " + scene.getCameraByName("camera1").position);
     scene.render();
+    //console.log("Kameraposition: " + scene.getCameraByName("freeCam").position);
 });

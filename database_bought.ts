@@ -1,13 +1,14 @@
-export interface purchase{
-    name:string,
-    object_ids: string[]
+export class purchase{
+    name:string;
+    object_ids: string[];
+    
 }
 
-export interface purchases{
+export class purchases{
     purchase: purchase[]
 }
 
-export let purchases:purchases = {
+export let p:purchases = {
     "purchase":[{
         "name":"",
         "object_ids":[""]
