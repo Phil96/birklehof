@@ -20,6 +20,8 @@ objectsHTML.addEventListener("click", manipulateCheckout);
 let overview = document.getElementById("overview");
 overview.addEventListener("click", chooseObject);
 
+let personalData = document.getElementById("personalData");
+
 /* let categorys = document.getElementById("categorys");
 categorys.addEventListener("click", chooseCategory); */
 
@@ -66,7 +68,7 @@ function showBought() {
     }
     for (let i = 0; i < buys.purchase.length; i++) {
         let currObjects = buys.purchase[i];
-        for (let j = 0; j < currObjects.object_ids.length; j++) {
+        for (let j = 1; j < currObjects.object_ids.length; j++) {
             let currMeshID = currObjects.object_ids[j];
             let currMesh = <BABYLON.Mesh>scene.getMeshByID(currMeshID);
 
@@ -102,7 +104,8 @@ function setMeshVisibility(_meshID: string, _visibility: boolean) {
 function buyObjects(_event: MouseEvent) {
 
     let newBuy = new DATA_BOUGHT.purchase;
-    newBuy.name = "Max Mustermann";
+    let buyName = personalData.getElementsByTagName("input")[0].value + " "+ personalData.getElementsByTagName("input")[1].value;
+    newBuy.name = buyName;
     newBuy.object_ids = [];
 
     for (let i = 0; i < objectsHTML.getElementsByTagName("div").length; i++) {
