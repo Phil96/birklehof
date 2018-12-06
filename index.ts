@@ -525,7 +525,7 @@ function createScene(): BABYLON.Scene {
             });
             if (pickResult.pickedMesh) {
 
-                displayObjects.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
+                //displayObjects.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
                 /* console.log("Picked material: " + pickResult.pickedMesh.material);
                 console.log("Cache Parent: ");
                 console.log(pickParent);
