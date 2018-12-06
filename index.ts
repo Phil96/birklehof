@@ -157,6 +157,15 @@ function objectSelected(selectedMesh: string) {
 
     referenceToOverview.getElementsByTagName("input")[0].checked = true;
 
+    let price = parseInt(referenceToOverview.getAttribute("price"));
+
+    let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
+
+    let newSum = sum + price;
+
+    objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+
+
     //referenceToMesh.material = pickMaterial;
     if (referenceToMesh.getChildMeshes() != null) {
         let childs = referenceToMesh.getChildMeshes();
@@ -176,6 +185,14 @@ function objectDeselected(selectedMeseh: string) {
     referenceToOverview.getElementsByTagName("input")[0].checked = false;
 
     referenceToCheckout.remove();
+
+    let price = parseInt(referenceToOverview.getAttribute("price"));
+
+    let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
+
+    let newSum = sum - price;
+
+    objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
 
     if (referenceToMesh.getChildMeshes() != null) {
         let childs = referenceToMesh.getChildMeshes();

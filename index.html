@@ -24,10 +24,14 @@
             width: 20%;
             height: 100%;
             float: left;
+            padding: 1%
         }
         #overview{
             height: 100px;
             overflow: auto;
+        }
+        #buy{
+            float: right;
         }
     </style>
 </head>
@@ -48,7 +52,7 @@
             <br>
             <div id="objects">
                 <h4>Ausgewählte Objekte:</h4>
-                <button id="buy" type="button">Buy</button><label id="sum"></label>
+                <div><span>Summe in €:</span><label id="sum">0</label><button id="buy" type="button">Buy</button></div>
             </div>
             <br>
             <div>
