@@ -535,107 +535,107 @@ let shelves: Category = {
         {
             "name": "Regal",
             "id": "Regal_000",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_001",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_002",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_003",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_004",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_005",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_006",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_007",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_008",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_009",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_010",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_011",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_012",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_013",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_014",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_015",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_016",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_017",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_018",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_019",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_020",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_021",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_022",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_023",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_024",
-            "price": 50
+            "price": 10
         }, {
             "name": "Regal",
             "id": "Regal_025",
-            "price": 50
+            "price": 10
         }
     ]
 }
@@ -647,107 +647,107 @@ let cupboards: Category = {
         {
             "name": "Schrank",
             "id": "Schrank_000",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_001",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_002",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_003",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_004",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_005",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_006",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_007",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_008",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_009",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_010",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_011",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_012",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_013",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_014",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_015",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_016",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_017",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_018",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_019",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_020",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_021",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_022",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_023",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_024",
-            "price": 50
+            "price": 20
         }, {
             "name": "Schrank",
             "id": "Schrank_025",
-            "price": 50
+            "price": 20
         },
         {
             "name": "Aktenschrank",
@@ -772,327 +772,327 @@ let walls: Category = {
         {
             "name": "Wand",
             "id": "Wand_000",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_001",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_002",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_003",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_004",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_005",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_006",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_007",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_008",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_009",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_010",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_011",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_012",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_013",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_014",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_015",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_016",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_017",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_018",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_019",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_020",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_021",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_022",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_023",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_024",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_025",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_026",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_027",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_028",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_029",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_030",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_031",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_032",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_033",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_034",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_035",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_036",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_037",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_038",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_039",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_040",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_041",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_042",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_043",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_044",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_045",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_046",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_047",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_048",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_049",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_050",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_051",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_052",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_053",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_054",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_055",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_056",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_057",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_058",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_059",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_060",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_061",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_062",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_063",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_064",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_065",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_066",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_067",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_068",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_069",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_070",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_071",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_072",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_073",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_074",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_075",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_076",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_077",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_078",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_079",
-            "price": 0
+            "price": 100
         }, {
             "name": "Wand",
             "id": "Wand_080",
-            "price": 0
+            "price": 100
         }
     ]
 }

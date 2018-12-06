@@ -29,7 +29,8 @@ var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
 
-let hl = new BABYLON.HighlightLayer("hl1", scene);
+let boughtLayer = new BABYLON.HighlightLayer("hl1", scene);
+let selectedLayer = new BABYLON.HighlightLayer("hl2", scene);
 
 let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
@@ -56,7 +57,8 @@ function setBoughtMat(_meshID: string, ) {
     if (mesh) {
         for (let i = 0; i < mesh.getChildren().length; i++) {
             let child = <BABYLON.Mesh>mesh.getChildren()[i];
-            child.material = pickMaterial;
+            boughtLayer.addMesh(child, BABYLON.Color3.Red());
+            //child.material = pickMaterial;
             //child.material.alpha = 0.3;
         }
     }
@@ -104,7 +106,7 @@ function setMeshVisibility(_meshID: string, _visibility: boolean) {
 function buyObjects(_event: MouseEvent) {
 
     let newBuy = new DATA_BOUGHT.purchase;
-    let buyName = personalData.getElementsByTagName("input")[0].value + " "+ personalData.getElementsByTagName("input")[1].value;
+    let buyName = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value;
     newBuy.name = buyName;
     newBuy.object_ids = [];
 
@@ -184,7 +186,7 @@ function objectSelected(selectedMesh: string) {
         let childs = referenceToMesh.getChildMeshes();
         for (let i = 0; i < childs.length; i++) {
             let child = <BABYLON.Mesh>childs[i];
-            hl.addMesh(child, BABYLON.Color3.Green());
+            selectedLayer.addMesh(child, BABYLON.Color3.Green());
         }
     }
     //hl.addMesh(referenceToMesh,BABYLON.Color3.Green());
@@ -212,7 +214,7 @@ function objectDeselected(selectedMesh: string) {
             let childs = referenceToMesh.getChildMeshes();
             for (let i = 0; i < childs.length; i++) {
                 let child = <BABYLON.Mesh>childs[i];
-                hl.removeMesh(child);
+                selectedLayer.removeMesh(child);
                 //hl.addMesh(child,BABYLON.Color3.Green());
             }
         }
@@ -487,26 +489,30 @@ function createScene(): BABYLON.Scene {
 
         //mousewheel
 
-
-        if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOWN) {
+        /* if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOWN) {
+            return;
+        } */
+        if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOUBLETAP) {
             return;
         }
+
         //pointerinfo.pickInfo.pickedMesh.visibility = 1;
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
             console.log(pickResult);
             //let pickParent = pickResult.pickedMesh._cache.parent;
 
-            if (pickResult.pickedMesh.parent == null) {
-                if ("Stadtplanung Flurstücke" != pickResult.pickedMesh.parent.id) {
-                    pickResult.pickedMesh.isVisible = false;
-                }
+            if (pickResult.pickedMesh.parent != null) {
 
-            } else {
                 console.log(pickResult.pickedMesh.parent.getChildren());
                 for (let i = 0; i < pickResult.pickedMesh.parent.getChildren().length; i++) {
                     let child = <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
                     child.isVisible = false;
+                }
+
+            } else {
+                if ("Stadtplanung Flurstücke" != pickResult.pickedMesh.id) {
+                    pickResult.pickedMesh.isVisible = false;
                 }
             }
             //scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
@@ -542,8 +548,10 @@ function createScene(): BABYLON.Scene {
                     //pickParent._children[i].isVisible = false;
                 } */
 
-                saveMaterial = pickResult.pickedMesh.material;
+                /* saveMaterial = pickResult.pickedMesh.material;
                 pickResult.pickedMesh.material = pickMaterial;
+
+                selectedLayer.addMesh(<BABYLON.Mesh>pickResult.pickedMesh); */
 
                 objectSelected(pickResult.pickedMesh.parent.id);
 
