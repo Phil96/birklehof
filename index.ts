@@ -113,10 +113,10 @@ function buyObjects(_event: MouseEvent) {
     var targetID = (<HTMLElement>_event.target).id;
     //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
     if (targetID == "buy") {
-        for (let i = 0; i < newBuy.object_ids.length; i++) {
-            setBoughtMat(newBuy.object_ids[i]);
+        for (let j = 0; j < newBuy.object_ids.length; j++) {
+            setBoughtMat(newBuy.object_ids[j]);
             //setMeshVisibility(actBuy.object_ids[i],false);
-            console.log(newBuy.object_ids[i]);
+            console.log(newBuy.object_ids[j]);
         }
 
         console.log(newBuy);
@@ -124,16 +124,16 @@ function buyObjects(_event: MouseEvent) {
     buys.purchase.push(newBuy);
     console.log(buys);
 
+    let cartObjs = objectsHTML.getElementsByTagName("div");
+    let cartObjsLength = cartObjs.length - 1;
+
+    for (let k = cartObjsLength; k > 0; k--) {
+        console.log(cartObjs[k]);
+        objectDeselected(cartObjs[k].id);
+    }
     let newSum = 0;
 
     objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
-
-    let cartObjs = objectsHTML.getElementsByTagName("div");
-
-    for(let i = 1; i<cartObjs.length;i++){
-        objectDeselected(cartObjs[i].id);
-    }
-
     //console.log(actBuy);
 
     /* //var meshName: string = bearbeitung.getElementsByTagName("div");
@@ -187,29 +187,31 @@ function objectSelected(selectedMesh: string) {
     //hl.addMesh(referenceToMesh,BABYLON.Color3.Green());
 }
 
-function objectDeselected(selectedMeseh: string) {
-    let referenceToOverview: Element = overview.querySelector("#" + selectedMeseh);
-    let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMeseh);
-    let referenceToMesh = scene.getMeshByID(selectedMeseh);
+function objectDeselected(selectedMesh: string) {
+    if (selectedMesh != "") {
+        let referenceToOverview: Element = overview.querySelector("#" + selectedMesh);
+        let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
+        let referenceToMesh = scene.getMeshByID(selectedMesh);
 
-    referenceToOverview.getElementsByTagName("input")[0].checked = false;
+        referenceToOverview.getElementsByTagName("input")[0].checked = false;
 
-    referenceToCheckout.remove();
+        referenceToCheckout.remove();
 
-    let price = parseInt(referenceToOverview.getAttribute("price"));
+        let price = parseInt(referenceToOverview.getAttribute("price"));
 
-    let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
+        let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
 
-    let newSum = sum - price;
+        let newSum = sum - price;
 
-    objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+        objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
 
-    if (referenceToMesh.getChildMeshes() != null) {
-        let childs = referenceToMesh.getChildMeshes();
-        for (let i = 0; i < childs.length; i++) {
-            let child = <BABYLON.Mesh>childs[i];
-            hl.removeMesh(child);
-            //hl.addMesh(child,BABYLON.Color3.Green());
+        if (referenceToMesh.getChildMeshes() != null) {
+            let childs = referenceToMesh.getChildMeshes();
+            for (let i = 0; i < childs.length; i++) {
+                let child = <BABYLON.Mesh>childs[i];
+                hl.removeMesh(child);
+                //hl.addMesh(child,BABYLON.Color3.Green());
+            }
         }
     }
 

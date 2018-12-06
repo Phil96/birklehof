@@ -2170,5 +2170,5 @@ export let categorys={
     roof,
     shelves,showers,sinks,stairs,steps,
     tables,tenne,
-    walls,windows]
+    walls,windows,windowShutters]
 }
