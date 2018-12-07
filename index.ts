@@ -295,13 +295,13 @@ function objectDeselected(selectedMesh: string) {
 
         //referenceToCheckout.remove();
 
-        let price = parseInt(referenceToOverview.getAttribute("price"));
+        /* let price = parseInt(referenceToOverview.getAttribute("price"));
 
         let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
 
         let newSum = sum - price;
 
-        objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+        objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString(); */
 
         referenceToOverview.style.backgroundColor = "";
 
