@@ -10,7 +10,8 @@ var BirklehofServerClient;
 (function (BirklehofServerClient) {
     window.addEventListener("load", init);
     let domText;
-    let serverAdress = "http://localhost/birklehof/";
+    let serverAdress = "https://webuser.hs-furtwangen.de/~del/birklehof/";
+    // let serverAdress: string = "http://localhost/birklehof/";
     function init(_event) {
         let domSendMail = document.getElementsByTagName("button")[0];
         let domSendData = document.getElementsByTagName("button")[1];
