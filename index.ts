@@ -18,7 +18,7 @@ let objectsHTML = document.getElementById("objects");
 objectsHTML.addEventListener("click", manipulateCheckout);
 
 let overview = document.getElementById("overview");
-overview.addEventListener("click", chooseObject);
+overview.addEventListener("click", chooseObjectFromOverview);
 
 let personalData = document.getElementById("personalData");
 
@@ -90,7 +90,6 @@ function showBought() {
     }
     scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
 }
-
 
 function setMeshVisibility(_objID: string, _visibility: boolean) {
     let obj = scene.getMeshByID(_objID);
@@ -164,15 +163,12 @@ function buyObjects(_event: MouseEvent) {
     } */
 }
 
-function objectSelected(selectedMesh: string) {
-
+function objectBuy(selectedMesh: string) {
     if (selectedMesh == "Stadtplanung Flurstücke") {
         return;
     }
-
-    let referenceToOverview: Element = overview.querySelector("#" + selectedMesh);
+    let referenceToOverview: HTMLElement = overview.querySelector("#" + selectedMesh);
     let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
-    let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
 
     let newDiv = document.createElement("div");
     newDiv.id = selectedMesh;
@@ -183,7 +179,7 @@ function objectSelected(selectedMesh: string) {
     newInput.checked = true;
 
     let newLabel = document.createElement("label");
-    newLabel.innerText = selectedMesh;
+    newLabel.innerText = referenceToOverview.innerText;
     newLabel.id = "_02";
 
     newDiv.append(newInput);
@@ -199,6 +195,80 @@ function objectSelected(selectedMesh: string) {
     let newSum = sum + price;
 
     objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+
+
+}
+
+function objectBuyNot(selectedMesh: string) {
+    if (selectedMesh == "Stadtplanung Flurstücke") {
+        return;
+    }
+    if (selectedMesh != "") {
+        let referenceToOverview: HTMLElement = overview.querySelector("#" + selectedMesh);
+        let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
+        let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
+
+        referenceToOverview.getElementsByTagName("input")[0].checked = false;
+
+        referenceToCheckout.remove();
+
+        let price = parseInt(referenceToOverview.getAttribute("price"));
+
+        let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
+
+        let newSum = sum - price;
+
+        objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+
+        //referenceToOverview.style.display = "none";
+    }
+
+}
+
+function objectSelected(selectedMesh: string) {
+
+    if (selectedMesh == "Stadtplanung Flurstücke") {
+        return;
+    }
+
+    let referenceToOverview: HTMLElement = overview.querySelector("#" + selectedMesh);
+    let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
+    let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
+
+    /* let newDiv = document.createElement("div");
+    newDiv.id = selectedMesh;
+
+    let newInput = document.createElement("input");
+    newInput.type = "checkbox";
+    newInput.id = "_01";
+    newInput.checked = true;
+
+    let newLabel = document.createElement("label");
+    newLabel.innerText = selectedMesh;
+    newLabel.id = "_02";
+
+    newDiv.append(newInput);
+    newDiv.append(newLabel);
+    objectsHTML.append(newDiv);
+
+    referenceToOverview.getElementsByTagName("input")[0].checked = true; */
+
+    referenceToOverview.style.backgroundColor = "#0066ff";
+
+    //referenceToOverview.style.display = "block";
+
+    for (let i = 1; i < referenceToOverview.parentElement.childElementCount; i++) {
+        let child: HTMLElement = <HTMLElement>referenceToOverview.parentElement.children[i];
+        child.style.display = "block";
+    }
+
+    /* let price = parseInt(referenceToOverview.getAttribute("price"));
+
+    let sum = parseInt(objectsHTML.getElementsByTagName("label")[0].innerText);
+
+    let newSum = sum + price;
+
+    objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString(); */
 
 
     //referenceToMesh.material = pickMaterial;
@@ -217,13 +287,13 @@ function objectSelected(selectedMesh: string) {
 
 function objectDeselected(selectedMesh: string) {
     if (selectedMesh != "") {
-        let referenceToOverview: Element = overview.querySelector("#" + selectedMesh);
+        let referenceToOverview: HTMLElement = overview.querySelector("#" + selectedMesh);
         let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
         let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
 
         referenceToOverview.getElementsByTagName("input")[0].checked = false;
 
-        referenceToCheckout.remove();
+        //referenceToCheckout.remove();
 
         let price = parseInt(referenceToOverview.getAttribute("price"));
 
@@ -232,6 +302,15 @@ function objectDeselected(selectedMesh: string) {
         let newSum = sum - price;
 
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+
+        referenceToOverview.style.backgroundColor = "";
+
+        //referenceToOverview.style.display = "none";
+
+        /* for (let i = 1; i < referenceToOverview.parentElement.childElementCount; i++) {
+            let child: HTMLElement = <HTMLElement>referenceToOverview.parentElement.children[i];
+            child.style.display = "none";
+        } */
 
         if (referenceToMesh.getChildren().length != 0) {
             let childs = referenceToMesh.getChildMeshes();
@@ -256,11 +335,12 @@ function manipulateCheckout(_event: MouseEvent) {
         //target.parentElement.remove();
         let reference: Element = overview.querySelector("#" + target.parentElement.id);
         reference.getElementsByTagName("input")[0].checked = false;
-        objectDeselected(target.parentElement.id);
+        objectBuyNot(target.parentElement.id);
+        //objectDeselected(target.parentElement.id);
     }
 }
 
-function chooseObject(_event: MouseEvent) {
+function chooseObjectFromOverview(_event: MouseEvent) {
     var target = (<HTMLElement>_event.target);
     let reference: Element = overview.querySelector("#" + target.parentElement.id);
     let referenceToCheckout: Element = objectsHTML.querySelector("#" + target.parentElement.id);
@@ -323,11 +403,13 @@ function chooseObject(_event: MouseEvent) {
 
     if (target.id == "_01" && reference.getElementsByTagName("input")[0].checked == true) {
 
-        objectSelected(target.parentElement.id);
+        //objectSelected(target.parentElement.id);
+        objectBuy(target.parentElement.id);
 
     }
     if (target.id == "_01" && reference.getElementsByTagName("input")[0].checked == false) {
-        objectDeselected(target.parentElement.id);
+        objectBuyNot(target.parentElement.id);
+        //objectDeselected(target.parentElement.id);
         //referenceToCheckout.remove();
     }
     /* if (target.id == "_02") {
@@ -448,10 +530,10 @@ function initCategorys() {
         //newIcon.setAttribute("function","displayCategory");
 
 
-        
+
         newDiv.append(newIcon);
 
-        newDiv.insertAdjacentText("beforeend"," " + currentCat.name);
+        newDiv.insertAdjacentText("beforeend", " " + currentCat.name);
 
         for (let j = 0; j < currentCat.items.length; j++) {
             let newDivChild = document.createElement("div");
@@ -459,6 +541,7 @@ function initCategorys() {
             newDivChild.id = currentObject.id
             newDivChild.className = "categoryElement";
             newDivChild.setAttribute("price", currentObject.price.toString());
+            newDivChild.setAttribute("isActive","false");
 
             let newIcon = document.createElement("span");
             newIcon.className = "glyphicon glyphicon-eye-open"
@@ -484,7 +567,6 @@ function initCategorys() {
 
     }
 }
-
 
 function initData(category: string) {
     for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
@@ -564,31 +646,43 @@ function createScene(): BABYLON.Scene {
                     console.log(pickResult);
                     //let pickParent = pickResult.pickedMesh._cache.parent;
 
-                    setMeshVisibility(pickResult.pickedMesh.id,false)
+                    setMeshVisibility(pickResult.pickedMesh.id, false)
 
- /*                    if (pickResult.pickedMesh.parent != null) {
 
-                        console.log(pickResult.pickedMesh.parent.getChildren());
-                        for (let i = 0; i < pickResult.pickedMesh.parent.getChildren().length; i++) {
-                            let child = <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
-                            child.isVisible = false;
-                        }
-
-                    } else {
-                        if ("Stadtplanung Flurstücke" != pickResult.pickedMesh.id) {
-                            pickResult.pickedMesh.isVisible = false;
-                        }
-                    } */
 
                 }
             } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
                 if (pickResult.pickedMesh) {
 
-                    let elements = objectsHTML.getElementsByTagName("div");
+                    let obj;
+
+                    //let elements = objectsHTML.getElementsByTagName("div");
                     let pickedParentObjectHTML;
                     let pickedObjectHTML;
 
-                    for (let i = 1; i < elements.length; i++) {
+                    if (pickResult.pickedMesh.parent != null) {
+                        obj = document.getElementById(pickResult.pickedMesh.parent.id);
+                        //pickedParentObjectHTML = pickResult.pickedMesh.parent.id;
+
+                    } else {
+                        obj = document.getElementById(pickResult.pickedMesh.id);
+                        //pickedObjectHTML = pickResult.pickedMesh.id;
+
+                    }
+
+                    if(obj.getAttribute("isActive") == "false"){
+                        objectSelected(obj.id);
+                        obj.setAttribute("isActive","true");
+                        //obj.isActive = "true";
+                    } else if(obj.getAttribute("isActive") == "true"){
+                        objectDeselected(obj.id);
+                        obj.setAttribute("isActive","false");
+                        //obj.isActive = "false";
+                    } else{
+
+                    }
+
+                    /* for (let i = 1; i < elements.length; i++) {
                         let currObject = elements[i].id
                         console.log(currObject);
                         if (pickResult.pickedMesh.parent != null) {
@@ -605,19 +699,19 @@ function createScene(): BABYLON.Scene {
                                 //objectDeselected(pickedObjectHTML);
                             }
                         }
-                    }
+                    } */
 
 
-                    if (pickResult.pickedMesh.parent != null) {
+                   /*  if (pickResult.pickedMesh.parent != null) {
                         console.log("Picked Parent: ")
                         console.log(pickResult.pickedMesh.parent.id);
-                        if (pickedParentObjectHTML == null) {
+                        if (pickedParentObjectHTML != null) {
                             objectSelected(pickResult.pickedMesh.parent.id);
                         } else {
                             objectDeselected(pickedParentObjectHTML);
                         }
                     } else {
-                        if (pickedObjectHTML == null) {
+                        if (pickedObjectHTML != null) {
                             objectSelected(pickResult.pickedMesh.id);
                         } else {
                             objectDeselected(pickedObjectHTML);
@@ -625,7 +719,7 @@ function createScene(): BABYLON.Scene {
                         console.log("Picked Mesh: ")
                         console.log(pickResult.pickedMesh);
 
-                    }
+                    } */
                 }
             } else {
                 return;
