@@ -182,12 +182,15 @@ function objectSelected(selectedMesh: string) {
 
 
     //referenceToMesh.material = pickMaterial;
-    if (referenceToMesh.getChildMeshes() != null) {
+    if (referenceToMesh.getChildren().length != 0) {
         let childs = referenceToMesh.getChildMeshes();
         for (let i = 0; i < childs.length; i++) {
             let child = <BABYLON.Mesh>childs[i];
             selectedLayer.addMesh(child, BABYLON.Color3.Green());
         }
+    } else {
+        console.log(referenceToMesh);
+        selectedLayer.addMesh(referenceToMesh, BABYLON.Color3.Green());
     }
     //hl.addMesh(referenceToMesh,BABYLON.Color3.Green());
 }
@@ -196,7 +199,7 @@ function objectDeselected(selectedMesh: string) {
     if (selectedMesh != "") {
         let referenceToOverview: Element = overview.querySelector("#" + selectedMesh);
         let referenceToCheckout: Element = objectsHTML.querySelector("#" + selectedMesh);
-        let referenceToMesh = scene.getMeshByID(selectedMesh);
+        let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
 
         referenceToOverview.getElementsByTagName("input")[0].checked = false;
 
@@ -210,13 +213,16 @@ function objectDeselected(selectedMesh: string) {
 
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
 
-        if (referenceToMesh.getChildMeshes() != null) {
+        if (referenceToMesh.getChildren().length != 0) {
             let childs = referenceToMesh.getChildMeshes();
             for (let i = 0; i < childs.length; i++) {
                 let child = <BABYLON.Mesh>childs[i];
                 selectedLayer.removeMesh(child);
                 //hl.addMesh(child,BABYLON.Color3.Green());
             }
+        } else {
+            console.log("Deselect" + referenceToMesh);
+            selectedLayer.removeMesh(referenceToMesh);
         }
     }
 
@@ -336,10 +342,6 @@ function initCategorys() {
         newDiv.className = "category";
         newDiv.innerText = currentCat.name;
 
-        /* let newLabelP = document.createElement("label");
-            newLabelP.innerText = currentCat.name;
-            newDiv.append(newLabelP); */
-
         for (let j = 0; j < currentCat.items.length; j++) {
             let newDivChild = document.createElement("div");
             let currentObject = currentCat.items[j];
@@ -360,27 +362,6 @@ function initCategorys() {
             newDiv.append(newDivChild);
         }
         overview.append(newDiv);
-
-        /* let newButton = document.createElement("button");
-        newButton.innerText = currentObject.name;
-        newButton.id = currentObject.name;
-        newButton.type = "button";
-        //newDiv.setAttribute("price", currentObject.price.toString());
-
-        let newInput = document.createElement("input");
-         newInput.type = "checkbox"; 
-        //newInput.id = currentObject.name + "_01";
-         newInput.id = "_01"; 
-        //newInput.checked = true;
-        //newInput.value = pickResult.pickedMesh.name;
-
-        let newLabel = document.createElement("label");
-        newLabel.innerText = currentObject.name;
-        newLabel.id = "_02"; */
-
-        //newDiv.append(newInput);
-        //newDiv.append(newLabel);
-        //categorys.append(newButton);
 
     }
 }
@@ -411,27 +392,6 @@ function initData(category: string) {
                 overview.append(newDiv);
             }
         }
-
-        /* let currentObject = DATA_CATEGORY.categorys.categorys[i];
-        let newDiv = document.createElement("div");
-        newDiv.id = currentObject.name;
-        //newDiv.setAttribute("price", currentObject.price.toString());
-
-        let newInput = document.createElement("input");
-        newInput.type = "checkbox";
-        //newInput.id = currentObject.name + "_01";
-        newInput.id = "_01";
-        //newInput.checked = true;
-        //newInput.value = pickResult.pickedMesh.name;
-
-        let newLabel = document.createElement("label");
-        newLabel.innerText = currentObject.name;
-        newLabel.id = "_02";
-
-        newDiv.append(newInput);
-        newDiv.append(newLabel);
-        overview.append(newDiv); */
-
     }
 }
 
@@ -440,16 +400,6 @@ function createScene(): BABYLON.Scene {
     console.log(DATA);
     console.log(DATA_CATEGORY);
     console.log(DATA_BOUGHT);
-
-    /* let income = 0;
-
-    /* for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
-        console.log("erste schleife");
-        for (let j = 0; j < DATA_CATEGORY.categorys.categorys[i].items.length; j++) {
-            console.log("zweite schleife");
-            income = DATA_CATEGORY.categorys.categorys[i].items[j].price + income;
-        }
-    } */
 
     // console.log("income: " + income);
 
@@ -487,104 +437,83 @@ function createScene(): BABYLON.Scene {
 
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
 
-        //mousewheel
-
-        /* if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOWN) {
-            return;
-        } */
-        if (pointerinfo.type != BABYLON.PointerEventTypes.POINTERDOUBLETAP) {
-            return;
-        }
-
-        //pointerinfo.pickInfo.pickedMesh.visibility = 1;
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
-            console.log(pickResult);
-            //let pickParent = pickResult.pickedMesh._cache.parent;
 
-            if (pickResult.pickedMesh.parent != null) {
+            if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOUBLETAP) {
+                if (scene.pick(scene.pointerX, scene.pointerY) != null) {
+                    var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+                    console.log(pickResult);
+                    //let pickParent = pickResult.pickedMesh._cache.parent;
 
-                console.log(pickResult.pickedMesh.parent.getChildren());
-                for (let i = 0; i < pickResult.pickedMesh.parent.getChildren().length; i++) {
-                    let child = <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
-                    child.isVisible = false;
+                    if (pickResult.pickedMesh.parent != null) {
+
+                        console.log(pickResult.pickedMesh.parent.getChildren());
+                        for (let i = 0; i < pickResult.pickedMesh.parent.getChildren().length; i++) {
+                            let child = <BABYLON.Mesh>pickResult.pickedMesh.parent.getChildren()[i];
+                            child.isVisible = false;
+                        }
+
+                    } else {
+                        if ("Stadtplanung Flurstücke" != pickResult.pickedMesh.id) {
+                            pickResult.pickedMesh.isVisible = false;
+                        }
+                    }
+
                 }
+            } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
+                if (pickResult.pickedMesh) {
 
+                    let elements = objectsHTML.getElementsByTagName("div");
+                    let pickedParentObjectHTML;
+                    let pickedObjectHTML;
+
+                    for (let i = 1; i < elements.length; i++) {
+                        let currObject = elements[i].id
+                        console.log(currObject);
+                        if (pickResult.pickedMesh.parent != null) {
+                            if (currObject == pickResult.pickedMesh.parent.id) {
+                                console.log("Parent steht auf ausgewählter Liste")
+                                pickedParentObjectHTML = currObject;
+                                //objectDeselected(pickedObjectHTML);
+                            } 
+                            
+                        } else{
+                            if (currObject == pickResult.pickedMesh.id) {
+                                console.log("Objekt steht auf ausgewählter Liste")
+                                pickedObjectHTML = currObject;
+                                //objectDeselected(pickedObjectHTML);
+                            }
+                        }
+                    }
+
+
+                    if (pickResult.pickedMesh.parent != null) {
+                        console.log("Picked Parent: ")
+                        console.log(pickResult.pickedMesh.parent.id);
+                        if (pickedParentObjectHTML == null) {
+                            objectSelected(pickResult.pickedMesh.parent.id);
+                        } else {
+                            objectDeselected(pickedParentObjectHTML);
+                        }
+                    } else {
+                        if(pickedObjectHTML == null){
+                           objectSelected(pickResult.pickedMesh.id); 
+                        } else {
+                            objectDeselected(pickedObjectHTML);
+                        }
+                        console.log("Picked Mesh: ")
+                        console.log(pickResult.pickedMesh);
+                        
+                    }
+                }
             } else {
-                if ("Stadtplanung Flurstücke" != pickResult.pickedMesh.id) {
-                    pickResult.pickedMesh.isVisible = false;
-                }
+                return;
             }
-            //scene.pick(scene.pointerX, scene.pointerY).pickedMesh.isVisible = false;
-            //pickResult.pickedMesh._cache.parent.isVisible = false;
 
-            //hideMesh(pickResult.pickedMesh.name);
-
-            scene.meshes.forEach(function (m) {
-                //text1.text = "none";
-            });
-            if (pickResult.pickedMesh) {
-
-                //displayObjects.getElementsByTagName("input")[0].value = pickResult.pickedMesh.name;
-                /* console.log("Picked material: " + pickResult.pickedMesh.material);
-                console.log("Cache Parent: ");
-                console.log(pickParent);
-                console.log("Cache: ");
-                console.log(pickResult.pickedMesh._cache);
-                console.log("Parent: ");
-                console.log(pickResult.pickedMesh.parent);
-                console.log("Picked Mesh: ")
-                console.log(pickResult.pickedMesh); */
-
-                if (pickResult.pickedMesh.parent != null) {
-                    console.log("Picked Parent: ")
-                    console.log(pickResult.pickedMesh.parent);
-                } else {
-                    console.log("Picked Mesh: ")
-                    console.log(pickResult.pickedMesh);
-                }
-
-                /* for(let i = 0; pickParent._children.length > i; i++){
-                    //pickParent._children[i].isVisible = false;
-                } */
-
-                /* saveMaterial = pickResult.pickedMesh.material;
-                pickResult.pickedMesh.material = pickMaterial;
-
-                selectedLayer.addMesh(<BABYLON.Mesh>pickResult.pickedMesh); */
-
-                objectSelected(pickResult.pickedMesh.parent.id);
-
-
-                /* let newDiv = document.createElement("div");
-                newDiv.id = pickResult.pickedMesh.name;
-                //newDiv.setAttribute("price",target.parentElement.price);
-
-                let newInput = document.createElement("input");
-                newInput.type = "checkbox";
-                //newInput.id = currentObject.name + "_01";
-                newInput.id = "_01";
-                newInput.checked = true;
-                //newInput.value = pickResult.pickedMesh.name;
-
-                let newLabel = document.createElement("label");
-                newLabel.innerText = pickResult.pickedMesh.name;
-                newLabel.id = "_02";
-
-                newDiv.append(newInput);
-                newDiv.append(newLabel);
-                objectsHTML.append(newDiv);
-
-                addLabelToMesh(pickResult.pickedMesh); */
-
-                //text1.text = pickResult.pickedMesh.name;
-            }
         }
     });
 
-    //addLabelToMesh(sphere);
-
-    //loads old scene (test)
 
     BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
