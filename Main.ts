@@ -12,7 +12,7 @@ namespace BirklehofServerClient {
     }
 
     function sendMail(_event: Event): void {
-        console.log("sendMail");
+        console.group("sendMail");
         sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
         return;
     }
@@ -22,11 +22,12 @@ namespace BirklehofServerClient {
     }
 
     async function sendTextToServerAddress(_text: string, _address: string): Promise<Response> {
-        console.log("Sending: " + _text);
+        console.log("Client sends: " + _text);
         let reqInfo: RequestInfo = _address;
         let postData: Object = createPostData(_text);
         let response: Response = await fetch(reqInfo, postData);
         console.log(await response.text());
+        console.groupEnd();
         return response;
     }
 

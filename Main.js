@@ -19,7 +19,7 @@ var BirklehofServerClient;
         domSendData.addEventListener("click", sendData);
     }
     function sendMail(_event) {
-        console.log("sendMail");
+        console.group("sendMail");
         sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
         return;
     }
@@ -28,11 +28,12 @@ var BirklehofServerClient;
     }
     function sendTextToServerAddress(_text, _address) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Sending: " + _text);
+            console.log("Client sends: " + _text);
             let reqInfo = _address;
             let postData = createPostData(_text);
             let response = yield fetch(reqInfo, postData);
             console.log(yield response.text());
+            console.groupEnd();
             return response;
         });
     }

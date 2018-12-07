@@ -1,4 +1,4 @@
 <?php
-    print("Hallo\n");
+    print("Server received: ");
     print(file_get_contents('php://input'));
 ?>
