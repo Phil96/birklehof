@@ -14,22 +14,27 @@ namespace BirklehofServerClient {
         domLoadData.addEventListener("click", loadData);
     }
 
-    function sendMail(_event: Event): void {
+    async function sendMail(_event: Event): Promise<Response> {
         console.group("sendMail");
-        sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
+        let response: Response = await sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
+        console.log("Response : " + await response.text());
+        console.groupEnd();
         return;
     }
 
-    function sendData(_event: Event): void {
-        sendTextToServerAddress(domText.value, serverAdress + "storeData.php");
+    async function sendData(_event: Event): Promise<Response> {
+        console.group("sendData");
+        let response: Response = await sendTextToServerAddress(domText.value, serverAdress + "storeData.php");
+        console.log("Response : " + await response.text());
+        console.groupEnd();
         return;
     }
 
-    function loadData(_event: Event): void {
-        let promise: Promise<Response> = sendTextToServerAddress("", serverAdress + "ordered.json");
-        promise.then(function (_response: Response): void {
-            console.log(_response.json);
-        });
+    async function loadData(_event: Event): Promise<Response> {
+        console.group("loadData");
+        let response: Response = await sendTextToServerAddress("", serverAdress + "ordered.json");
+        console.log("Response : " + await response.text());
+        console.groupEnd();
         return;
     }
 
@@ -37,9 +42,7 @@ namespace BirklehofServerClient {
         console.log("Client sends: " + _text);
         let reqInfo: RequestInfo = _address;
         let postData: Object = createPostData(_text);
-        let response: Response = await fetch(reqInfo, postData);
-        console.log(await response.text());
-        console.groupEnd();
+        let response: Promise<Response> = fetch(reqInfo, postData);
         return response;
     }
 

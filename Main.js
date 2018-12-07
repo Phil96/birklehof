@@ -22,29 +22,38 @@ var BirklehofServerClient;
         domLoadData.addEventListener("click", loadData);
     }
     function sendMail(_event) {
-        console.group("sendMail");
-        sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
-        return;
+        return __awaiter(this, void 0, void 0, function* () {
+            console.group("sendMail");
+            let response = yield sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
+            console.log("Response : " + (yield response.text()));
+            console.groupEnd();
+            return;
+        });
     }
     function sendData(_event) {
-        sendTextToServerAddress(domText.value, serverAdress + "storeData.php");
-        return;
+        return __awaiter(this, void 0, void 0, function* () {
+            console.group("sendData");
+            let response = yield sendTextToServerAddress(domText.value, serverAdress + "storeData.php");
+            console.log("Response : " + (yield response.text()));
+            console.groupEnd();
+            return;
+        });
     }
     function loadData(_event) {
-        let promise = sendTextToServerAddress("", serverAdress + "ordered.json");
-        promise.then(function (_response) {
-            console.log(_response.json);
+        return __awaiter(this, void 0, void 0, function* () {
+            console.group("loadData");
+            let response = yield sendTextToServerAddress("", serverAdress + "ordered.json");
+            console.log("Response : " + (yield response.text()));
+            console.groupEnd();
+            return;
         });
-        return;
     }
     function sendTextToServerAddress(_text, _address) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Client sends: " + _text);
             let reqInfo = _address;
             let postData = createPostData(_text);
-            let response = yield fetch(reqInfo, postData);
-            console.log(yield response.text());
-            console.groupEnd();
+            let response = fetch(reqInfo, postData);
             return response;
         });
     }
