@@ -2107,7 +2107,7 @@ let herrgott: Category = {
 
 
 //keine verkaufsobjekte
-let structur: Category = {
+export let structur: Category = {
     "name": "Hof Strukturen",
     "items": [
         {
@@ -2145,7 +2145,7 @@ let structur: Category = {
         },
     ]
 }
-let balken: Category = {
+export let balken: Category = {
     "name": "Balken",
     "items": [
         {
