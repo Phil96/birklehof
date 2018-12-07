@@ -7,9 +7,11 @@ namespace BirklehofServerClient {
     function init(_event: Event): void {
         let domSendMail: HTMLButtonElement = document.getElementsByTagName("button")[0];
         let domSendData: HTMLButtonElement = document.getElementsByTagName("button")[1];
+        let domLoadData: HTMLButtonElement = document.getElementsByTagName("button")[2];
         domText = document.getElementsByTagName("textarea")[0];
         domSendMail.addEventListener("click", sendMail);
         domSendData.addEventListener("click", sendData);
+        domLoadData.addEventListener("click", loadData);
     }
 
     function sendMail(_event: Event): void {
@@ -17,9 +19,17 @@ namespace BirklehofServerClient {
         sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
         return;
     }
-    
+
     function sendData(_event: Event): void {
         sendTextToServerAddress(domText.value, serverAdress + "storeData.php");
+        return;
+    }
+
+    function loadData(_event: Event): void {
+        let promise: Promise<Response> = sendTextToServerAddress("", serverAdress + "ordered.json");
+        promise.then(function (_response: Response): void {
+            console.log(_response.json);
+        });
         return;
     }
 
