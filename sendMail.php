@@ -5,7 +5,7 @@
     header("Access-Control-Allow-Origin: *");
 
     // convert the expected json-string to a php-array
-    $json = file_get_contents('php://input');
+    $json = file_get_contents("php://input");
     $data = json_decode($json);
 
     // create response- and mail-message
