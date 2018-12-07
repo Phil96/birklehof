@@ -14,13 +14,13 @@ var BirklehofServerClient;
     function init(_event) {
         let domSendMail = document.getElementsByTagName("button")[0];
         let domSendData = document.getElementsByTagName("button")[1];
-        domText = document.getElementsByTagName("textarea")[1];
+        domText = document.getElementsByTagName("textarea")[0];
         domSendMail.addEventListener("click", sendMail);
         domSendData.addEventListener("click", sendData);
     }
     function sendMail(_event) {
         console.log("sendMail");
-        sendTextToServerAddress("Hallo", serverAdress + "sendMail.php");
+        sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
         return;
     }
     function sendData(_event) {
@@ -28,10 +28,24 @@ var BirklehofServerClient;
     }
     function sendTextToServerAddress(_text, _address) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Sending: " + _text);
             let reqInfo = _address;
-            let response = yield fetch(reqInfo);
-            console.log(response);
+            let postData = createPostData(_text);
+            let response = yield fetch(reqInfo, postData);
+            console.log(yield response.text());
+            return response;
         });
+    }
+    function createPostData(_text) {
+        let data = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: _text
+        };
+        return data;
     }
 })(BirklehofServerClient || (BirklehofServerClient = {}));
 //# sourceMappingURL=Main.js.map
