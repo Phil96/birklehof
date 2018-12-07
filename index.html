@@ -1,97 +1,16 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        html,
-        body {
-            overflow: auto;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-        }
-
-        #renderCanvas {
-            width: 79%;
-            touch-action: none;
-            float: left;
-        }
-
-        #form{
-            width: 20%;
-            height: 100%;
-            float: left;
-            padding: 1%
-        }
-        #overview{
-            height: 100px;
-            overflow: auto;
-        }
-        
-    </style>
-</head>
-
-<body>
-    <canvas id="renderCanvas"></canvas>
-    <div id="form">
-        <form action="">
-            <div id="display">
-                <h4>Anzeige:</h4>
-                <div>Info: Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden.</div>
-                <button id="showAll" type="button">Alle anzeigen</button>
-                <button id="showBought" type="button">Spenden anzeigen</button>
-            </div>
-            <h4>Übersicht:</h4>
-            <div id="overview">
-
-            </div>
-            <br>
-            <div id="objects">
-                <h4>Ausgewählte Objekte:</h4>
-                <div><span>Summe in €:</span><label id="sum">0</label></div>
-            </div>
-            <br>
-            <div id="personalData">
-                <h4>Persönliche Daten:</h4>
-                Vorname:<br>
-                <input type="text" name="firstname" value="">
-                <br>
-                Nachname:<br>
-                <input type="text" name="lastname" value="">
-                <br>
-                Adresse:<br>
-                <input type="text" name="anschrift" value="">
-                <br>
-                PLZ:<br>
-                <input type="text" name="anschrift" value="">
-                <br>
-                Ort:<br>
-                <input type="text" name="anschrift" value="">
-                <br>
-                E-Mail:<br>
-                <input type="email" name="e-mail" value="">
-                <br>
-            </div>
-            <br>
-            <div id="donation">
-                <h4>Zahlungsinformationen:</h4>
-                IBAN:<br>
-                <input type="text" name="iban" value="">
-                <br>
-                Einzugsermächtigung:<br>
-                <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
-                über die oben genannten Summe.
-                <br>
-                <br>
-                <button id="buy" type="button">Spenden</button>
-            </div>
-            <br>
-        </form>
-    </div>
-    <script src="dist/index.js"></script>
-</body>
-
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>BirklehofSpenden-ServerExchange</title>
+		<meta name="description" content="">
+		<meta name="author" content="Prof. Jirka R. Dell'Oro-Friedl">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="Main.js"></script>
+	</head>
+	<body>
+		<textarea cols="40" rows="20">{"testobject": "Hello World!"}</textarea><br/>
+		<button type="button">Send Mail</button>
+		<button type="button">Send Data</button>
+	</body>
 </html>

@@ -1,29 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "noResolve": false,
-    "noImplicitAny": false,
-    "removeComments": false,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "isolatedModules": false,
-    "lib": [
-      "dom",
-      "es2015.promise",
-      "es5"
-    ],
-    "declaration": true,
-    "outDir": "./"
-  },
-  "files": [
-    "./index.ts"
-  ],
-  "types": [
-    "babylonjs",
-    "babylonjs-loaders"
-  ],
-  "resolveJsonModule": true,
-  "esModuleInterop": true,
-}
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "sourceMap": true,
+        "noImplicitAny": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+} 
