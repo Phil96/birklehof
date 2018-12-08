@@ -150,6 +150,7 @@ function buyObjects(_event: MouseEvent) {
         console.log(cartObjs[k]);
         objectDeselected(cartObjs[k].id);
     }
+    resetField(objectsHTML);
     let newSum = 0;
 
     objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
@@ -491,8 +492,8 @@ function toggle(_event: MouseEvent) {
 function resetField(_field: HTMLElement) {
     let field = _field
     let elements = field.getElementsByTagName("div");
-    for (let i = 0; i < elements.length; i++) {
-        elements[i]
+    for (let i = elements.length-1; i >0; i--) {
+        elements[i].remove();
     }
 }
 

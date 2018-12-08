@@ -2135,11 +2135,7 @@ export let structur: Category = {
             "name": "Hof Struktur",
             "id": "Hof_Struktur_006",
             "price": 0
-        }, {
-            "name": "Hof Struktur",
-            "id": "Hof_Struktur_006_01",
-            "price": 0
-        },
+        }
     ]
 }
 export let balken: Category = {

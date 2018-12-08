@@ -14,6 +14,10 @@
             text-align: left;
         }
 
+        input{
+            margin-top: 5px;
+        }
+
         .category{
             cursor: default;  
         }
@@ -78,31 +82,18 @@
             <br>
             <h4>Persönliche Daten:</h4>
             <div id="personalData">
-                
-                Vorname:<br>
-                <input type="text" name="firstname" value="">
-                <br>
-                Nachname:<br>
-                <input type="text" name="lastname" value="">
-                <br>
-                Adresse:<br>
-                <input type="text" name="anschrift" value="">
-                <br>
-                PLZ:<br>
-                <input type="text" name="anschrift" value="">
-                <br>
-                Ort:<br>
-                <input type="text" name="anschrift" value="">
-                <br>
-                E-Mail:<br>
-                <input type="email" name="e-mail" value="">
-                <br>
+                <input type="text" name="firstname" placeholder="Vorname" value="">
+                <input type="text" name="lastname" placeholder="Nachname" value="">
+                <input type="text" name="anschrift" placeholder="Adresse" value="">
+                <input type="text" name="anschrift" placeholder="Postleitzahl" value="">
+                <input type="text" name="anschrift" placeholder="Ort" value="">
+                <input type="email" name="e-mail" placeholder="E-Mail" value="">
             </div>
             <br>
             <div id="donation">
                 <h4>Zahlungsinformationen:</h4>
                 IBAN:<br>
-                <input type="text" name="iban" value="">
+                <input type="text" name="iban" pattern="DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}" placeholder="" value="">
                 <br>
                 Einzugsermächtigung:<br>
                 <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
