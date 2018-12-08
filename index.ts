@@ -348,6 +348,7 @@ function chooseObjectFromOverview(_event: MouseEvent) {
 
     if (target.className == "category") {
         let elements = target.getElementsByTagName("div");
+        
         console.log("clicked category" + target.id);
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].style.display == "none") {
@@ -412,32 +413,21 @@ function chooseObjectFromOverview(_event: MouseEvent) {
         //objectDeselected(target.parentElement.id);
         //referenceToCheckout.remove();
     }
-    /* if (target.id == "_02") {
-        for (let i = 0; i < scene.meshes.length; i++) {
-            scene.meshes[i].isVisible = false;
+    if(target.id == "_02"){
+        let active = reference.getAttribute("isActive");
+        if(active == "false"){
+            objectSelected(reference.id);
+            active = "true";
+            reference.setAttribute("isActive",active);
+        }   else if (active == "true"){
+            objectDeselected(reference.id);
+            active = "false";
+            reference.setAttribute("isActive",active);
+        } else{
+
         }
-        console.log(target.parentElement.id);
 
-        if (scene.getMeshByID(target.parentElement.id) != null) {
-            let parent = <BABYLON.Mesh>scene.getMeshByID(target.parentElement.id);
-            for (let i = 0; i < parent.getChildren().length; i++) {
-                let child = parent.getChildMeshes()[i];
-                child.isVisible = true;
-            }
-        }
-        scene.getMeshByID(target.parentElement.id).isVisible = true;
-
-        scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true; //untergrund bleibt sichtbar
-
-        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
-
-        myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
-        myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
-        myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
-
-        //scene.getMeshByName(target.id).material.
-    } */
+    }
 }
 
 function toggle(_event: MouseEvent) {

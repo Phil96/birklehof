@@ -528,7 +528,6 @@ let windows: Category = {
     ]
 }
 
-//kein preis
 let shelves: Category = {
     "name": "Regal",
     "items": [
@@ -640,7 +639,6 @@ let shelves: Category = {
     ]
 }
 
-//kein preis
 let cupboards: Category = {
     "name": "Schränke",
     "items": [
@@ -765,7 +763,6 @@ let cupboards: Category = {
     ]
 }
 
-//kein preis
 let walls: Category = {
     "name": "Wände",
     "items": [
@@ -1272,590 +1269,590 @@ let doorsIn: Category = {
     ]
 }
 
-//kein preis
+
 let fronts: Category = {
     "name": "Fassaden",
     "items": [
         {
             "name": "Fassade EG, Front, rechts",
             "id": "Fassade_001",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Seite, rechts",
             "id": "Fassade_002",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Rückseite, links",
             "id": "Fassade_003",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Rückseite, Ecke",
             "id": "Fassade_004",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Rückseite, Mitte",
             "id": "Fassade_005",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Rückseite, rechts",
             "id": "Fassade_006",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Seite, links",
             "id": "Fassade_007",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade EG, Front, links",
             "id": "Fassade_008",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG1, Rückseite, Ecke",
             "id": "Fassade_009",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG1, Rückseite, links",
             "id": "Fassade_010",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG1, Rückseite, rechts",
             "id": "Fassade_011",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG1, Seite, links",
             "id": "Fassade_012",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG1, Front, links",
             "id": "Fassade_013",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG2, Seite, rechts",
             "id": "Fassade_014",
-            "price": 0
+            "price": 300
         }, {
             "name": "Fassade OG2, Seite, links",
             "id": "Fassade_015",
-            "price": 0
+            "price": 300
         },
     ]
 }
 
-//kein preis
+
 let chairs: Category = {
     "name": "Stühle",
     "items": [
         {
             "name": "Stuhl",
             "id": "Stuhl_001",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_002",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_003",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_004",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_005",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_006",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_007",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_008",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_009",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_010",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_011",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_012",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_013",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_014",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_015",
-            "price": 0
+            "price": 10
         }, {
             "name": "Stuhl",
             "id": "Stuhl_016",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_001_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_002_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_003_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_004_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_005_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_006_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_007_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_008_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_009_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_010_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_011_Stuhl",
-            "price": 0
+            "price": 10
         }, {
             "name": "Schreibtischstuhl",
             "id": "ST_012_Stuhl",
-            "price": 0
+            "price": 10
         },
     ]
 }
 
-//kein preis
+
 let armchairs: Category = {
     "name": "Sessel",
     "items": [
         {
             "name": "Sessel",
             "id": "Sessel_000",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_001",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_002",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_003",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_004",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_005",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_006",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_07",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_008",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_009",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_010",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_011",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_012",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_013",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_014",
-            "price": 0
+            "price": 20
         }, {
             "name": "Sessel",
             "id": "Sessel_015",
-            "price": 0
+            "price": 20
         },
     ]
 }
 
-//kein preis
+
 let tables: Category = {
     "name": "Tische",
     "items": [
         {
             "name": "Tisch",
             "id": "Tisch_000",
-            "price": 0
+            "price": 20
         }, {
             "name": "Tisch",
             "id": "Tisch_001",
-            "price": 0
+            "price": 20
         }, {
             "name": "Tisch",
             "id": "Tisch_002",
-            "price": 0
+            "price": 20
         }, {
             "name": "Tisch",
             "id": "Tisch_003",
-            "price": 0
+            "price": 20
         }, {
             "name": "Tisch",
             "id": "Tisch_004",
-            "price": 0
+            "price": 20
         }, {
             "name": "Tisch",
             "id": "Tisch_005",
-            "price": 0
+            "price": 20
         }, {
             "name": "Tisch",
             "id": "Tisch_099",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_001",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_002",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_003",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_004",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_005",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_006",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_007",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_008",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_009",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_010",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_011",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "ST_012",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "Schreibtisch_001",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "Schreibtisch_002",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "Schreibtisch_003",
-            "price": 0
+            "price": 20
         }, {
             "name": "Schreibtisch",
             "id": "Schreibtisch_004",
-            "price": 0
+            "price": 20
         }, {
             "name": "Glastisch",
             "id": "Glastisch_001",
-            "price": 0
+            "price": 20
         }, {
             "name": "Glastisch",
             "id": "Glastisch_002",
-            "price": 0
+            "price": 20
         }, {
             "name": "Glastisch",
             "id": "Glastisch_003",
-            "price": 0
+            "price": 20
         },
     ]
 }
 
-//kein preis
+
 let sinks: Category = {
     "name": "Waschbecken",
     "items": [
         {
             "name": "Waschbecken",
             "id": "Waschbecken_001",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_002",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_003",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_004",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_005",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_006",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_007",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_008",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_009",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_010",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_011",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_012",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_013",
-            "price": 0
+            "price": 50
         }, {
             "name": "Waschbecken",
             "id": "Waschbecken_014",
-            "price": 0
+            "price": 50
         },
     ]
 }
 
-//kein preis
+
 let toilets: Category = {
     "name": "Toiletten",
     "items": [
         {
             "name": "Toilette",
             "id": "wc_000",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_001",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_002",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_003",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_004",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_005",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_006",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_007",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_008",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_009",
-            "price": 0
+            "price": 50
         }, {
             "name": "Toilette",
             "id": "wc_010",
-            "price": 0
+            "price": 50
         },
     ]
 }
 
-//kein preis
+
 let stairs: Category = {
     "name": "Treppen",
     "items": [
         {
             "name": "Treppe EG",
             "id": "Treppe_001",
-            "price": 0
+            "price": 500
         }, {
             "name": "Treppe EG",
             "id": "Treppe_002",
-            "price": 0
+            "price": 500
         }, {
             "name": "Treppe EG",
             "id": "Treppe_007_000",
-            "price": 0
+            "price": 500
         }, {
             "name": "Treppe OG1",
             "id": "Treppe_003",
-            "price": 0
+            "price": 500
         }, {
             "name": "Treppe OG1",
             "id": "Treppe_006_000",
-            "price": 0
+            "price": 500
         }, {
             "name": "Treppe OG2",
             "id": "Treppe_004",
-            "price": 0
+            "price": 500
         }, {
             "name": "Treppe, Tenne",
             "id": "Treppe_005_000",
-            "price": 0
+            "price": 500
         },
     ]
 }
 
-//kein preis
+
 let bathtub: Category = {
     "name": "Badewannen",
     "items": [
         {
             "name": "Badewanne",
             "id": "Badewanne_000",
-            "price": 0
+            "price": 100
         }, {
             "name": "Badewanne",
             "id": "Badewanne_001",
-            "price": 0
+            "price": 100
         }, {
             "name": "Badewanne",
             "id": "Badewanne_002",
-            "price": 0
+            "price": 100
         }, {
             "name": "Badewanne",
             "id": "Badewanne_003",
-            "price": 0
+            "price": 100
         }
     ]
 }
 
-//kein preis
+
 let showers: Category = {
     "name": "Duschen",
     "items": [
         {
             "name": "Dusche",
             "id": "dusche_000",
-            "price": 0
+            "price": 550
         }, {
             "name": "Dusche",
             "id": "dusche_001",
-            "price": 0
+            "price": 50
         }, {
             "name": "Dusche",
             "id": "dusche_002",
-            "price": 0
+            "price": 50
         }, {
             "name": "Dusche",
             "id": "dusche_003",
-            "price": 0
+            "price": 50
         }, {
             "name": "Dusche",
             "id": "dusche_004",
-            "price": 0
+            "price": 50
         }, {
             "name": "Dusche",
             "id": "dusche_005",
-            "price": 0
+            "price": 50
         }, {
             "name": "Dusche",
             "id": "dusche_006",
-            "price": 0
+            "price": 50
         }, {
             "name": "Dusche",
             "id": "dusche_007",
-            "price": 0
+            "price": 50
         },
     ]
 }
@@ -1933,74 +1930,74 @@ let kitchens: Category = {
     ]
 }
 
-//kein preis
+
 let couches: Category = {
     "name": "Sofas",
     "items": [
         {
             "name": "Sofa",
             "id": "Sofa",
-            "price": 0
+            "price": 80
         }, {
             "name": "Sofa",
             "id": "Sofa_000",
-            "price": 0
+            "price": 80
         }, {
             "name": "Sofa",
             "id": "Sofa_ecke",
-            "price": 0
+            "price": 80
         },
     ]
 }
 
-//kein preis
+
 let electronics: Category = {
     "name": "Elektroartikel",
     "items": [
         {
             "name": "Trockner",
             "id": "Trockner_001",
-            "price": 0
+            "price": 100
         }, {
             "name": "Trockner",
             "id": "Trockner_002",
-            "price": 0
+            "price": 100
         }, {
             "name": "Trockner",
             "id": "Trockner_003",
-            "price": 0
+            "price": 100
         }, {
             "name": "Waschmaschine",
             "id": "Waschmaschine_001",
-            "price": 0
+            "price": 100
         }, {
             "name": "Waschmaschine",
             "id": "Waschmaschine_002",
-            "price": 0
+            "price": 100
         }
     ]
 }
 
-//kein preis
+
 let steps: Category = {
     "name": "Stufen",
     "items": [
         {
             "name": "Stufen, aussen",
             "id": "Stufen_000",
-            "price": 0
+            "price": 200
         }, {
             "name": "Stufen, aussen",
             "id": "Stufen_001",
-            "price": 0
+            "price": 200
         }, {
             "name": "Stufen, innen",
             "id": "Stufen_002",
-            "price": 0
+            "price": 200
         }, {
             "name": "Stufen, innen",
             "id": "Stufen_003",
-            "price": 0
+            "price": 200
         },
     ]
 }
@@ -2036,18 +2033,18 @@ let windowShutters: Category = {
     ]
 }
 
-//kein preis
+
 let benches: Category = {
     "name": "Bänke",
     "items": [
         {
             "name": "Sitzbank",
             "id": "Bank_001",
-            "price": 0
+            "price": 50
         }, {
             "name": "Eckbank",
             "id": "Eckbank_001",
-            "price": 0
+            "price": 50
         }
     ]
 }
@@ -2070,17 +2067,17 @@ let ofen: Category = {
     }]
 }
 
-//kein preis
+
 let gutter: Category = {
     "name": "Regenrinne",
     "items": [{
         "name": "Regenrinne",
         "id": "Regenrinne_001",
-        "price": 0
+        "price": 250
     }]
 }
 
-//kein Preis
+
 let tenne: Category = {
     "name": "Tenne",
     "items": [{
@@ -2090,7 +2087,7 @@ let tenne: Category = {
     }, {
         "name": "Tenne",
         "id": "Tenne",
-        "price": 0
+        "price": 2000
     }
     ]
 }
@@ -2152,23 +2149,24 @@ export let balken: Category = {
             "name": "Balken",
             "id": "Balken",
             "price": 0
-        }, 
+        },
     ]
 }
 
-export let categorys={
-    "categorys":[
-    balcony,bathtub,beds,benches,
-    chairs,couches,cupboards,
-    doorsIn,doorsOut,
-    electronics,
-    floor,fronts,
-    gutter,
-    herrgott,
-    kitchens,
-    ofen,
-    roof,
-    shelves,showers,sinks,stairs,steps,
-    tables,tenne,
-    walls,windows,windowShutters]
+export let categorys = {
+    "categorys": [
+        armchairs,
+        balcony, bathtub, beds, benches,
+        chairs, couches, cupboards,
+        doorsIn, doorsOut,
+        electronics,
+        floor, fronts,
+        gutter,
+        herrgott,
+        kitchens,
+        ofen,
+        roof,
+        shelves, showers, sinks, stairs, steps,
+        tables, tenne, toilets,
+        walls, windows, windowShutters]
 }
