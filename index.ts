@@ -38,10 +38,9 @@ actBuy.object_ids = [];
 
 let buys = DATA_BOUGHT.p;
 //buys.purchase = [];
-
-/* let bought: DATA_BOUGHT.purchase;
-bought.name = "Max Mustermann";
-bought.object_ids = ["Fassade_001", "Fassade_002", "Fassade_003"]; */
+let testBuy: DATA_BOUGHT.purchase = new DATA_BOUGHT.purchase;
+testBuy.name = "Max Mustermann";
+testBuy.object_ids = ["Fassade_001", "Fassade_002", "Fassade_003"];
 
 //Materials
 
@@ -51,13 +50,13 @@ pickMaterial.alpha = 0.5;
 
 let saveMaterial;
 
-function iniBought() {
-    for (let i = 0; i < DATA_BOUGHT.p.purchase.length; i++) {
-        let currBuyIDs = DATA_BOUGHT.p.purchase[i].object_ids;
+function userMessage(_message:string){
 
-        for (let j = 0; j < currBuyIDs.length; j++) {
-            let refToHTML = document.getElementById(currBuyIDs[j]);
-            let refToMesh = scene.getMeshByID(currBuyIDs[j]);
+}
+
+function setBought(_objID:string){
+    let refToHTML = document.getElementById(_objID);
+            let refToMesh = scene.getMeshByID(_objID);
 
             let childInput = <HTMLInputElement>refToHTML.childNodes[1];
             let childLabel = <HTMLElement>refToHTML.childNodes[2];
@@ -78,6 +77,37 @@ function iniBought() {
                 refToMesh.isPickable = false;
                 boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
             }
+
+}
+
+function iniBought() {
+    for (let i = 0; i < DATA_BOUGHT.p.purchase.length; i++) {
+        let currBuyIDs = DATA_BOUGHT.p.purchase[i].object_ids;
+
+        for (let j = 0; j < currBuyIDs.length; j++) {
+            setBought(currBuyIDs[j]);
+            /* let refToHTML = document.getElementById(currBuyIDs[j]);
+            let refToMesh = scene.getMeshByID(currBuyIDs[j]);
+
+            let childInput = <HTMLInputElement>refToHTML.childNodes[1];
+            let childLabel = <HTMLElement>refToHTML.childNodes[2];
+            childInput.disabled = true;
+            childLabel.id = "";
+            refToHTML.style.backgroundColor = "red";
+
+            if (refToMesh.getChildren().length > 0) {
+                let refToMeshChilds = refToMesh.getChildren();
+                for (let k = 0; k < refToMeshChilds.length; k++) {
+                    let currChild = <BABYLON.Mesh>refToMeshChilds[k];
+                    currChild.isPickable = false;
+                    boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
+                }
+                refToMesh.isPickable = false;
+                boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
+            } else {
+                refToMesh.isPickable = false;
+                boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
+            } */
 
         }
 
@@ -167,6 +197,7 @@ function buyObjects(_event: MouseEvent) {
     newBuy.name = buyName;
     newBuy.object_ids = [];
     //newBuy.object_ids.pop;
+    DATA_BOUGHT.p.purchase.push(testBuy);
 
     for (let i = 1; i < objectsHTML.getElementsByTagName("div").length; i++) {
         let data = objectsHTML.getElementsByTagName("div")[i].id;
@@ -177,23 +208,44 @@ function buyObjects(_event: MouseEvent) {
     //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
     if (targetID == "buy") {
         for (let j = 0; j < newBuy.object_ids.length; j++) {
-            setBoughtMat(newBuy.object_ids[j]);
-            //setMeshVisibility(actBuy.object_ids[i],false);
+            //setBoughtMat(newBuy.object_ids[j]);
+
+            //check if object allready bought
+            for (let k = 0; k < DATA_BOUGHT.p.purchase.length; k++) {
+                let currPurchase = DATA_BOUGHT.p.purchase[k];
+                for (let l = 0; l < currPurchase.object_ids.length; l++) {
+                    let currID = currPurchase.object_ids[l];
+                    if (newBuy.object_ids[j] == currID) {
+                        console.log(currID + " wurde leider gerade eben gespendet.")
+                        iniBought();
+                        return;
+                    }
+                }
+
+            }
+
+            let cartObjs = objectsHTML.getElementsByTagName("div");
+            let cartObjsLength = cartObjs.length - 1;
+
+            for (let k = cartObjsLength; k > 0; k--) {
+                console.log(cartObjs[k]);
+                objectDeselected(cartObjs[k].id);
+            }
+
+            //setBought(newBuy.object_ids[j]);
+
+            //setMeshVisibility(newBuy.object_ids[j],false);
             console.log(newBuy.object_ids[j]);
         }
 
         console.log(newBuy);
     }
-    buys.purchase.push(newBuy);
+    DATA_BOUGHT.p.purchase.push(newBuy);
+    iniBought();
+    //buys.purchase.push(newBuy);
     console.log(buys);
+    console.log(DATA_BOUGHT.p.purchase);
 
-    let cartObjs = objectsHTML.getElementsByTagName("div");
-    let cartObjsLength = cartObjs.length - 1;
-
-    for (let k = cartObjsLength; k > 0; k--) {
-        console.log(cartObjs[k]);
-        objectDeselected(cartObjs[k].id);
-    }
     resetField(objectsHTML);
     let newSum = 0;
 
