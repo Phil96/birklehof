@@ -2149,7 +2149,7 @@ export let balken: Category = {
     ]
 }
 
-export let categorys = {
+/* export let categorys = {
     "categorys": [
         armchairs,
         balcony, bathtub, beds, benches,
@@ -2165,4 +2165,10 @@ export let categorys = {
         shelves, showers, sinks, stairs, steps,
         tables, tenne, toilets,
         walls, windows, windowShutters]
+} */
+export let categorys = {
+    "categorys": [
+        doorsOut,bathtub,balcony,benches,beds,roof,showers,electronics,fronts,
+        windows,windowShutters,floor,herrgott,doorsIn,ofen,kitchens,shelves,gutter,cupboards,armchairs,couches,steps,chairs,
+        tenne,tables,stairs,toilets,sinks,walls]
 }

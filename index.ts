@@ -374,7 +374,22 @@ function buyObjects(_event: MouseEvent) {
 
         let iban = <HTMLInputElement>document.getElementById("iban");
         if(IBAN.isValidIBAN(iban.value)==false){
+            /* let mod = document.getElementById("err");
+            mod.className = "modal";
+            let modC = document.createElement("div");
+            modC.className = "modal-content";
+            let span = document.createElement("span");
+            span.className = "close";
+            span.innerText = "&times;";
+
+            let con = document.createElement("div");
+            con.innerText = "Bitte geben Sie eine gültige IBAN ein."
+
+            modC.append(span);
+            modC.append(con);
+            mod.append(modC); */
             console.log("keine gültige IBAN")
+            return;
 
         } else {
             console.log("gültige IBAN")
@@ -769,57 +784,7 @@ function toggle(_event: MouseEvent) {
             target.className = "glyphicon glyphicon-eye-open";
         }
     }
-    /* if (targetID == "showAll") {
-        //console.log(scene.meshes);
-        for (let i = 0; i < scene.meshes.length; i++) {
-            let curr = scene.meshes[i];
-            //console.log(i);
-            curr.isVisible = true;
-        }
 
-        let displayIcons = document.getElementsByClassName("glyphicon glyphicon-eye-close");
-        let lengthSave = displayIcons.length - 1;
-        //console.log(displayIcons.length);
-
-        for (let j = lengthSave; j >= 0; j--) {
-            let currIcon = displayIcons[j];
-            currIcon.className = "glyphicon glyphicon-eye-open";
-            //displayIcons[j].className
-        }
-        //scene.render();
-    } */
-    /* if (targetID == "hideAll") {
-        for (let i = 0; i < scene.meshes.length; i++) {
-            let curr = scene.meshes[i];
-            //console.log(i);
-            curr.isVisible = false;
-
-            if ("Stadtplanung Flurstücke" == curr.id) {
-                curr.isVisible = true;
-            }
-        }
-
-
-        let displayIcons = document.getElementsByClassName("glyphicon glyphicon-eye-open");
-        let lengthSave = displayIcons.length - 1;
-        for (let j = lengthSave; j >= 0; j--) {
-            let currIcon = displayIcons[j];
-            currIcon.className = "glyphicon glyphicon-eye-close";
-            //displayIcons[j].className
-        }
-    } */
-    /* if (targetID == "showBought") {
-        showBought();
-    }
-    if (targetID == "hideBought") {
-        hideBought();
-    } */
-    /* if (targetID == "showStructur") {
-        showStructur();
-    }
-    if (targetID == "hideStructur") {
-        hideStructur();
-    } */
     if (target.id == "_00") {
 
         let objID = target.parentElement.id;
