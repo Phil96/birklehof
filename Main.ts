@@ -2,7 +2,7 @@
     window.addEventListener("load", init);
     let domText: HTMLTextAreaElement;
     // let serverAdress: string = "https://webuser.hs-furtwangen.de/~del/birklehof/";
-    let serverAdress: string = "https://webuser.hs-furtwangen.de/~del/birklehof/";
+    let serverAdress: string = "";
 
     export function init(_event: Event): void {
         /* let domSendMail: HTMLButtonElement = document.getElementsByTagName("button")[0];
