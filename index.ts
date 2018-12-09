@@ -105,7 +105,7 @@ function showBought() {
         for (let j = 0; j < currObjects.object_ids.length; j++) {
             let currMeshID = currObjects.object_ids[j];
 
-            setMeshVisibility(currMeshID,true);
+            setMeshVisibility(currMeshID, true);
 
             /* let currMesh = <BABYLON.Mesh>scene.getMeshByID(currMeshID);
             if (currMesh.getChildren().length != 0) {
@@ -128,10 +128,10 @@ function setMeshVisibility(_objID: string, _visibility: boolean) {
     let obj = scene.getMeshByID(_objID);
     let objHTML = document.getElementById(_objID);
 
-    if(_visibility == true){
+    if (_visibility == true) {
         objHTML.getElementsByTagName("span")[0].className = "glyphicon glyphicon-eye-open"
     }
-    if(_visibility == false){
+    if (_visibility == false) {
         objHTML.getElementsByTagName("span")[0].className = "glyphicon glyphicon-eye-close"
     }
 
@@ -686,9 +686,11 @@ function createScene(): BABYLON.Scene {
                     console.log(pickResult);
                     //let pickParent = pickResult.pickedMesh._cache.parent;
 
-                    setMeshVisibility(pickResult.pickedMesh.id, false)
-
-
+                    if (pickResult.pickedMesh.parent != null) {
+                        setMeshVisibility(pickResult.pickedMesh.parent.id, false)
+                    } else {
+                        setMeshVisibility(pickResult.pickedMesh.id, false)
+                    }
 
                 }
             } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
@@ -736,17 +738,17 @@ function createScene(): BABYLON.Scene {
         // do something with the scene
     });
     */
-   BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
-    // do something with the scene
+    BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
+        // do something with the scene
 
-    scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0, 1.0);
-    scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+        scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0, 1.0);
+        scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
-    iniBought();
+        iniBought();
 
-    //scene.getMeshByID("Sessel_000").isPickable = false;
-    //boughtLayer.addMesh(<BABYLON.Mesh>scene.getMeshByID("Sessel_000"), BABYLON.Color3.Red());
-});
+        //scene.getMeshByID("Sessel_000").isPickable = false;
+        //boughtLayer.addMesh(<BABYLON.Mesh>scene.getMeshByID("Sessel_000"), BABYLON.Color3.Red());
+    });
 
     return scene;
 }
