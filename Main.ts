@@ -31,10 +31,16 @@ namespace BirklehofServerClient {
     }
 
     async function loadData(_event: Event): Promise<Response> {
+        loadData2(_event);
+        console.log("Handler done");
+        return;
+    }
+    async function loadData2(_event: Event): Promise<Response> {
         console.group("loadData");
         let response: Response = await sendTextToServerAddress("", serverAdress + "ordered.json");
-        let content: string =  await response.text();
-        console.log(content);
+        console.log("Extracting...");
+        let content: string = await response.text();
+        console.log("Response : " + content);
         domText.value = content;
         console.groupEnd();
         return;

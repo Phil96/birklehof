@@ -41,10 +41,18 @@ var BirklehofServerClient;
     }
     function loadData(_event) {
         return __awaiter(this, void 0, void 0, function* () {
+            loadData2(_event);
+            console.log("Handler done");
+            return;
+        });
+    }
+    function loadData2(_event) {
+        return __awaiter(this, void 0, void 0, function* () {
             console.group("loadData");
             let response = yield sendTextToServerAddress("", serverAdress + "ordered.json");
+            console.log("Extracting...");
             let content = yield response.text();
-            console.log(content);
+            console.log("Response : " + content);
             domText.value = content;
             console.groupEnd();
             return;
