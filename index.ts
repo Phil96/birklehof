@@ -913,7 +913,7 @@ function createScene(): BABYLON.Scene {
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
-    //var cameraArc = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
+    //var camera = new BABYLON.ArcRotateCamera("Camera", 15, 8, -20, new BABYLON.Vector3(0, 0, 0), scene);
 
     // This positions the camera
     //camera.setPosition(new BABYLON.Vector3(0, 0, -10));
@@ -922,13 +922,13 @@ function createScene(): BABYLON.Scene {
     
     //camera.attachControl(canvas, true);
 
-    var camera = new BABYLON.UniversalCamera('univCam', new BABYLON.Vector3(15, 8, -20), scene);
+     var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     camera.keysUp.push(87);    //W
     camera.keysDown.push(83)   //D
     camera.keysLeft.push(65);  //A
-    camera.keysRight.push(68); //S 
+    camera.keysRight.push(68); //S  
 
 
     /* var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
@@ -969,13 +969,33 @@ function createScene(): BABYLON.Scene {
 
 
 
-    /* scene.onKeyboardObservable.add((keyboardInfo:BABYLON.KeyboardInfo) =>{
+     scene.onKeyboardObservable.add((keyboardInfo:BABYLON.KeyboardInfo) =>{
+
+       /*  //Pressing W
+        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,0.1));
+        //Pressing S
+        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,-0.1));
+        //Pressing A
+        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(-0.1,0,0));	
+        //Pressing D 
+        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0.1,0,0));
+        //The rotation is done by creating mouse variable: */
+
         if(keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN){
-            if(keyboardInfo.event.keyCode == 87){
-                console.log(keyboardInfo);
+            /* if(keyboardInfo.event.keyCode == 87){
+                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,0.1));
             }
+            if(keyboardInfo.event.keyCode == 68){
+                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,-0.1));
+            }
+            if(keyboardInfo.event.keyCode == 65){
+                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(-0.1,0,0));
+            }
+            if(keyboardInfo.event.keyCode == 83){
+                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0.1,0,0));
+            } */
         }
-    }) */
+    }) 
 
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
 
