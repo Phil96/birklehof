@@ -41,8 +41,8 @@ let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
 actBuy.object_ids = [];
 
-let serverData = SERVER.loadData();
-console.log(serverData);
+/* let serverData = SERVER.loadData();
+console.log(serverData); */
 
 let buys = DATA_BOUGHT.p;
 //buys.purchase = [];
@@ -352,7 +352,7 @@ function buyObjects(_event: MouseEvent) {
             //setBoughtMat(newBuy.object_ids[j]);
 
             //check if object allready bought
-            for (let k = 0; k < DATA_BOUGHT.p.purchase.length; k++) {
+            /* for (let k = 0; k < DATA_BOUGHT.p.purchase.length; k++) {
                 let currPurchase = DATA_BOUGHT.p.purchase[k];
                 for (let l = 0; l < currPurchase.object_ids.length; l++) {
                     let currID = currPurchase.object_ids[l];
@@ -363,7 +363,7 @@ function buyObjects(_event: MouseEvent) {
                     }
                 }
 
-            }
+            } */
 
             let cartObjs = objectsHTML.getElementsByTagName("div");
             let cartObjsLength = cartObjs.length - 1;
@@ -382,7 +382,7 @@ function buyObjects(_event: MouseEvent) {
         let iban = <HTMLInputElement>document.getElementById("iban");
         if(IBAN.isValidIBAN(iban.value)==false){
             console.log("keine gültige IBAN")
-            return;
+            //return;
 
         } else {
             console.log("gültige IBAN")
