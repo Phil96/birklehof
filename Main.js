@@ -43,7 +43,9 @@ var BirklehofServerClient;
         return __awaiter(this, void 0, void 0, function* () {
             console.group("loadData");
             let response = yield sendTextToServerAddress("", serverAdress + "ordered.json");
-            console.log("Response : " + (yield response.text()));
+            let content = yield response.text();
+            console.log(content);
+            domText.value = content;
             console.groupEnd();
             return;
         });

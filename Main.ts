@@ -33,7 +33,9 @@ namespace BirklehofServerClient {
     async function loadData(_event: Event): Promise<Response> {
         console.group("loadData");
         let response: Response = await sendTextToServerAddress("", serverAdress + "ordered.json");
-        console.log("Response : " + await response.text());
+        let content: string =  await response.text();
+        console.log(content);
+        domText.value = content;
         console.groupEnd();
         return;
     }
