@@ -147,15 +147,15 @@
             <div id="donation">
                 <h4>Zahlungsinformationen:</h4>
                 IBAN:<br>
-                <input type="text" name="iban" id="iban" pattern="DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}"
-                    placeholder="DEXXAAAABBBBCCCCDDDDEE" value="">
+                <input type="text" name="iban" id="iban" pattern="^DE\d{20}$"
+                    placeholder="DEXXAAAABBBBCCCCDDDDEE" value="" required>
                 <br>
                 Einzugsermächtigung:<br>
-                <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
+                <input type="checkbox" name="check" value="check" required> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
                 über die oben genannten Summe.
                 <br>
                 <br>
-                <button id="buy" type="button">Spenden</button>
+                <button id="buy" type="submit">Spenden</button>
             </div>
             <br>
         </form>
