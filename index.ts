@@ -1,3 +1,4 @@
+
 import * as BABYLON from 'babylonjs';
 import { addLabelToMesh } from "./gui";
 import * as GUI from 'babylonjs-gui';
@@ -6,6 +7,7 @@ import * as IBAN from "ibantools";
 import * as DATA from "./database";
 import * as DATA_CATEGORY from "./database_category";
 import * as DATA_BOUGHT from "./database_bought";
+import * as SERVER from "./Main";
 import { Checkbox } from 'babylonjs-gui';
 
 
@@ -30,12 +32,17 @@ var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
 
+engine.loadingUIText = "Das Modell wird geladen, bitte haben Sie etwas Geduld";
+
 let boughtLayer = new BABYLON.HighlightLayer("hl1", scene);
 let selectedLayer = new BABYLON.HighlightLayer("hl2", scene);
 
 let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
 actBuy.object_ids = [];
+
+let serverData = SERVER.loadData();
+console.log(serverData);
 
 let buys = DATA_BOUGHT.p;
 //buys.purchase = [];
@@ -374,20 +381,6 @@ function buyObjects(_event: MouseEvent) {
 
         let iban = <HTMLInputElement>document.getElementById("iban");
         if(IBAN.isValidIBAN(iban.value)==false){
-            /* let mod = document.getElementById("err");
-            mod.className = "modal";
-            let modC = document.createElement("div");
-            modC.className = "modal-content";
-            let span = document.createElement("span");
-            span.className = "close";
-            span.innerText = "&times;";
-
-            let con = document.createElement("div");
-            con.innerText = "Bitte geben Sie eine gültige IBAN ein."
-
-            modC.append(span);
-            modC.append(con);
-            mod.append(modC); */
             console.log("keine gültige IBAN")
             return;
 
@@ -402,6 +395,8 @@ function buyObjects(_event: MouseEvent) {
     //buys.purchase.push(newBuy);
     console.log(buys);
     console.log(DATA_BOUGHT.p.purchase);
+
+    
 
     resetField(objectsHTML);
     let newSum = 0;
@@ -913,15 +908,6 @@ function createScene(): BABYLON.Scene {
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
-    //var camera = new BABYLON.ArcRotateCamera("Camera", 15, 8, -20, new BABYLON.Vector3(0, 0, 0), scene);
-
-    // This positions the camera
-    //camera.setPosition(new BABYLON.Vector3(0, 0, -10));
-
-    // This attaches the camera to the canvas
-    
-    //camera.attachControl(canvas, true);
-
      var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
@@ -929,30 +915,6 @@ function createScene(): BABYLON.Scene {
     camera.keysDown.push(83)   //D
     camera.keysLeft.push(65);  //A
     camera.keysRight.push(68); //S  
-
-
-    /* var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
-    camera.setTarget(BABYLON.Vector3.Zero());
-    camera.attachControl(canvas, true);
-    camera.keysUp.push(87);    //W
-    camera.keysDown.push(83)   //D
-    camera.keysLeft.push(65);  //A
-    camera.keysRight.push(68); //S  */
-    
-
-    //cameraArc.setTarget(camera.position);
-    //scene.activeCamera = cameraArc;
-    //cameraArc.
-
-    /* var arcCamera = new BABYLON.ArcRotateCamera("arcCam",
-                    BABYLON.Tools.ToRadians(45),
-                    BABYLON.Tools.ToRadians(45),
-                    10.0,new BABYLON.Vector3(scene.pointerX,scene.pointerY,0),scene); */
-
-
-    /* var camera1 = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(24, 1, 139), scene);
-    camera1.setTarget(BABYLON.Vector3.Zero());
-    camera1.attachControl(canvas, true); */
 
     var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
@@ -971,29 +933,8 @@ function createScene(): BABYLON.Scene {
 
      scene.onKeyboardObservable.add((keyboardInfo:BABYLON.KeyboardInfo) =>{
 
-       /*  //Pressing W
-        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,0.1));
-        //Pressing S
-        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,-0.1));
-        //Pressing A
-        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(-0.1,0,0));	
-        //Pressing D 
-        camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0.1,0,0));
-        //The rotation is done by creating mouse variable: */
-
         if(keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN){
-            /* if(keyboardInfo.event.keyCode == 87){
-                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,0.1));
-            }
-            if(keyboardInfo.event.keyCode == 68){
-                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0,0,-0.1));
-            }
-            if(keyboardInfo.event.keyCode == 65){
-                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(-0.1,0,0));
-            }
-            if(keyboardInfo.event.keyCode == 83){
-                camera.cameraDirection= camera.cameraDirection.add(new BABYLON.Vector3(0.1,0,0));
-            } */
+
         }
     }) 
 

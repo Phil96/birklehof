@@ -18,7 +18,8 @@
     "outDir": "./"
   },
   "files": [
-    "./index.ts"
+    "./index.ts",
+    "./Main.ts"
   ],
   "types": [
     "babylonjs",
