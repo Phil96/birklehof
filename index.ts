@@ -2,6 +2,7 @@ import * as BABYLON from 'babylonjs';
 import { addLabelToMesh } from "./gui";
 import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
+import * as IBAN from "ibantools";
 import * as DATA from "./database";
 import * as DATA_CATEGORY from "./database_category";
 import * as DATA_BOUGHT from "./database_bought";
@@ -47,6 +48,8 @@ testBuy.object_ids = ["Fassade_001", "Fassade_002", "Fassade_003"];
 let pickMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 pickMaterial.diffuseColor = BABYLON.Color3.Red();
 pickMaterial.alpha = 0.5;
+
+
 
 let saveMaterial;
 
@@ -127,9 +130,9 @@ function setBoughtMat(_meshID: string, ) {
 }
 
 function showBought() {
-    for (let i = 0; i < scene.meshes.length; i++) {
+    /* for (let i = 0; i < scene.meshes.length; i++) {
         scene.meshes[i].isVisible = false;
-    }
+    } */
     for (let i = 0; i < buys.purchase.length; i++) {
         let currObjects = buys.purchase[i];
         for (let j = 0; j < currObjects.object_ids.length; j++) {
@@ -152,6 +155,137 @@ function showBought() {
         }
     }
     scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
+}
+
+function hideBought() {
+    /* for (let i = 0; i < scene.meshes.length; i++) {
+        scene.meshes[i].isVisible = true;
+    } */
+    for (let i = 0; i < buys.purchase.length; i++) {
+        let currObjects = buys.purchase[i];
+        for (let j = 0; j < currObjects.object_ids.length; j++) {
+            let currMeshID = currObjects.object_ids[j];
+
+            setMeshVisibility(currMeshID, false);
+
+            /* let currMesh = <BABYLON.Mesh>scene.getMeshByID(currMeshID);
+            if (currMesh.getChildren().length != 0) {
+                for (let k = 0; k < currMesh.getChildren().length; k++) {
+                    let child = <BABYLON.Mesh>currMesh.getChildren()[k];
+                    child.isVisible = true;
+                }
+            } else {
+                currMesh.isVisible = true;
+            } */
+
+
+
+        }
+    }
+    scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
+}
+
+function showStructur(){
+    let balken = DATA_CATEGORY.balken;
+    let structur = DATA_CATEGORY.structur;
+
+    for(let i = 0; i<balken.items.length;i++){
+        let currB = balken.items[i].id;
+        let obj = scene.getMeshByID(currB);
+
+        if (obj.parent != null) {
+
+            console.log(obj.parent.getChildren());
+            for (let j = 0; j < obj.parent.getChildren().length; j++) {
+                let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
+                child.isVisible = true;
+            }
+    
+        } else if (obj.getChildren().length != 0) {
+            for (let k = 0; k < obj.getChildren().length; k++) {
+                let child = <BABYLON.Mesh>obj.getChildren()[k];
+                child.isVisible = true;
+            }
+        } else {
+            if ("Stadtplanung Flurstücke" != obj.id) {
+                obj.isVisible = true;
+            }
+        }
+    }
+    for(let i = 0; i<structur.items.length;i++){
+        let currB = structur.items[i].id;
+        let obj = scene.getMeshByID(currB);
+
+        if (obj.parent != null) {
+
+            console.log(obj.parent.getChildren());
+            for (let j = 0; j < obj.parent.getChildren().length; j++) {
+                let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
+                child.isVisible = true;
+            }
+    
+        } else if (obj.getChildren().length != 0) {
+            for (let k = 0; k < obj.getChildren().length; k++) {
+                let child = <BABYLON.Mesh>obj.getChildren()[k];
+                child.isVisible = true;
+            }
+        } else {
+            if ("Stadtplanung Flurstücke" != obj.id) {
+                obj.isVisible = true;
+            }
+        }
+    }
+}
+function hideStructur(){
+    let balken = DATA_CATEGORY.balken;
+    let structur = DATA_CATEGORY.structur;
+
+    for(let i = 0; i<balken.items.length;i++){
+        let currB = balken.items[i].id;
+        let obj = scene.getMeshByID(currB);
+
+        if (obj.parent != null) {
+
+            console.log(obj.parent.getChildren());
+            for (let j = 0; j < obj.parent.getChildren().length; j++) {
+                let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
+                child.isVisible = false;
+            }
+    
+        } else if (obj.getChildren().length != 0) {
+            for (let k = 0; k < obj.getChildren().length; k++) {
+                let child = <BABYLON.Mesh>obj.getChildren()[k];
+                child.isVisible = false;
+            }
+        } else {
+            if ("Stadtplanung Flurstücke" != obj.id) {
+                obj.isVisible = false;
+            }
+        }
+    }
+    for(let i = 0; i<structur.items.length;i++){
+        let currB = structur.items[i].id;
+        let obj = scene.getMeshByID(currB);
+
+        if (obj.parent != null) {
+
+            console.log(obj.parent.getChildren());
+            for (let j = 0; j < obj.parent.getChildren().length; j++) {
+                let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
+                child.isVisible = false;
+            }
+    
+        } else if (obj.getChildMeshes().length != 0) {
+            for (let k = 0; k < obj.getChildMeshes().length; k++) {
+                let child = <BABYLON.Mesh>obj.getChildMeshes()[k];
+                child.isVisible = false;
+            }
+        } else {
+            if ("Stadtplanung Flurstücke" != obj.id) {
+                obj.isVisible = false;
+            }
+        }
+    }
 }
 
 function setMeshVisibility(_objID: string, _visibility: boolean) {
@@ -236,6 +370,14 @@ function buyObjects(_event: MouseEvent) {
 
             //setMeshVisibility(newBuy.object_ids[j],false);
             console.log(newBuy.object_ids[j]);
+        }
+
+        let iban = <HTMLInputElement>document.getElementById("iban");
+        if(IBAN.isValidIBAN(iban.value)==false){
+            console.log("keine gültige IBAN")
+
+        } else {
+            console.log("gültige IBAN")
         }
 
         console.log(newBuy);
@@ -420,6 +562,46 @@ function manipulateCheckout(_event: MouseEvent) {
     }
 }
 
+/* function chooseObjectFromDisplay(_event: MouseEvent) {
+    var target = (<HTMLElement>_event.target);
+    //let reference: Element = overview.querySelector("#" + target.parentElement.id);
+    console.log(target.id);
+
+    if (target.id == "_00") {
+
+        let objID = target.parentElement.id;
+        console.log(objID);
+
+        if (target.className == "glyphicon glyphicon-eye-open") {
+            target.className = "glyphicon glyphicon-eye-close";
+
+
+
+            setMeshVisibility(objID, false);
+        } else {
+            target.className = "glyphicon glyphicon-eye-open";
+            setMeshVisibility(objID, true);
+        }
+
+    }
+
+    if (target.id == "_02") {
+        let active = reference.getAttribute("isActive");
+        if (active == "false") {
+            objectSelected(reference.id);
+            active = "true";
+            reference.setAttribute("isActive", active);
+        } else if (active == "true") {
+            objectDeselected(reference.id);
+            active = "false";
+            reference.setAttribute("isActive", active);
+        } else {
+
+        }
+
+    }
+} */
+
 function chooseObjectFromOverview(_event: MouseEvent) {
     var target = (<HTMLElement>_event.target);
     let reference: Element = overview.querySelector("#" + target.parentElement.id);
@@ -521,7 +703,73 @@ function toggle(_event: MouseEvent) {
     if (targetID == "show") {
         setMeshVisibility(meshName, true);
     } */
-    if (targetID == "showAll") {
+    if(targetID == "toggleAll"){
+        let eyeOpen:boolean;
+        if(target.className == "glyphicon glyphicon-eye-open"){
+
+            for (let i = 0; i < scene.meshes.length; i++) {
+                let curr = scene.meshes[i];
+                //console.log(i);
+                curr.isVisible = false;
+    
+                if ("Stadtplanung Flurstücke" == curr.id) {
+                    curr.isVisible = true;
+                }
+            }
+    
+    
+            let displayIcons = document.getElementsByClassName("glyphicon glyphicon-eye-open");
+            let lengthSave = displayIcons.length - 1;
+            for (let j = lengthSave; j >= 0; j--) {
+                let currIcon = displayIcons[j];
+                currIcon.className = "glyphicon glyphicon-eye-close";
+                //displayIcons[j].className
+                /* console.log(displayIcons[j].className);
+                console.log(lengthSave); */
+            }
+            target.className = "glyphicon glyphicon-eye-close";
+        }else {
+
+            for (let i = 0; i < scene.meshes.length; i++) {
+                let curr = scene.meshes[i];
+                //console.log(i);
+                curr.isVisible = true;
+            }
+    
+            let displayIcons = document.getElementsByClassName("glyphicon glyphicon-eye-close");
+            let lengthSave = displayIcons.length - 1;
+            //console.log(displayIcons.length);
+    
+            for (let j = lengthSave; j >= 0; j--) {
+                let currIcon = displayIcons[j];
+                currIcon.className = "glyphicon glyphicon-eye-open";
+                //displayIcons[j].className
+                /* console.log(displayIcons[j].className);
+                console.log(lengthSave); */
+            }
+            target.className = "glyphicon glyphicon-eye-open";
+        }
+        
+    }
+    if(targetID == "toggleBought"){
+        if(target.className == "glyphicon glyphicon-eye-open"){
+            hideBought();
+            target.className = "glyphicon glyphicon-eye-close";
+        } else{
+            showBought();
+            target.className = "glyphicon glyphicon-eye-open";
+        }
+    }
+    if(targetID == "toggleStructur"){
+        if(target.className == "glyphicon glyphicon-eye-open"){
+            hideStructur();
+            target.className = "glyphicon glyphicon-eye-close";
+        } else{
+            showStructur();
+            target.className = "glyphicon glyphicon-eye-open";
+        }
+    }
+    /* if (targetID == "showAll") {
         //console.log(scene.meshes);
         for (let i = 0; i < scene.meshes.length; i++) {
             let curr = scene.meshes[i];
@@ -537,12 +785,10 @@ function toggle(_event: MouseEvent) {
             let currIcon = displayIcons[j];
             currIcon.className = "glyphicon glyphicon-eye-open";
             //displayIcons[j].className
-            /* console.log(displayIcons[j].className);
-            console.log(lengthSave); */
         }
         //scene.render();
-    }
-    if (targetID == "hideAll") {
+    } */
+    /* if (targetID == "hideAll") {
         for (let i = 0; i < scene.meshes.length; i++) {
             let curr = scene.meshes[i];
             //console.log(i);
@@ -560,13 +806,20 @@ function toggle(_event: MouseEvent) {
             let currIcon = displayIcons[j];
             currIcon.className = "glyphicon glyphicon-eye-close";
             //displayIcons[j].className
-            /* console.log(displayIcons[j].className);
-            console.log(lengthSave); */
         }
-    }
-    if (targetID == "showBought") {
+    } */
+    /* if (targetID == "showBought") {
         showBought();
     }
+    if (targetID == "hideBought") {
+        hideBought();
+    } */
+    /* if (targetID == "showStructur") {
+        showStructur();
+    }
+    if (targetID == "hideStructur") {
+        hideStructur();
+    } */
     if (target.id == "_00") {
 
         let objID = target.parentElement.id;
@@ -695,8 +948,16 @@ function createScene(): BABYLON.Scene {
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
+    //var cameraArc = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
 
-    var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
+    // This positions the camera
+    //camera.setPosition(new BABYLON.Vector3(0, 0, -10));
+
+    // This attaches the camera to the canvas
+    
+    //camera.attachControl(canvas, true);
+
+    var camera = new BABYLON.UniversalCamera('univCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     camera.keysUp.push(87);    //W
@@ -704,15 +965,29 @@ function createScene(): BABYLON.Scene {
     camera.keysLeft.push(65);  //A
     camera.keysRight.push(68); //S 
 
+
+    /* var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
+    camera.setTarget(BABYLON.Vector3.Zero());
+    camera.attachControl(canvas, true);
+    camera.keysUp.push(87);    //W
+    camera.keysDown.push(83)   //D
+    camera.keysLeft.push(65);  //A
+    camera.keysRight.push(68); //S  */
+    
+
+    //cameraArc.setTarget(camera.position);
+    //scene.activeCamera = cameraArc;
+    //cameraArc.
+
     /* var arcCamera = new BABYLON.ArcRotateCamera("arcCam",
                     BABYLON.Tools.ToRadians(45),
                     BABYLON.Tools.ToRadians(45),
                     10.0,new BABYLON.Vector3(scene.pointerX,scene.pointerY,0),scene); */
 
 
-    var camera1 = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(24, 1, 139), scene);
+    /* var camera1 = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(24, 1, 139), scene);
     camera1.setTarget(BABYLON.Vector3.Zero());
-    camera1.attachControl(canvas, true);
+    camera1.attachControl(canvas, true); */
 
     var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
@@ -726,6 +1001,16 @@ function createScene(): BABYLON.Scene {
     var light1: BABYLON.HemisphericLight = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
     scene.clearColor = new BABYLON.Color4(0.5, 0.8, 0.5, 1.0);
     scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+
+
+
+    /* scene.onKeyboardObservable.add((keyboardInfo:BABYLON.KeyboardInfo) =>{
+        if(keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN){
+            if(keyboardInfo.event.keyCode == 87){
+                console.log(keyboardInfo);
+            }
+        }
+    }) */
 
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
 
@@ -746,6 +1031,7 @@ function createScene(): BABYLON.Scene {
 
                 }
             } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
+                //camera.rotation = pointerinfo.pickInfo.pickedPoint;
                 if (pickResult.pickedMesh) {
 
                     let obj;
