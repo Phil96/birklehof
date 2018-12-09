@@ -1491,7 +1491,7 @@ let armchairs: Category = {
             "price": 20
         }, {
             "name": "Sessel",
-            "id": "Sessel_07",
+            "id": "Sessel_007",
             "price": 20
         }, {
             "name": "Sessel",

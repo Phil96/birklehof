@@ -30,6 +30,10 @@
         .categoryElement:hover{
             background-color: rgb(122, 195, 255);
         }
+        .disabled{
+            pointer-events: none;
+    background-color: red;
+        }
 
         #renderCanvas {
             width: 79%;
@@ -62,10 +66,15 @@
     <canvas id="renderCanvas"></canvas>
     <div id="form">
         <form action="">
-                <h4>Anzeige:</h4>
+            <h4>Anzeige:</h4>
             <div id="display">
-            
+
                 <div>Info: Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden.</div>
+                <div id="Sessel_000" class="categoryElement" price="20" isactive="false" style="display: none;">
+                    <span class="glyphicon glyphicon-eye-open" id="_00"></span>
+                    <input type="checkbox" id="_01">
+                    <label id="_02">Hofstruktur</label>
+                </div>
                 <button id="showAll" type="button">Alle anzeigen</button>
                 <button id="hideAll" type="button">Alle ausblenden</button>
                 <button id="showBought" type="button">Spenden anzeigen</button>
@@ -93,7 +102,8 @@
             <div id="donation">
                 <h4>Zahlungsinformationen:</h4>
                 IBAN:<br>
-                <input type="text" name="iban" pattern="DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}" placeholder="" value="">
+                <input type="text" name="iban" pattern="DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}"
+                    placeholder="" value="">
                 <br>
                 Einzugsermächtigung:<br>
                 <input type="checkbox" name="check" value="check"> Hiermit erteile ich die Erlaubnis eines Bankeinzugs
