@@ -1,4 +1,4 @@
-export declare let orderedData: any;
+export declare let orderedData: string;
 export declare function init(_event: Event): void;
 export declare function sendMail(_data: string): Promise<Response>;
 export declare function sendData(_data: string): Promise<Response>;

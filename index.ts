@@ -90,33 +90,19 @@ function setBought(_objID: string) {
 }
 
 function iniBought() {
+    SERVER.loadData();
+
+    let bought = SERVER.orderedData;
+    let purchases = JSON.parse(bought);
+    
+    console.log("Gespeicherte Spenden:")
+    console.log(purchases);
+
     for (let i = 0; i < DATA_BOUGHT.p.purchase.length; i++) {
         let currBuyIDs = DATA_BOUGHT.p.purchase[i].object_ids;
 
         for (let j = 0; j < currBuyIDs.length; j++) {
             setBought(currBuyIDs[j]);
-            /* let refToHTML = document.getElementById(currBuyIDs[j]);
-            let refToMesh = scene.getMeshByID(currBuyIDs[j]);
-
-            let childInput = <HTMLInputElement>refToHTML.childNodes[1];
-            let childLabel = <HTMLElement>refToHTML.childNodes[2];
-            childInput.disabled = true;
-            childLabel.id = "";
-            refToHTML.style.backgroundColor = "red";
-
-            if (refToMesh.getChildren().length > 0) {
-                let refToMeshChilds = refToMesh.getChildren();
-                for (let k = 0; k < refToMeshChilds.length; k++) {
-                    let currChild = <BABYLON.Mesh>refToMeshChilds[k];
-                    currChild.isPickable = false;
-                    boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
-                }
-                refToMesh.isPickable = false;
-                boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
-            } else {
-                refToMesh.isPickable = false;
-                boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
-            } */
 
         }
 
@@ -136,9 +122,6 @@ function setBoughtMat(_meshID: string, ) {
 }
 
 function showBought() {
-    /* for (let i = 0; i < scene.meshes.length; i++) {
-        scene.meshes[i].isVisible = false;
-    } */
     for (let i = 0; i < buys.purchase.length; i++) {
         let currObjects = buys.purchase[i];
         for (let j = 0; j < currObjects.object_ids.length; j++) {
@@ -146,46 +129,17 @@ function showBought() {
 
             setMeshVisibility(currMeshID, true);
 
-            /* let currMesh = <BABYLON.Mesh>scene.getMeshByID(currMeshID);
-            if (currMesh.getChildren().length != 0) {
-                for (let k = 0; k < currMesh.getChildren().length; k++) {
-                    let child = <BABYLON.Mesh>currMesh.getChildren()[k];
-                    child.isVisible = true;
-                }
-            } else {
-                currMesh.isVisible = true;
-            } */
-
-
-
         }
     }
     scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
 }
 
 function hideBought() {
-    /* for (let i = 0; i < scene.meshes.length; i++) {
-        scene.meshes[i].isVisible = true;
-    } */
     for (let i = 0; i < buys.purchase.length; i++) {
         let currObjects = buys.purchase[i];
         for (let j = 0; j < currObjects.object_ids.length; j++) {
             let currMeshID = currObjects.object_ids[j];
-
             setMeshVisibility(currMeshID, false);
-
-            /* let currMesh = <BABYLON.Mesh>scene.getMeshByID(currMeshID);
-            if (currMesh.getChildren().length != 0) {
-                for (let k = 0; k < currMesh.getChildren().length; k++) {
-                    let child = <BABYLON.Mesh>currMesh.getChildren()[k];
-                    child.isVisible = true;
-                }
-            } else {
-                currMesh.isVisible = true;
-            } */
-
-
-
         }
     }
     scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
@@ -354,20 +308,6 @@ function buyObjects(_event: MouseEvent) {
             for (let j = 0; j < newBuy.object_ids.length; j++) {
                 //setBoughtMat(newBuy.object_ids[j]);
 
-                //check if object allready bought
-                /* for (let k = 0; k < DATA_BOUGHT.p.purchase.length; k++) {
-                    let currPurchase = DATA_BOUGHT.p.purchase[k];
-                    for (let l = 0; l < currPurchase.object_ids.length; l++) {
-                        let currID = currPurchase.object_ids[l];
-                        if (newBuy.object_ids[j] == currID) {
-                            console.log(currID + " wurde leider gerade eben gespendet.")
-                            iniBought();
-                            return;
-                        }
-                    }
-    
-                } */
-
                 let cartObjs = objectsHTML.getElementsByTagName("div");
                 let cartObjsLength = cartObjs.length - 1;
 
@@ -375,9 +315,6 @@ function buyObjects(_event: MouseEvent) {
                     console.log(cartObjs[k]);
                     objectDeselected(cartObjs[k].id);
                 }
-
-                //setBought(newBuy.object_ids[j]);
-
                 //setMeshVisibility(newBuy.object_ids[j],false);
                 console.log(newBuy.object_ids[j]);
             }
@@ -393,16 +330,20 @@ function buyObjects(_event: MouseEvent) {
             console.log(newBuy);
         }
         DATA_BOUGHT.p.purchase.push(newBuy);
-        SERVER.sendData(JSON.stringify(DATA_BOUGHT.p.purchase));
-        console.log(JSON.stringify(DATA_BOUGHT.p.purchase));
+        let pos = SERVER.orderedData.lastIndexOf("]");
+        //SERVER.orderedData.
+        SERVER.orderedData.charAt[pos] = "";
+        SERVER.sendData(SERVER.orderedData + "," + JSON.stringify(newBuy) + "]");
+        SERVER.loadData();
+        //console.log(JSON.stringify(DATA_BOUGHT.p.purchase));
         console.log(SERVER.loadData());
-        console.log("Serverdate:");
+        console.log("Serverdaten:");
         console.log(SERVER.orderedData);
         //SERVER.sendData(JSON.);
         iniBought();
         //buys.purchase.push(newBuy);
-        console.log(buys);
-        console.log(DATA_BOUGHT.p.purchase);
+        //console.log(buys);
+       // console.log(DATA_BOUGHT.p.purchase);
 
         let mailMessage = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value + "\n" +
             personalData.getElementsByTagName("input")[2].value + "\n" +
@@ -416,25 +357,13 @@ function buyObjects(_event: MouseEvent) {
         console.log(mailMessage);
         SERVER.sendMail(mailMessage);
 
-
-
-
-
         //SERVER.sendMail(mailMessage);
-
 
         resetField(objectsHTML);
         let newSum = 0;
 
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
         //console.log(actBuy);
-
-        /* //var meshName: string = bearbeitung.getElementsByTagName("div");
-        var targetID = (<HTMLElement>_event.target).id;
-        console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
-        if (targetID == "buy") {
-            setMeshVisibility(meshName, false);
-        } */
     } else {
         console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")
         alert("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.");
@@ -928,6 +857,8 @@ function initData(category: string) {
 
 function createScene(): BABYLON.Scene {
 
+    //SERVER.loadData();
+
     console.log(DATA);
     console.log(DATA_CATEGORY);
     console.log(DATA_BOUGHT);
@@ -1034,6 +965,7 @@ function createScene(): BABYLON.Scene {
     */
     BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
+        SERVER.loadData();
 
         scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0, 1.0);
         scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);

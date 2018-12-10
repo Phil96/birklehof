@@ -6,7 +6,7 @@
     // let serverAdress: string = "https://webuser.hs-furtwangen.de/~del/birklehof/";
     let serverAdress: string = "";
 
-    export let orderedData;
+    export let orderedData:string;
 
     export function init(_event: Event): void {
         /* let domSendMail: HTMLButtonElement = document.getElementsByTagName("button")[0];
