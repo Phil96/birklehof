@@ -95,6 +95,7 @@ function iniBought() {
 
     let bought = SERVER.orderedData;
     purchases.purchase = JSON.parse(bought);
+    buys = purchases;
     
     console.log("Gespeicherte Spenden:")
     console.log(purchases);
