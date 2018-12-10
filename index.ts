@@ -39,10 +39,7 @@ let selectedLayer = new BABYLON.HighlightLayer("hl2", scene);
 
 let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
-actBuy.object_ids = [];
-
-
-console.log(SERVER.orderedData); 
+actBuy.object_ids = []; 
 
 //let serverData = await SERVER.loadData().catch((err) => { console.log(err); });
 //let buys = await JSON.parse(await SERVER.loadData());
@@ -397,6 +394,8 @@ function buyObjects(_event: MouseEvent) {
     SERVER.sendData(JSON.stringify(DATA_BOUGHT.p.purchase));
     console.log(JSON.stringify(DATA_BOUGHT.p.purchase));
     console.log(SERVER.loadData());
+    console.log("Serverdate:");
+    console.log(SERVER.orderedData);
     //SERVER.sendData(JSON.);
     iniBought();
     //buys.purchase.push(newBuy);
