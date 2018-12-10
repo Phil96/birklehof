@@ -91,7 +91,7 @@ function setBought(_objID: string) {
 }
 
 function iniBought() {
-    SERVER.loadData();
+    //SERVER.loadData();
 
     let bought = SERVER.orderedData;
     purchases.purchase = JSON.parse(bought);
@@ -329,9 +329,13 @@ function buyObjects(_event: MouseEvent) {
 
             console.log(newBuy);
         }
-        DATA_BOUGHT.p.purchase.push(newBuy);
+        //DATA_BOUGHT.p.purchase.push(newBuy);
         purchases.purchase.push(newBuy);
         console.log(purchases);
+
+        for (let j = 0; j < newBuy.object_ids.length; j++) {
+            setBought(newBuy.object_ids[j]);
+        }
 
         let data = JSON.stringify(purchases.purchase);
         console.log(data);
@@ -349,7 +353,6 @@ function buyObjects(_event: MouseEvent) {
         console.log(SERVER.orderedData); */
 
         //SERVER.sendData(JSON.);
-        iniBought();
         //buys.purchase.push(newBuy);
         //console.log(buys);
        // console.log(DATA_BOUGHT.p.purchase);
@@ -365,6 +368,7 @@ function buyObjects(_event: MouseEvent) {
 
         //console.log(mailMessage);
         SERVER.sendMail(mailMessage);
+        SERVER.loadData();
 
         //SERVER.sendMail(mailMessage);
 
@@ -374,7 +378,8 @@ function buyObjects(_event: MouseEvent) {
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
         //console.log(actBuy);
         alert("Vielen Dank für Ihre Spende!");
-        location.reload();
+        iniBought();
+        //location.reload();
     } else {
         console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")
         alert("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.");

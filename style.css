@@ -1,60 +1,67 @@
-html,
-        body {
-            overflow: auto;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-        }
+html, body {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
 
-        input{
-            margin-top: 5px;
-        }
+input {
+    margin-top: 5px;
+}
 
-        .category{
-            cursor: default;  
-        }
-        .category:hover{
-            background-color: #cccccc;
-        }
-        .categoryElement{
-            padding-left: 15px;
-        }
-        .categoryElement:hover{
-            background-color: rgb(122, 195, 255);
-        }
-        .disabled{
-            pointer-events: none;
+.category {
+    cursor: default;
+}
+
+.category:hover {
+    background-color: #cccccc;
+}
+
+.categoryElement {
+    padding-left: 15px;
+}
+
+.categoryElement:hover {
+    background-color: rgb(122, 195, 255);
+}
+
+.disabled {
+    pointer-events: none;
     background-color: red;
-        }
-        .displayElement:hover{
-            background-color: #cccccc;
-        }
-        .glyphicon{
-            margin: 5px;
-        }
+}
 
-        #renderCanvas {
-            width: 79%;
-            height: 100%;
-            touch-action: none;
-            float: left;
-        }
+.displayElement:hover {
+    background-color: #cccccc;
+}
 
-        #form{
-            width: 20%;
-            height: 100%;
-            float: left;
-            padding: 1%
-        }
-        #overview{
-            width: 100%;
-            height: 100px;
-            overflow: auto;
-        }
-        #personalData{
-            width: 100%;
-            height: 100px;
-            overflow: auto;
-        }
+.glyphicon {
+    margin: 5px;
+}
+
+#renderCanvas {
+    width: 79%;
+    height: 100%;
+    touch-action: none;
+    float: left;
+}
+
+#form {
+    width: 20%;
+    height: 100%;
+    float: left;
+    padding: 1%
+}
+
+#overview {
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+}
+
+#personalData {
+    width: 100%;
+    height: 100px;
+    overflow: auto;
+}
