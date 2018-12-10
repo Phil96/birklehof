@@ -10,12 +10,13 @@
 
     // create response- and mail-message
     print("Server received: \n");
-    $message = "Hallo Tester,\n\n";
+    $message = $json;
+    /* $message = "Hallo Tester,\n\n";
     foreach ($data as $key => $value) {
         $line = $key." : ".$value."\n";
         print($line);
         $message .= $line;
-    }
+    } */
 
     // send mail via the (usually built-in) php smtp-mailer
     mail( "gnannphi@hs-furtwangen.de", "Testmail", $message, "From: gnannphi@hs-furtwangen.de");

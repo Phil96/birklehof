@@ -25,6 +25,8 @@ overview.addEventListener("click", chooseObjectFromOverview);
 
 let personalData = document.getElementById("personalData");
 
+
+
 /* let categorys = document.getElementById("categorys");
 categorys.addEventListener("click", chooseCategory); */
 
@@ -39,10 +41,7 @@ let selectedLayer = new BABYLON.HighlightLayer("hl2", scene);
 
 let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
-actBuy.object_ids = []; 
-
-//let serverData = await SERVER.loadData().catch((err) => { console.log(err); });
-//let buys = await JSON.parse(await SERVER.loadData());
+actBuy.object_ids = [];
 
 let buys = DATA_BOUGHT.p;
 //buys.purchase = [];
@@ -60,33 +59,33 @@ pickMaterial.alpha = 0.5;
 
 let saveMaterial;
 
-function userMessage(_message:string){
+function userMessage(_message: string) {
 
 }
 
-function setBought(_objID:string){
+function setBought(_objID: string) {
     let refToHTML = document.getElementById(_objID);
-            let refToMesh = scene.getMeshByID(_objID);
+    let refToMesh = scene.getMeshByID(_objID);
 
-            let childInput = <HTMLInputElement>refToHTML.childNodes[1];
-            let childLabel = <HTMLElement>refToHTML.childNodes[2];
-            childInput.disabled = true;
-            childLabel.id = "";
-            refToHTML.style.backgroundColor = "red";
+    let childInput = <HTMLInputElement>refToHTML.childNodes[1];
+    let childLabel = <HTMLElement>refToHTML.childNodes[2];
+    childInput.disabled = true;
+    childLabel.id = "";
+    refToHTML.style.backgroundColor = "red";
 
-            if (refToMesh.getChildren().length > 0) {
-                let refToMeshChilds = refToMesh.getChildren();
-                for (let k = 0; k < refToMeshChilds.length; k++) {
-                    let currChild = <BABYLON.Mesh>refToMeshChilds[k];
-                    currChild.isPickable = false;
-                    boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
-                }
-                refToMesh.isPickable = false;
-                boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
-            } else {
-                refToMesh.isPickable = false;
-                boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
-            }
+    if (refToMesh.getChildren().length > 0) {
+        let refToMeshChilds = refToMesh.getChildren();
+        for (let k = 0; k < refToMeshChilds.length; k++) {
+            let currChild = <BABYLON.Mesh>refToMeshChilds[k];
+            currChild.isPickable = false;
+            boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
+        }
+        refToMesh.isPickable = false;
+        boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
+    } else {
+        refToMesh.isPickable = false;
+        boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
+    }
 
 }
 
@@ -192,11 +191,11 @@ function hideBought() {
     scene.getMeshByName("Stadtplanung Flurstücke").isVisible = true
 }
 
-function showStructur(){
+function showStructur() {
     let balken = DATA_CATEGORY.balken;
     let structur = DATA_CATEGORY.structur;
 
-    for(let i = 0; i<balken.items.length;i++){
+    for (let i = 0; i < balken.items.length; i++) {
         let currB = balken.items[i].id;
         let obj = scene.getMeshByID(currB);
 
@@ -207,7 +206,7 @@ function showStructur(){
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = true;
             }
-    
+
         } else if (obj.getChildren().length != 0) {
             for (let k = 0; k < obj.getChildren().length; k++) {
                 let child = <BABYLON.Mesh>obj.getChildren()[k];
@@ -219,7 +218,7 @@ function showStructur(){
             }
         }
     }
-    for(let i = 0; i<structur.items.length;i++){
+    for (let i = 0; i < structur.items.length; i++) {
         let currB = structur.items[i].id;
         let obj = scene.getMeshByID(currB);
 
@@ -230,7 +229,7 @@ function showStructur(){
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = true;
             }
-    
+
         } else if (obj.getChildren().length != 0) {
             for (let k = 0; k < obj.getChildren().length; k++) {
                 let child = <BABYLON.Mesh>obj.getChildren()[k];
@@ -243,11 +242,11 @@ function showStructur(){
         }
     }
 }
-function hideStructur(){
+function hideStructur() {
     let balken = DATA_CATEGORY.balken;
     let structur = DATA_CATEGORY.structur;
 
-    for(let i = 0; i<balken.items.length;i++){
+    for (let i = 0; i < balken.items.length; i++) {
         let currB = balken.items[i].id;
         let obj = scene.getMeshByID(currB);
 
@@ -258,7 +257,7 @@ function hideStructur(){
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = false;
             }
-    
+
         } else if (obj.getChildren().length != 0) {
             for (let k = 0; k < obj.getChildren().length; k++) {
                 let child = <BABYLON.Mesh>obj.getChildren()[k];
@@ -270,7 +269,7 @@ function hideStructur(){
             }
         }
     }
-    for(let i = 0; i<structur.items.length;i++){
+    for (let i = 0; i < structur.items.length; i++) {
         let currB = structur.items[i].id;
         let obj = scene.getMeshByID(currB);
 
@@ -281,7 +280,7 @@ function hideStructur(){
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = false;
             }
-    
+
         } else if (obj.getChildMeshes().length != 0) {
             for (let k = 0; k < obj.getChildMeshes().length; k++) {
                 let child = <BABYLON.Mesh>obj.getChildMeshes()[k];
@@ -337,6 +336,8 @@ function buyObjects(_event: MouseEvent) {
     let buyName = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value;
     newBuy.name = buyName;
     newBuy.object_ids = [];
+
+    let iban = <HTMLInputElement>document.getElementById("iban");
     //newBuy.object_ids.pop;
     //DATA_BOUGHT.p.purchase.push(testBuy);
 
@@ -379,8 +380,7 @@ function buyObjects(_event: MouseEvent) {
             console.log(newBuy.object_ids[j]);
         }
 
-        let iban = <HTMLInputElement>document.getElementById("iban");
-        if(IBAN.isValidIBAN(iban.value)==false){
+        if (IBAN.isValidIBAN(iban.value) == false) {
             console.log("keine gültige IBAN")
             //return;
 
@@ -402,7 +402,27 @@ function buyObjects(_event: MouseEvent) {
     console.log(buys);
     console.log(DATA_BOUGHT.p.purchase);
 
-    
+    let donationAccess = <HTMLInputElement>document.getElementById("donationCheck");
+    let mailMessage = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value + "\n" +
+        personalData.getElementsByTagName("input")[2].value + "\n" +
+        personalData.getElementsByTagName("input")[3].value + ", " + personalData.getElementsByTagName("input")[4].value + "\n" +
+        personalData.getElementsByTagName("input")[5].value + "\n" +
+        "Gespendete Objekte: " + "\n" +
+        newBuy.object_ids + "\n" +
+        "Summe in €: " + objectsHTML.getElementsByTagName("label")[0].innerText + "\n" + "\n" +
+        "IBAN: " + iban.value;
+    if (donationAccess.checked) {
+        console.log(mailMessage);
+        SERVER.sendMail(mailMessage);
+    } else {
+        console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")
+    }
+
+
+
+
+    //SERVER.sendMail(mailMessage);
+
 
     resetField(objectsHTML);
     let newSum = 0;
@@ -719,21 +739,21 @@ function toggle(_event: MouseEvent) {
     if (targetID == "show") {
         setMeshVisibility(meshName, true);
     } */
-    if(targetID == "toggleAll"){
-        let eyeOpen:boolean;
-        if(target.className == "glyphicon glyphicon-eye-open"){
+    if (targetID == "toggleAll") {
+        let eyeOpen: boolean;
+        if (target.className == "glyphicon glyphicon-eye-open") {
 
             for (let i = 0; i < scene.meshes.length; i++) {
                 let curr = scene.meshes[i];
                 //console.log(i);
                 curr.isVisible = false;
-    
+
                 if ("Stadtplanung Flurstücke" == curr.id) {
                     curr.isVisible = true;
                 }
             }
-    
-    
+
+
             let displayIcons = document.getElementsByClassName("glyphicon glyphicon-eye-open");
             let lengthSave = displayIcons.length - 1;
             for (let j = lengthSave; j >= 0; j--) {
@@ -744,18 +764,18 @@ function toggle(_event: MouseEvent) {
                 console.log(lengthSave); */
             }
             target.className = "glyphicon glyphicon-eye-close";
-        }else {
+        } else {
 
             for (let i = 0; i < scene.meshes.length; i++) {
                 let curr = scene.meshes[i];
                 //console.log(i);
                 curr.isVisible = true;
             }
-    
+
             let displayIcons = document.getElementsByClassName("glyphicon glyphicon-eye-close");
             let lengthSave = displayIcons.length - 1;
             //console.log(displayIcons.length);
-    
+
             for (let j = lengthSave; j >= 0; j--) {
                 let currIcon = displayIcons[j];
                 currIcon.className = "glyphicon glyphicon-eye-open";
@@ -765,22 +785,22 @@ function toggle(_event: MouseEvent) {
             }
             target.className = "glyphicon glyphicon-eye-open";
         }
-        
+
     }
-    if(targetID == "toggleBought"){
-        if(target.className == "glyphicon glyphicon-eye-open"){
+    if (targetID == "toggleBought") {
+        if (target.className == "glyphicon glyphicon-eye-open") {
             hideBought();
             target.className = "glyphicon glyphicon-eye-close";
-        } else{
+        } else {
             showBought();
             target.className = "glyphicon glyphicon-eye-open";
         }
     }
-    if(targetID == "toggleStructur"){
-        if(target.className == "glyphicon glyphicon-eye-open"){
+    if (targetID == "toggleStructur") {
+        if (target.className == "glyphicon glyphicon-eye-open") {
             hideStructur();
             target.className = "glyphicon glyphicon-eye-close";
-        } else{
+        } else {
             showStructur();
             target.className = "glyphicon glyphicon-eye-open";
         }
@@ -914,7 +934,7 @@ function createScene(): BABYLON.Scene {
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
-     var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
+    var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     camera.keysUp.push(87);    //W
@@ -937,12 +957,12 @@ function createScene(): BABYLON.Scene {
 
 
 
-     scene.onKeyboardObservable.add((keyboardInfo:BABYLON.KeyboardInfo) =>{
+    scene.onKeyboardObservable.add((keyboardInfo: BABYLON.KeyboardInfo) => {
 
-        if(keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN){
+        if (keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN) {
 
         }
-    }) 
+    })
 
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
 

@@ -22,7 +22,7 @@ module.exports = {
     },
 };
 
-/*  module.exports = {
+/* module.exports = {
     entry: './Main.ts',
     output: {
         filename: 'Main.js',
@@ -42,4 +42,4 @@ module.exports = {
         "cannon": true,
         "earcut": true
     },
-}; */ 
+}; */
