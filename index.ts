@@ -95,7 +95,6 @@ function iniBought() {
 
     let bought = SERVER.orderedData;
     purchases.purchase = JSON.parse(bought);
-    buys = purchases;
     
     console.log("Gespeicherte Spenden:")
     console.log(purchases);
@@ -332,6 +331,7 @@ function buyObjects(_event: MouseEvent) {
         }
         //DATA_BOUGHT.p.purchase.push(newBuy);
         purchases.purchase.push(newBuy);
+        buys = purchases;
         console.log(purchases);
 
         for (let j = 0; j < newBuy.object_ids.length; j++) {
