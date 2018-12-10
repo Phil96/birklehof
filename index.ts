@@ -44,6 +44,7 @@ actBuy.name = "Max Mustermann";
 actBuy.object_ids = [];
 
 let buys = DATA_BOUGHT.p;
+let purchases = new DATA_BOUGHT.purchases;
 //buys.purchase = [];
 let testBuy: DATA_BOUGHT.purchase = new DATA_BOUGHT.purchase;
 testBuy.name = "Max Mustermann";
@@ -93,17 +94,16 @@ function iniBought() {
     SERVER.loadData();
 
     let bought = SERVER.orderedData;
-    let purchases = JSON.parse(bought);
+    purchases.purchase = JSON.parse(bought);
     
     console.log("Gespeicherte Spenden:")
     console.log(purchases);
 
-    for (let i = 0; i < DATA_BOUGHT.p.purchase.length; i++) {
-        let currBuyIDs = DATA_BOUGHT.p.purchase[i].object_ids;
+    for (let i = 0; i < purchases.purchase.length; i++) {
+        let currBuyIDs = purchases.purchase[i].object_ids;
 
         for (let j = 0; j < currBuyIDs.length; j++) {
             setBought(currBuyIDs[j]);
-
         }
 
     }
@@ -330,7 +330,15 @@ function buyObjects(_event: MouseEvent) {
             console.log(newBuy);
         }
         DATA_BOUGHT.p.purchase.push(newBuy);
-        let pos = SERVER.orderedData.lastIndexOf("]");
+        purchases.purchase.push(newBuy);
+        console.log(purchases);
+
+        let data = JSON.stringify(purchases.purchase);
+        console.log(data);
+
+        SERVER.sendData(data);
+
+        /* let pos = SERVER.orderedData.lastIndexOf("]");
         //SERVER.orderedData.
         SERVER.orderedData.charAt[pos] = "";
         SERVER.sendData(SERVER.orderedData + "," + JSON.stringify(newBuy) + "]");
@@ -338,7 +346,8 @@ function buyObjects(_event: MouseEvent) {
         //console.log(JSON.stringify(DATA_BOUGHT.p.purchase));
         console.log(SERVER.loadData());
         console.log("Serverdaten:");
-        console.log(SERVER.orderedData);
+        console.log(SERVER.orderedData); */
+
         //SERVER.sendData(JSON.);
         iniBought();
         //buys.purchase.push(newBuy);
@@ -354,7 +363,7 @@ function buyObjects(_event: MouseEvent) {
             "Summe in €: " + objectsHTML.getElementsByTagName("label")[0].innerText + "\n" + "\n" +
             "IBAN: " + iban.value;
 
-        console.log(mailMessage);
+        //console.log(mailMessage);
         SERVER.sendMail(mailMessage);
 
         //SERVER.sendMail(mailMessage);
@@ -364,6 +373,8 @@ function buyObjects(_event: MouseEvent) {
 
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
         //console.log(actBuy);
+        alert("Vielen Dank für Ihre Spende!");
+        location.reload();
     } else {
         console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")
         alert("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.");
@@ -857,7 +868,7 @@ function initData(category: string) {
 
 function createScene(): BABYLON.Scene {
 
-    //SERVER.loadData();
+    SERVER.loadData();
 
     console.log(DATA);
     console.log(DATA_CATEGORY);
