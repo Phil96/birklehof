@@ -41,8 +41,11 @@ let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
 actBuy.object_ids = [];
 
-/* let serverData = SERVER.loadData();
-console.log(serverData); */
+
+console.log(SERVER.orderedData); 
+
+//let serverData = await SERVER.loadData().catch((err) => { console.log(err); });
+//let buys = await JSON.parse(await SERVER.loadData());
 
 let buys = DATA_BOUGHT.p;
 //buys.purchase = [];
@@ -338,7 +341,7 @@ function buyObjects(_event: MouseEvent) {
     newBuy.name = buyName;
     newBuy.object_ids = [];
     //newBuy.object_ids.pop;
-    DATA_BOUGHT.p.purchase.push(testBuy);
+    //DATA_BOUGHT.p.purchase.push(testBuy);
 
     for (let i = 1; i < objectsHTML.getElementsByTagName("div").length; i++) {
         let data = objectsHTML.getElementsByTagName("div")[i].id;
@@ -391,6 +394,10 @@ function buyObjects(_event: MouseEvent) {
         console.log(newBuy);
     }
     DATA_BOUGHT.p.purchase.push(newBuy);
+    SERVER.sendData(JSON.stringify(DATA_BOUGHT.p.purchase));
+    console.log(JSON.stringify(DATA_BOUGHT.p.purchase));
+    console.log(SERVER.loadData());
+    //SERVER.sendData(JSON.);
     iniBought();
     //buys.purchase.push(newBuy);
     console.log(buys);

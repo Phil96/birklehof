@@ -1,8 +1,12 @@
 
+    import * as INDEX from "./index";
+
     window.addEventListener("load", init);
     let domText: HTMLTextAreaElement;
     // let serverAdress: string = "https://webuser.hs-furtwangen.de/~del/birklehof/";
     let serverAdress: string = "";
+
+    export let orderedData;
 
     export function init(_event: Event): void {
         /* let domSendMail: HTMLButtonElement = document.getElementsByTagName("button")[0];
@@ -14,9 +18,9 @@
         domLoadData.addEventListener("click", loadData); */
     }
 
-    export async function sendMail(_event: Event): Promise<Response> {
+    export async function sendMail(_data:string): Promise<Response> {
         console.group("sendMail");
-        let response: Response = await sendTextToServerAddress(domText.value, serverAdress + "sendMail.php");
+        let response: Response = await sendTextToServerAddress(_data, serverAdress + "sendMail.php");
         console.log("Response : " + await response.text());
         console.groupEnd();
         return;
@@ -35,7 +39,8 @@
         let response: Response = await sendTextToServerAddress("", serverAdress + "ordered.json");
         let content: string =  await response.text();
         console.log(content);
-        domText.value = content;
+        orderedData = content;
+        //domText.value = content;
         console.groupEnd();
         return;
     }
