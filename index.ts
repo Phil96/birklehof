@@ -96,7 +96,7 @@ function iniBought() {
     let bought = SERVER.orderedData;
     purchases.purchase = JSON.parse(bought);
     //buys = purchases;
-    
+
     console.log("Gespeicherte Spenden:")
     console.log(purchases);
 
@@ -287,101 +287,84 @@ function setMeshVisibility(_objID: string, _visibility: boolean) {
 
 function buyObjects(_event: MouseEvent) {
     let donationAccess = <HTMLInputElement>document.getElementById("donationCheck");
-
+    let iban = <HTMLInputElement>document.getElementById("iban");
     if (donationAccess.checked) {
-        let newBuy = new DATA_BOUGHT.purchase;
-        let buyName = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value;
-        newBuy.name = buyName;
-        newBuy.object_ids = [];
+        if (IBAN.isValidIBAN(iban.value) == true) {
 
-        let iban = <HTMLInputElement>document.getElementById("iban");
-        //newBuy.object_ids.pop;
-        //DATA_BOUGHT.p.purchase.push(testBuy);
+            let newBuy = new DATA_BOUGHT.purchase;
+            let buyName = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value;
+            newBuy.name = buyName;
+            newBuy.object_ids = [];
 
-        for (let i = 1; i < objectsHTML.getElementsByTagName("div").length; i++) {
-            let data = objectsHTML.getElementsByTagName("div")[i].id;
-            newBuy.object_ids.push(data);
-        }
-
-        var targetID = (<HTMLElement>_event.target).id;
-        //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
-        if (targetID == "buy") {
-            for (let j = 0; j < newBuy.object_ids.length; j++) {
-                //setBoughtMat(newBuy.object_ids[j]);
-
-                let cartObjs = objectsHTML.getElementsByTagName("div");
-                let cartObjsLength = cartObjs.length - 1;
-
-                for (let k = cartObjsLength; k > 0; k--) {
-                    console.log(cartObjs[k]);
-                    objectDeselected(cartObjs[k].id);
-                }
-                //setMeshVisibility(newBuy.object_ids[j],false);
-                console.log(newBuy.object_ids[j]);
+            for (let i = 1; i < objectsHTML.getElementsByTagName("div").length; i++) {
+                let data = objectsHTML.getElementsByTagName("div")[i].id;
+                newBuy.object_ids.push(data);
             }
 
-            if (IBAN.isValidIBAN(iban.value) == false) {
-                console.log("keine gültige IBAN")
+            var targetID = (<HTMLElement>_event.target).id;
+            //console.log("Eingegebener Name: " + meshName + " ; TargetID: " + targetID);
+            if (targetID == "buy") {
+                for (let j = 0; j < newBuy.object_ids.length; j++) {
+                    //setBoughtMat(newBuy.object_ids[j]);
+
+                    let cartObjs = objectsHTML.getElementsByTagName("div");
+                    let cartObjsLength = cartObjs.length - 1;
+
+                    for (let k = cartObjsLength; k > 0; k--) {
+                        console.log(cartObjs[k]);
+                        objectDeselected(cartObjs[k].id);
+                    }
+                    //setMeshVisibility(newBuy.object_ids[j],false);
+                    console.log(newBuy.object_ids[j]);
+                }
+
+                console.log("gültige IBAN")
                 //return;
 
-            } else {
-                console.log("gültige IBAN")
+
+                console.log(newBuy);
+            }
+            //DATA_BOUGHT.p.purchase.push(newBuy);
+            purchases.purchase.push(newBuy);
+            console.log(purchases);
+
+
+            for (let j = 0; j < newBuy.object_ids.length; j++) {
+                setBought(newBuy.object_ids[j]);
             }
 
-            console.log(newBuy);
+            let data = JSON.stringify(purchases.purchase);
+            console.log(data);
+
+            SERVER.sendData(data);
+
+            let mailMessage = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value + "\n" +
+                personalData.getElementsByTagName("input")[2].value + "\n" +
+                personalData.getElementsByTagName("input")[3].value + ", " + personalData.getElementsByTagName("input")[4].value + "\n" +
+                personalData.getElementsByTagName("input")[5].value + "\n" + "\n" +
+                "Gespendete Objekte: " + "\n" +
+                newBuy.object_ids + "\n" +
+                "Summe in €: " + objectsHTML.getElementsByTagName("label")[0].innerText + "\n" + "\n" +
+                "IBAN: " + iban.value;
+
+            //console.log(mailMessage);
+            SERVER.sendMail(mailMessage);
+            SERVER.loadData();
+
+            //SERVER.sendMail(mailMessage);
+
+            resetField(objectsHTML);
+            let newSum = 0;
+
+            objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
+            //console.log(actBuy);
+            alert("Vielen Dank für Ihre Spende!");
+            //iniBought();
+            //location.reload();
+        } else {
+            alert("Bitte geben Sie eine gültige IBAN ein.");
+            //console.log("gültige IBAN")
         }
-        //DATA_BOUGHT.p.purchase.push(newBuy);
-        purchases.purchase.push(newBuy);
-        console.log(purchases);
-        
-
-        for (let j = 0; j < newBuy.object_ids.length; j++) {
-            setBought(newBuy.object_ids[j]);
-        }
-
-        let data = JSON.stringify(purchases.purchase);
-        console.log(data);
-
-        SERVER.sendData(data);
-
-        /* let pos = SERVER.orderedData.lastIndexOf("]");
-        //SERVER.orderedData.
-        SERVER.orderedData.charAt[pos] = "";
-        SERVER.sendData(SERVER.orderedData + "," + JSON.stringify(newBuy) + "]");
-        SERVER.loadData();
-        //console.log(JSON.stringify(DATA_BOUGHT.p.purchase));
-        console.log(SERVER.loadData());
-        console.log("Serverdaten:");
-        console.log(SERVER.orderedData); */
-
-        //SERVER.sendData(JSON.);
-        //buys.purchase.push(newBuy);
-        //console.log(buys);
-       // console.log(DATA_BOUGHT.p.purchase);
-
-        let mailMessage = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value + "\n" +
-            personalData.getElementsByTagName("input")[2].value + "\n" +
-            personalData.getElementsByTagName("input")[3].value + ", " + personalData.getElementsByTagName("input")[4].value + "\n" +
-            personalData.getElementsByTagName("input")[5].value + "\n" + "\n" +
-            "Gespendete Objekte: " + "\n" +
-            newBuy.object_ids + "\n" +
-            "Summe in €: " + objectsHTML.getElementsByTagName("label")[0].innerText + "\n" + "\n" +
-            "IBAN: " + iban.value;
-
-        //console.log(mailMessage);
-        SERVER.sendMail(mailMessage);
-        SERVER.loadData();
-
-        //SERVER.sendMail(mailMessage);
-
-        resetField(objectsHTML);
-        let newSum = 0;
-
-        objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
-        //console.log(actBuy);
-        alert("Vielen Dank für Ihre Spende!");
-        //iniBought();
-        //location.reload();
     } else {
         console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")
         alert("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.");
@@ -783,13 +766,6 @@ function resetField(_field: HTMLElement) {
     }
 }
 
-/* function chooseCategory(_event: MouseEvent) {
-    resetField(overview);
-    var targetID = (<HTMLElement>_event.target).id;
-    initData(targetID);
-
-} */
-
 function initCategorys() {
     for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
         let currentCat = DATA_CATEGORY.categorys.categorys[i];
@@ -975,12 +951,6 @@ function createScene(): BABYLON.Scene {
     });
 
 
-
-    /*
-    BABYLON.SceneLoader.Append("./assets/", "birklehof.babylon", scene, function (scene) {
-        // do something with the scene
-    });
-    */
     BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
         // do something with the scene
         SERVER.loadData();
