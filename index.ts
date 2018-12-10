@@ -43,7 +43,7 @@ let actBuy = new DATA_BOUGHT.purchase;
 actBuy.name = "Max Mustermann";
 actBuy.object_ids = [];
 
-let buys = DATA_BOUGHT.p;
+//let buys = DATA_BOUGHT.p;
 let purchases = new DATA_BOUGHT.purchases;
 //buys.purchase = [];
 let testBuy: DATA_BOUGHT.purchase = new DATA_BOUGHT.purchase;
@@ -95,6 +95,7 @@ function iniBought() {
 
     let bought = SERVER.orderedData;
     purchases.purchase = JSON.parse(bought);
+    //buys = purchases;
     
     console.log("Gespeicherte Spenden:")
     console.log(purchases);
@@ -122,8 +123,8 @@ function setBoughtMat(_meshID: string, ) {
 }
 
 function showBought() {
-    for (let i = 0; i < buys.purchase.length; i++) {
-        let currObjects = buys.purchase[i];
+    for (let i = 0; i < purchases.purchase.length; i++) {
+        let currObjects = purchases.purchase[i];
         for (let j = 0; j < currObjects.object_ids.length; j++) {
             let currMeshID = currObjects.object_ids[j];
 
@@ -135,8 +136,8 @@ function showBought() {
 }
 
 function hideBought() {
-    for (let i = 0; i < buys.purchase.length; i++) {
-        let currObjects = buys.purchase[i];
+    for (let i = 0; i < purchases.purchase.length; i++) {
+        let currObjects = purchases.purchase[i];
         for (let j = 0; j < currObjects.object_ids.length; j++) {
             let currMeshID = currObjects.object_ids[j];
             setMeshVisibility(currMeshID, false);
@@ -331,8 +332,8 @@ function buyObjects(_event: MouseEvent) {
         }
         //DATA_BOUGHT.p.purchase.push(newBuy);
         purchases.purchase.push(newBuy);
-        buys = purchases;
         console.log(purchases);
+        
 
         for (let j = 0; j < newBuy.object_ids.length; j++) {
             setBought(newBuy.object_ids[j]);
@@ -379,7 +380,7 @@ function buyObjects(_event: MouseEvent) {
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
         //console.log(actBuy);
         alert("Vielen Dank für Ihre Spende!");
-        iniBought();
+        //iniBought();
         //location.reload();
     } else {
         console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")

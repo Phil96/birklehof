@@ -2079,7 +2079,7 @@ let gutter: Category = {
 
 
 let tenne: Category = {
-    "name": "Tenne",
+    "name": "Tenne (gesam)",
     "items": [{
         "name": "Tor zur Tenne",
         "id": "Tor_zur_Tenne",
