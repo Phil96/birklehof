@@ -19,5 +19,5 @@
     } */
 
     // send mail via the (usually built-in) php smtp-mailer
-    mail( "gnannphi@hs-furtwangen.de", "Testmail", $message, "From: gnannphi@hs-furtwangen.de");
+    mail( "gnannphi@hs-furtwangen.de", "Birklehof Spende", $message, "From: gnannphi@hs-furtwangen.de");
 ?>

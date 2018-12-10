@@ -406,7 +406,7 @@ function buyObjects(_event: MouseEvent) {
     let mailMessage = personalData.getElementsByTagName("input")[0].value + " " + personalData.getElementsByTagName("input")[1].value + "\n" +
         personalData.getElementsByTagName("input")[2].value + "\n" +
         personalData.getElementsByTagName("input")[3].value + ", " + personalData.getElementsByTagName("input")[4].value + "\n" +
-        personalData.getElementsByTagName("input")[5].value + "\n" +
+        personalData.getElementsByTagName("input")[5].value + "\n" +"\n"+
         "Gespendete Objekte: " + "\n" +
         newBuy.object_ids + "\n" +
         "Summe in €: " + objectsHTML.getElementsByTagName("label")[0].innerText + "\n" + "\n" +
@@ -416,6 +416,7 @@ function buyObjects(_event: MouseEvent) {
         SERVER.sendMail(mailMessage);
     } else {
         console.log("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.")
+        alert("Wir benötigen Ihre Erlaubnis für einen Bankeinzug.");
     }
 
 
