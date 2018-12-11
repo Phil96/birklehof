@@ -10,6 +10,8 @@ import * as DATA_BOUGHT from "./database_bought";
 import * as SERVER from "./Main";
 import { Checkbox } from 'babylonjs-gui';
 
+let resetPos = document.getElementById("reset");
+resetPos.addEventListener("click",resetCameraPosition);
 
 let buy = document.getElementById("buy");
 buy.addEventListener("click", buyObjects);
@@ -56,11 +58,53 @@ let pickMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 pickMaterial.diffuseColor = BABYLON.Color3.Red();
 pickMaterial.alpha = 0.5;
 
+//testing camera
+var xRot;
+var yRot = 0;
+var zDist = 0;
+// var tCam : Transform;
+var bRot = false;
+var bPan = false;
+var fPan = 1;
+var fZoom = 1;
+var posOld = BABYLON.Vector3.Zero();
 
-
-let saveMaterial;
 
 function userMessage(_message: string) {
+
+}
+
+function resetCameraPosition(_event: MouseEvent){
+    let cam = scene.getCameraByID("freeCam");
+    cam.position = new BABYLON.Vector3(15, 8, -20);
+}
+
+function resetBought(_objID: string) {
+    let refToHTML = document.getElementById(_objID);
+    let refToMesh = scene.getMeshByID(_objID);
+
+    let childInput = <HTMLInputElement>refToHTML.childNodes[1];
+    let childLabel = <HTMLElement>refToHTML.childNodes[2];
+    childInput.disabled = false;
+    childLabel.id = "_02";
+    refToHTML.style.backgroundColor = "";
+
+    if (refToMesh.getChildren().length > 0) {
+        let refToMeshChilds = refToMesh.getChildren();
+        for (let k = 0; k < refToMeshChilds.length; k++) {
+            let currChild = <BABYLON.Mesh>refToMeshChilds[k];
+            currChild.isPickable = true;
+            boughtLayer.removeMesh(currChild);
+            //boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
+        }
+        refToMesh.isPickable = true;
+        boughtLayer.removeMesh(<BABYLON.Mesh>refToMesh);
+        //boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
+    } else {
+        refToMesh.isPickable = true;
+        boughtLayer.removeMesh(<BABYLON.Mesh>refToMesh);
+        //boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
+    }
 
 }
 
@@ -82,8 +126,16 @@ function setBought(_objID: string) {
             boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
         }
         refToMesh.isPickable = false;
+        if(selectedLayer.hasMesh(<BABYLON.Mesh>refToMesh)){
+            selectedLayer.removeMesh(<BABYLON.Mesh>refToMesh);
+        }
+        
         boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
     } else {
+
+        if(selectedLayer.hasMesh(<BABYLON.Mesh>refToMesh)){
+            selectedLayer.removeMesh(<BABYLON.Mesh>refToMesh);
+        }
         refToMesh.isPickable = false;
         boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
     }
@@ -312,6 +364,19 @@ function buyObjects(_event: MouseEvent) {
 
                     for (let k = cartObjsLength; k > 0; k--) {
                         console.log(cartObjs[k]);
+
+                        let orders = JSON.parse(SERVER.orderedData);
+                        for(let l = 0; l < orders.length;l++){
+                            //let orders = JSON.parse(SERVER.orderedData);
+                            let currOrder = orders[l];
+                            for(let m = 0; m<currOrder.object_ids.length;m++){
+                                if(currOrder.object_ids[m] == cartObjs[k].id){
+                                    alert(cartObjs[k].id + " wurde leider gerade eben gespendet. Es gibt bestimmt noch etwas anderes für Sie.");
+                                    return;
+                                }
+                            }
+                        }
+
                         objectDeselected(cartObjs[k].id);
                     }
                     //setMeshVisibility(newBuy.object_ids[j],false);
@@ -373,6 +438,7 @@ function buyObjects(_event: MouseEvent) {
 }
 
 function objectBuy(selectedMesh: string) {
+    SERVER.loadData();
     if (selectedMesh == "Stadtplanung Flurstücke") {
         return;
     }
@@ -405,6 +471,8 @@ function objectBuy(selectedMesh: string) {
 
     objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
 
+    setBought(selectedMesh);
+
 
 }
 
@@ -430,6 +498,8 @@ function objectBuyNot(selectedMesh: string) {
         objectsHTML.getElementsByTagName("label")[0].innerText = newSum.toString();
 
         //referenceToOverview.style.display = "none";
+
+        resetBought(selectedMesh);
     }
 
 }
@@ -863,15 +933,84 @@ function createScene(): BABYLON.Scene {
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
+    //var cameraArc = new BABYLON.ArcRotateCamera("CameraArc", -Math.PI / 1,  Math.PI / 1, 50, new BABYLON.Vector3(15, 8, -20), scene);
+
+ /*    // Parameters: alpha, beta, radius, target position, scene
+    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(15, 8, -20), scene);
+    let inputManager = camera.inputs;
+
+    // This targets the camera to scene origin
+    camera.setTarget(BABYLON.Vector3.Zero());
+
+    // This attaches the camera to the canvas
+    camera.attachControl(canvas, true); */
+
+    /* var ArcRotateCameraKeyboardMoveInput = function () {
+        this._keys = [];
+        this.keysUp = [87];    //W
+        this.keysDown = [83];   //D
+        this.keysLeft = [65];  //A
+        this.keysRight = [68];; //S 
+        this.sensibility = 1;
+    }*/
+
+    //testing del camera
+    //zDist = camera.position.z;
+
+    //scene.activeCamera = cameraArc;
+
+    scene.registerAfterRender(function () {
+        //cameraArc.setTarget(new BABYLON.Vector3(canvas.pointerX,canvas.pointerY,0));
+    });
+
+
+    //camera.inputs.add(new BABYLON.ArcRotateCameraKeyboardMoveInput());
+
+    /*  let cameraInput = new BABYLON.ArcRotateCameraKeyboardMoveInput();
+     cameraInput.keysUp.push(87);    //W
+     cameraInput.keysDown.push(83)   //D
+     cameraInput.keysLeft.push(65);  //A
+     cameraInput.keysRight.push(68); //S 
+     cameraInput.camera = camera; */
+
+
+    //camera.inputs.addKeyboard();
+
+    //camera.inputs.add(cameraInput);
+    // Positions the camera overwriting alpha, beta, radius
+    /* camera.setPosition(new BABYLON.Vector3(15, 8, -20));
+    scene.activeCamera = camera; */
+
+    // This attaches the camera to the canvas
+    //camera.attachControl(scene, true);
+
+
+
     var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     camera.keysUp.push(87);    //W
     camera.keysDown.push(83)   //D
     camera.keysLeft.push(65);  //A
-    camera.keysRight.push(68); //S  
+    camera.keysRight.push(68); //S 
+    camera.speed = 0.15;
 
-    var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    //var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 0.5, scene);
+    /* let box = BABYLON.Mesh.CreateBox('box', 0.5, scene);
+    box.visibility = 0;
+    let sphere = box;
+
+    sphere.position = new BABYLON.Vector3(15, 8, -18);
+
+    camera.wheelPrecision = 20;
+    camera.panningSensibility = 1 / (camera.radius * Math.tan(camera.fov / 2) * 2) * engine.getRenderHeight(true)
+
+    camera.parent = sphere; */
+
+    //camera.setTarget(sphere);
+
+
+    //var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
     var container = new GUI.StackPanel();
     container.width = 0.5;
@@ -886,6 +1025,57 @@ function createScene(): BABYLON.Scene {
 
 
 
+    //Camera testing 2
+ /*    var map = {}; //object for multiple key presses
+    scene.actionManager = new BABYLON.ActionManager(scene);
+
+    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
+        map[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+
+    }));
+
+    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+        map[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+    }));
+
+    //dir = camera.getTarget();
+
+    scene.registerAfterRender(function () {
+        let forward = camera.getFrontPosition(0.01).subtract(camera.position);
+
+        let rayDir = camera.getForwardRay(0.01).direction;
+        //let forward = camera.position.subtract(camera.getFrontPosition(1));
+
+        if ((map["w"] || map["W"])) {
+            //sphere.position.z += 0.2;
+            //sphere.position.addInPlace(sphere.forward);
+            sphere.position.addInPlace(rayDir);
+
+            console.log(camera.getTarget());
+            console.log(camera.getDirection(new BABYLON.Vector3(1, 0, 0)));
+        };
+
+        if ((map["s"] || map["S"])) {
+            //sphere.position.z -= 0.2;
+            //sphere.position.addInPlace(sphere.forward.negate());
+            sphere.position.addInPlace(rayDir.negate());
+        };
+
+        if ((map["a"] || map["A"])) {
+            sphere.rotation.y -= 0.1;
+            //camera.rotation.y -= 0.1;
+        };
+
+        if ((map["d"] || map["D"])) {
+            sphere.rotation.y += 0.1;
+            //sphere.position.x += 0.2;
+           // camera.rotation.y += 0.1;
+        };
+
+    }); */
+
+
+
     scene.onKeyboardObservable.add((keyboardInfo: BABYLON.KeyboardInfo) => {
 
         if (keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN) {
@@ -897,6 +1087,10 @@ function createScene(): BABYLON.Scene {
 
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+
+            if(pickResult != null){
+                //camera.setTarget(pickResult.pickedMesh);
+            }
 
             if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOUBLETAP) {
                 if (scene.pick(scene.pointerX, scene.pointerY) != null) {
@@ -969,5 +1163,7 @@ function createScene(): BABYLON.Scene {
 
 engine.runRenderLoop(() => {
     scene.render();
+
+    //console.log(dir);
     //console.log("Kameraposition: " + scene.getCameraByName("freeCam").position);
 });
