@@ -11,7 +11,7 @@ import * as SERVER from "./Main";
 import { Checkbox } from 'babylonjs-gui';
 
 let resetPos = document.getElementById("reset");
-resetPos.addEventListener("click",resetCameraPosition);
+resetPos.addEventListener("click", resetCameraPosition);
 
 let buy = document.getElementById("buy");
 buy.addEventListener("click", buyObjects);
@@ -36,6 +36,8 @@ var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
 
+let camera;
+
 engine.loadingUIText = "Das Modell wird geladen, bitte haben Sie etwas Geduld";
 
 let boughtLayer = new BABYLON.HighlightLayer("hl1", scene);
@@ -58,6 +60,9 @@ let pickMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 pickMaterial.diffuseColor = BABYLON.Color3.Red();
 pickMaterial.alpha = 0.5;
 
+let startAlpha;
+let startBeta;
+
 //testing camera
 var xRot;
 var yRot = 0;
@@ -74,9 +79,40 @@ function userMessage(_message: string) {
 
 }
 
-function resetCameraPosition(_event: MouseEvent){
-    let cam = scene.getCameraByID("freeCam");
-    cam.position = new BABYLON.Vector3(15, 8, -20);
+function resetCameraPosition(_event: MouseEvent) {
+    let cam = <BABYLON.ArcRotateCamera>scene.getCameraByName("ArcCamera")
+    var targetID = (<HTMLElement>_event.target).id;
+    if (targetID == "reset") {
+        /* cam.alpha = 0;
+        cam.beta = 0;
+        cam.radius = 10; */
+        //cam.setTarget(BABYLON.Vector3.Zero());
+        cam.position = new BABYLON.Vector3(15, 8, -20);
+        /* cam.alpha = 90;
+        cam.beta = 90;
+        cam.radius = 10; */
+
+        scene.activeCamera = null;
+        camera = new BABYLON.ArcRotateCamera("ArcCamera", 0, 0, 10, new BABYLON.Vector3(15, 8, -20), scene);
+        let inputManager = camera.inputs;
+
+        // This targets the camera to scene origin
+        camera.setTarget(BABYLON.Vector3.Zero());
+        scene.activeCamera = camera;
+
+        // This attaches the camera to the canvas
+        camera.attachControl(canvas, true);
+        //console.log(camera.inputs);
+
+        camera._useCtrlForPanning = true;
+        camera.wheelPrecision = 20;
+        camera.checkCollisions = true;
+    }
+
+    //console.log(cam.position);
+    //cam.globalPosition = new BABYLON.Vector3(15, 8, -20);
+    //cam.position = new BABYLON.Vector3(15, 8, -20);
+    //console.log(cam.position);
 }
 
 function resetBought(_objID: string) {
@@ -126,14 +162,14 @@ function setBought(_objID: string) {
             boughtLayer.addMesh(currChild, BABYLON.Color3.Red());
         }
         refToMesh.isPickable = false;
-        if(selectedLayer.hasMesh(<BABYLON.Mesh>refToMesh)){
+        if (selectedLayer.hasMesh(<BABYLON.Mesh>refToMesh)) {
             selectedLayer.removeMesh(<BABYLON.Mesh>refToMesh);
         }
-        
+
         boughtLayer.addMesh(<BABYLON.Mesh>refToMesh, BABYLON.Color3.Red());
     } else {
 
-        if(selectedLayer.hasMesh(<BABYLON.Mesh>refToMesh)){
+        if (selectedLayer.hasMesh(<BABYLON.Mesh>refToMesh)) {
             selectedLayer.removeMesh(<BABYLON.Mesh>refToMesh);
         }
         refToMesh.isPickable = false;
@@ -150,7 +186,7 @@ function iniBought() {
     //buys = purchases;
 
     console.log("Gespeicherte Spenden:")
-    console.log(purchases);
+    //console.log(purchases);
 
     for (let i = 0; i < purchases.purchase.length; i++) {
         let currBuyIDs = purchases.purchase[i].object_ids;
@@ -208,7 +244,7 @@ function showStructur() {
 
         if (obj.parent != null) {
 
-            console.log(obj.parent.getChildren());
+            //console.log(obj.parent.getChildren());
             for (let j = 0; j < obj.parent.getChildren().length; j++) {
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = true;
@@ -231,7 +267,7 @@ function showStructur() {
 
         if (obj.parent != null) {
 
-            console.log(obj.parent.getChildren());
+            //console.log(obj.parent.getChildren());
             for (let j = 0; j < obj.parent.getChildren().length; j++) {
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = true;
@@ -259,7 +295,7 @@ function hideStructur() {
 
         if (obj.parent != null) {
 
-            console.log(obj.parent.getChildren());
+            //console.log(obj.parent.getChildren());
             for (let j = 0; j < obj.parent.getChildren().length; j++) {
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = false;
@@ -282,7 +318,7 @@ function hideStructur() {
 
         if (obj.parent != null) {
 
-            console.log(obj.parent.getChildren());
+            //console.log(obj.parent.getChildren());
             for (let j = 0; j < obj.parent.getChildren().length; j++) {
                 let child = <BABYLON.Mesh>obj.parent.getChildren()[j];
                 child.isVisible = false;
@@ -319,7 +355,7 @@ function setMeshVisibility(_objID: string, _visibility: boolean) {
 
     if (obj.parent != null) {
 
-        console.log(obj.parent.getChildren());
+        //console.log(obj.parent.getChildren());
         for (let i = 0; i < obj.parent.getChildren().length; i++) {
             let child = <BABYLON.Mesh>obj.parent.getChildren()[i];
             child.isVisible = _visibility;
@@ -366,11 +402,11 @@ function buyObjects(_event: MouseEvent) {
                         console.log(cartObjs[k]);
 
                         let orders = JSON.parse(SERVER.orderedData);
-                        for(let l = 0; l < orders.length;l++){
+                        for (let l = 0; l < orders.length; l++) {
                             //let orders = JSON.parse(SERVER.orderedData);
                             let currOrder = orders[l];
-                            for(let m = 0; m<currOrder.object_ids.length;m++){
-                                if(currOrder.object_ids[m] == cartObjs[k].id){
+                            for (let m = 0; m < currOrder.object_ids.length; m++) {
+                                if (currOrder.object_ids[m] == cartObjs[k].id) {
                                     alert(cartObjs[k].id + " wurde leider gerade eben gespendet. Es gibt bestimmt noch etwas anderes für Sie.");
                                     return;
                                 }
@@ -515,13 +551,32 @@ function objectSelected(selectedMesh: string) {
     let referenceToMesh = <BABYLON.Mesh>scene.getMeshByID(selectedMesh);
 
     referenceToOverview.style.backgroundColor = "#0066ff";
+    //document.location += #'referenceToOverview';
 
     //referenceToOverview.style.display = "block";
+
+    for (let i = 0; i < overview.children.length; i++) {
+        let currCat = overview.children[i];
+        for (let j = 1; j < currCat.children.length; j++) {
+            let catChild = <HTMLElement>currCat.children[j];
+            catChild.style.display = "none";
+        }
+
+    }
 
     for (let i = 1; i < referenceToOverview.parentElement.childElementCount; i++) {
         let child: HTMLElement = <HTMLElement>referenceToOverview.parentElement.children[i];
         child.style.display = "block";
     }
+
+    var page = <HTMLElement>document.querySelector('#form');
+    var scrollable = overview;
+    var scrolled = referenceToOverview;
+    /* page.scrollTop = scrollable.offsetTop-page.offsetTop;
+    scrollable.scrollTop = scrolled.offsetTop-scrollable.offsetTop; */
+    page.scrollTop = scrollable.offsetTop - page.offsetTop;
+    scrollable.scrollTop = scrolled.offsetTop - scrollable.offsetTop;
+    page.scrollTop = 0;
 
 
     /* let price = parseInt(referenceToOverview.getAttribute("price"));
@@ -541,7 +596,7 @@ function objectSelected(selectedMesh: string) {
             selectedLayer.addMesh(child, BABYLON.Color3.Green());
         }
     } else {
-        console.log(referenceToMesh);
+        //console.log(referenceToMesh);
         selectedLayer.addMesh(referenceToMesh, BABYLON.Color3.Green());
     }
     //hl.addMesh(referenceToMesh,BABYLON.Color3.Green());
@@ -644,7 +699,7 @@ function manipulateCheckout(_event: MouseEvent) {
 
 function chooseObjectFromOverview(_event: MouseEvent) {
     var target = (<HTMLElement>_event.target);
-    let reference: Element = overview.querySelector("#" + target.parentElement.id);
+    let reference: Element = overview.querySelector("#" + encodeURI(target.parentElement.id));
     let referenceToCheckout: Element = objectsHTML.querySelector("#" + target.parentElement.id);
     console.log(target.id);
 
@@ -681,11 +736,11 @@ function chooseObjectFromOverview(_event: MouseEvent) {
             }
         }
 
-        if (target.className == "glyphicon glyphicon-eye-open") {
-            for (let i = 0; i < childs.length; i++) {
-
-            }
-        }
+        /*         if (target.className == "glyphicon glyphicon-eye-open") {
+                    for (let i = 0; i < childs.length; i++) {
+        
+                    }
+                } */
     }
 
     if (target.id == "_00") {
@@ -923,11 +978,18 @@ function createScene(): BABYLON.Scene {
 
     SERVER.loadData();
 
-    console.log(DATA);
+    //console.log(DATA);
     console.log(DATA_CATEGORY);
-    console.log(DATA_BOUGHT);
+    //console.log(DATA_BOUGHT);
 
     // console.log("income: " + income);
+
+    let control = document.getElementById("control");
+    let controlText = "linke Maustaste:" + "\t" + "\t" + "Objekt auswählen (bei gedrückter Taste: rotieren)" + "\n" +
+        "linke Maustaste + STRG:" + "\t" + "bei gedrückten Tasten: Kamera schwenken" + "\n" +
+        "Mausrad:" + "\t" + "\t" + "\t" + "Zoom" + "\n" +
+        "Info:" + "\t" + "\t"+"\t"+"Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
+    control.title = controlText;
 
     initCategorys();
 
@@ -935,24 +997,162 @@ function createScene(): BABYLON.Scene {
 
     //var cameraArc = new BABYLON.ArcRotateCamera("CameraArc", -Math.PI / 1,  Math.PI / 1, 50, new BABYLON.Vector3(15, 8, -20), scene);
 
- /*    // Parameters: alpha, beta, radius, target position, scene
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(15, 8, -20), scene);
+    // Parameters: alpha, beta, radius, target position, scene
+    camera = new BABYLON.ArcRotateCamera("ArcCamera", 0, 0, 10, new BABYLON.Vector3(15, 8, -20), scene);
     let inputManager = camera.inputs;
 
     // This targets the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
 
     // This attaches the camera to the canvas
-    camera.attachControl(canvas, true); */
+    camera.attachControl(canvas, true);
+    //console.log(camera.inputs);
 
-    /* var ArcRotateCameraKeyboardMoveInput = function () {
+    camera._useCtrlForPanning = true;
+    camera.wheelPrecision = 20;
+
+
+    let pointers = <BABYLON.ArcRotateCameraPointersInput>camera.inputs.attached["pointers"];
+    //BABYLON.ArcRotateCameraKeyboardMoveInput
+
+    /* if (pointers) {
+      pointers.buttons[0] = 2; // respond to only right button. reserve left button for picking etc
+    } */
+
+    // Let's remove default keyboard:
+    /*      camera.inputs.removeByType("ArcRotateCameraKeyboardMoveInput");
+    
+         // Create our own manager:
+         var ArcRotateCameraKeyboardMoveInput = function () {
+                 this._keys = [];
+                 this.keysUp = [38];
+                 this.keysLeft = [37];
+                 this.keysRight = [39];
+                 this.keysDown = [40];
+                 this.sensibility = 0.01;
+         }
+     
+         // Hooking keyboard events
+         ArcRotateCameraKeyboardMoveInput.prototype.attachControl = function (element, noPreventDefault) {
+             var _this = this;
+             if (!this._onKeyDown) {
+                 element.tabIndex = 1;
+                 this._onKeyDown = function (evt) {
+                     if (_this.keysLeft.indexOf(evt.keyCode) !== -1 ||
+                         _this.keysRight.indexOf(evt.keyCode) !== -1) {
+                         var index = _this._keys.indexOf(evt.keyCode);
+                         if (index === -1) {
+                             _this._keys.push(evt.keyCode);
+                         }
+                         if (!noPreventDefault) {
+                             evt.preventDefault();
+                         }
+                     }
+                 };
+                 this._onKeyUp = function (evt) {
+                     if (_this.keysLeft.indexOf(evt.keyCode) !== -1 ||
+                         _this.keysRight.indexOf(evt.keyCode) !== -1) {
+                         var index = _this._keys.indexOf(evt.keyCode);
+                         if (index >= 0) {
+                             _this._keys.splice(index, 1);
+                         }
+                         if (!noPreventDefault) {
+                             evt.preventDefault();
+                         }
+                     }
+                 };
+     
+                 element.addEventListener("keydown", this._onKeyDown, false);
+                 element.addEventListener("keyup", this._onKeyUp, false);
+                 BABYLON.Tools.RegisterTopRootEvents([
+                     { name: "blur", handler: this._onLostFocus }
+                 ]);
+             }
+         };
+     
+         // Unhook
+         ArcRotateCameraKeyboardMoveInput.prototype.detachControl = function (element) {
+             if (this._onKeyDown) {
+                 element.removeEventListener("keydown", this._onKeyDown);
+                 element.removeEventListener("keyup", this._onKeyUp);
+                 BABYLON.Tools.UnregisterTopRootEvents([
+                     { name: "blur", handler: this._onLostFocus }
+                 ]);
+                 this._keys = [];
+                 this._onKeyDown = null;
+                 this._onKeyUp = null;
+             }
+         };
+     
+         // This function is called by the system on every frame
+         ArcRotateCameraKeyboardMoveInput.prototype.checkInputs = function () {
+             if (this._onKeyDown) {
+                 var camera = this.camera;
+                 // Keyboard
+                 for (var index = 0; index < this._keys.length; index++) {
+                     var keyCode = this._keys[index];
+                     if (this.keysLeft.indexOf(keyCode) !== -1) {
+                         camera.cameraRotation.y += this.sensibility;
+                     }
+                     else if (this.keysRight.indexOf(keyCode) !== -1) {
+                         camera.cameraRotation.y -= this.sensibility;
+                     }
+                 }
+             }
+         };
+         ArcRotateCameraKeyboardMoveInput.prototype.getTypeName = function () {
+             return "ArcRotateCameraKeyboardMoveInput";
+         };
+         ArcRotateCameraKeyboardMoveInput.prototype._onLostFocus = function (e) {
+             this._keys = [];
+         };
+         ArcRotateCameraKeyboardMoveInput.prototype.getSimpleName = function () {
+             return "keyboardMove";
+         };
+     
+         // Connect to camera:
+         camera.inputs.add(new ArcRotateCameraKeyboardMoveInput()); */
+
+    //camera._panningMouseButton = 0;
+
+
+    //camera.inputs.attached.
+
+    //camera.inputs.removeByType("ArcRotateCameraPointersInput");
+    /*     let ArcRotateCameraPointersInput = function () {
+            this.buttons[0] = [2];
+            this.buttons[1] = [0];
+            this.buttons[2] = [1];
+            this.angularSensibilityX = 1000;
+            this.angularSensibilityY = 1000;
+    
+        }
+    
+        ArcRotateCameraPointersInput.prototype.getTypeName = function () {
+            return "ArcRotateCameraPointersInput";
+        };
+        ArcRotateCameraPointersInput.prototype.getSimpleName = function () {
+            return "PointersInput";
+        };
+    
+    
+        camera.inputs.add(new ArcRotateCameraPointersInput()); */
+
+    ////console.log(camera.inputs);
+
+    //let ARc
+
+    //camera.inputs.
+
+    /*  var ArcRotateCameraKeyboardMoveInput = function () {
         this._keys = [];
         this.keysUp = [87];    //W
         this.keysDown = [83];   //D
         this.keysLeft = [65];  //A
         this.keysRight = [68];; //S 
         this.sensibility = 1;
-    }*/
+    } */
+
 
     //testing del camera
     //zDist = camera.position.z;
@@ -986,14 +1186,14 @@ function createScene(): BABYLON.Scene {
 
 
 
-    var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
+    /* var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     camera.keysUp.push(87);    //W
     camera.keysDown.push(83)   //D
     camera.keysLeft.push(65);  //A
     camera.keysRight.push(68); //S 
-    camera.speed = 0.15;
+    camera.speed = 0.15; */
 
     //var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 0.5, scene);
     /* let box = BABYLON.Mesh.CreateBox('box', 0.5, scene);
@@ -1002,7 +1202,6 @@ function createScene(): BABYLON.Scene {
 
     sphere.position = new BABYLON.Vector3(15, 8, -18);
 
-    camera.wheelPrecision = 20;
     camera.panningSensibility = 1 / (camera.radius * Math.tan(camera.fov / 2) * 2) * engine.getRenderHeight(true)
 
     camera.parent = sphere; */
@@ -1023,56 +1222,62 @@ function createScene(): BABYLON.Scene {
     scene.clearColor = new BABYLON.Color4(0.5, 0.8, 0.5, 1.0);
     scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
 
+    scene.collisionsEnabled = true;
+
+    //Then apply collisions and gravity to the active camera
+    camera.checkCollisions = true;
+    //camera.applyGravity = true;
+
 
 
     //Camera testing 2
- /*    var map = {}; //object for multiple key presses
-    scene.actionManager = new BABYLON.ActionManager(scene);
-
-    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
-        map[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-
-    }));
-
-    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
-        map[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-    }));
-
-    //dir = camera.getTarget();
-
-    scene.registerAfterRender(function () {
-        let forward = camera.getFrontPosition(0.01).subtract(camera.position);
-
-        let rayDir = camera.getForwardRay(0.01).direction;
-        //let forward = camera.position.subtract(camera.getFrontPosition(1));
-
-        if ((map["w"] || map["W"])) {
-            //sphere.position.z += 0.2;
-            //sphere.position.addInPlace(sphere.forward);
-            sphere.position.addInPlace(rayDir);
-
-            console.log(camera.getTarget());
-            console.log(camera.getDirection(new BABYLON.Vector3(1, 0, 0)));
-        };
-
-        if ((map["s"] || map["S"])) {
-            //sphere.position.z -= 0.2;
-            //sphere.position.addInPlace(sphere.forward.negate());
-            sphere.position.addInPlace(rayDir.negate());
-        };
-
-        if ((map["a"] || map["A"])) {
-            sphere.rotation.y -= 0.1;
-            //camera.rotation.y -= 0.1;
-        };
-
-        if ((map["d"] || map["D"])) {
-            sphere.rotation.y += 0.1;
-            //sphere.position.x += 0.2;
-           // camera.rotation.y += 0.1;
-        };
-
-    }); */
+    /*    var map = {}; //object for multiple key presses
+       scene.actionManager = new BABYLON.ActionManager(scene);
+   
+       scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
+           map[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+   
+       }));
+   
+       scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+           map[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+       }));
+   
+       //dir = camera.getTarget();
+   
+       scene.registerAfterRender(function () {
+           let forward = camera.getFrontPosition(0.01).subtract(camera.position);
+   
+           let rayDir = camera.getForwardRay(0.01).direction;
+           //let forward = camera.position.subtract(camera.getFrontPosition(1));
+   
+           if ((map["w"] || map["W"])) {
+               //sphere.position.z += 0.2;
+               //sphere.position.addInPlace(sphere.forward);
+               sphere.position.addInPlace(rayDir);
+   
+               console.log(camera.getTarget());
+               console.log(camera.getDirection(new BABYLON.Vector3(1, 0, 0)));
+           };
+   
+           if ((map["s"] || map["S"])) {
+               //sphere.position.z -= 0.2;
+               //sphere.position.addInPlace(sphere.forward.negate());
+               sphere.position.addInPlace(rayDir.negate());
+           };
+   
+           if ((map["a"] || map["A"])) {
+               sphere.rotation.y -= 0.1;
+               //camera.rotation.y -= 0.1;
+           };
+   
+           if ((map["d"] || map["D"])) {
+               sphere.rotation.y += 0.1;
+               //sphere.position.x += 0.2;
+              // camera.rotation.y += 0.1;
+           };
+   
+       }); */
 
 
 
@@ -1083,12 +1288,60 @@ function createScene(): BABYLON.Scene {
         }
     })
 
+    /*   scene.onPrePointerObservable.add((prePointerInfo:BABYLON.PointerInfoPre) =>{
+  
+          var event = prePointerInfo
+          var delta = 0;
+          if (event.wheelDelta) {
+              delta = event.wheelDelta;
+          }
+          else if (event.detail) {
+              delta = -event.detail;
+          }
+          if (delta) {
+              console.log(delta);
+              var dir = scene.activeCamera.getDirection(BABYLON.Axis.Z);
+              console.log("dir: ", dir);
+              //scene.activeCamera.position.z += delta/10;
+              if (delta>0)
+                  scene.activeCamera.position.addInPlace(dir);
+              else
+                  scene.activeCamera.position.subtractInPlace(dir);
+  
+          }
+      }, BABYLON.PointerEventTypes.POINTERWHEEL, false);
+      })
+  
+      scene.onPrePointerObservable.add( function(pointerInfo, eventState) {
+          // console.log(pointerInfo);
+          var event = pointerInfo.event;
+          var delta = 0;
+          if (event.wheelDelta) {
+              delta = event.wheelDelta;
+          }
+          else if (event.detail) {
+              delta = -event.detail;
+          }
+          if (delta) {
+              console.log(delta);
+              var dir = scene.activeCamera.getDirection(BABYLON.Axis.Z);
+              console.log("dir: ", dir);
+              //scene.activeCamera.position.z += delta/10;
+              if (delta>0)
+                  scene.activeCamera.position.addInPlace(dir);
+              else
+                  scene.activeCamera.position.subtractInPlace(dir);
+  
+          }
+      }, BABYLON.PointerEventTypes.POINTERWHEEL, false); */
+
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
+
 
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
 
-            if(pickResult != null){
+            if (pickResult != null) {
                 //camera.setTarget(pickResult.pickedMesh);
             }
 
@@ -1105,8 +1358,9 @@ function createScene(): BABYLON.Scene {
                     }
 
                 }
-            } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
+            } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERPICK) { // vorher pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN
                 //camera.rotation = pointerinfo.pickInfo.pickedPoint;
+
                 if (pickResult.pickedMesh) {
 
                     let obj;
@@ -1137,6 +1391,15 @@ function createScene(): BABYLON.Scene {
 
                     }
                 }
+            } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
+                //if(pointerinfo.event.button == 2){
+                //BABYLON.PointerEventTypes.
+                //camera.target = pickResult.pickedPoint;
+                //camera.panningOriginTarget= pickResult.pickedPoint;
+                console.log(pointerinfo);
+
+                //}
+
             } else {
                 return;
             }
@@ -1149,8 +1412,11 @@ function createScene(): BABYLON.Scene {
         // do something with the scene
         SERVER.loadData();
 
+
         scene.clearColor = new BABYLON.Color4(0.5, 0.7, 1.0, 1.0);
         scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+        let ground = scene.getMeshByID("Stadtplanung Flurstücke");
+        ground.checkCollisions = true;
 
         iniBought();
 

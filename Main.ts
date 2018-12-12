@@ -21,16 +21,16 @@
     export async function sendMail(_data:string): Promise<Response> {
         console.group("sendMail");
         let response: Response = await sendTextToServerAddress(_data, serverAdress + "sendMail.php");
-        console.log("Response : " + await response.text());
-        console.groupEnd();
+        //console.log("Response : " + await response.text());
+        //console.groupEnd();
         return;
     }
 
     export async function sendData(_data:string): Promise<Response> {
         console.group("sendData");
         let response: Response = await sendTextToServerAddress(_data, serverAdress + "storeData.php");
-        console.log("Response : " + await response.text());
-        console.groupEnd();
+        //console.log("Response : " + await response.text());
+        //console.groupEnd();
         return;
     }
 
@@ -38,15 +38,15 @@
         console.group("loadData");
         let response: Response = await sendTextToServerAddress("", serverAdress + "ordered.json");
         let content: string =  await response.text();
-        console.log(content);
+        //console.log(content);
         orderedData = content;
         //domText.value = content;
-        console.groupEnd();
+        //console.groupEnd();
         return;
     }
 
     export async function sendTextToServerAddress(_text: string, _address: string): Promise<Response> {
-        console.log("Client sends: " + _text);
+        //console.log("Client sends: " + _text);
         let reqInfo: RequestInfo = _address;
         let postData: Object = createPostData(_text);
         let response: Promise<Response> = fetch(reqInfo, postData);

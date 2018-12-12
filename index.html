@@ -10,11 +10,15 @@
     </style>
 </head>
 
-<body>
+<body oncontextmenu="return false">
     <div id="err"></div>
     <canvas id="renderCanvas"></canvas>
     <div id="form">
         <form action="">
+            <div class="controlPanel">
+                <h4><a href="#" id="control" data-toggle="tooltip" title="">Bedienungsanleitung</a></h4>
+            </div>
+            <br>
             <h4>Anzeige:</h4>
             <div id="display">
                 <div class="displayElement">
@@ -28,7 +32,6 @@
                 </div>
                 <button id="reset" type="button">Kamera zurück auf Anfang</button>
                 <br>
-                <div>Info: Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden.</div>
             </div>
             <h4>Übersicht:</h4>
             <div id="overview">
@@ -47,18 +50,19 @@
                 <input type="text" name="anschrift" id="anschrift" placeholder="Adresse" value="">
                 <input type="text" name="plz" id="plz" placeholder="Postleitzahl" value="">
                 <input type="text" name="ort" id="ort" placeholder="Ort" value="">
-                <input type="email" name="e-mail"id="mail"  placeholder="E-Mail" value="">
+                <input type="email" name="e-mail" id="mail" placeholder="E-Mail" value="">
             </div>
             <br>
             <div id="donation">
                 <h4>Zahlungsinformationen:</h4>
                 IBAN:<br>
-                <input type="text" name="iban" id="iban" pattern="^DE\d{20}$"
-                    placeholder="DEXXAAAABBBBCCCCDDDDEE" value="" required>
+                <input type="text" name="iban" id="iban" pattern="^DE\d{20}$" placeholder="DEXXAAAABBBBCCCCDDDDEE"
+                    value="" required>
                 <br>
                 Einzugsermächtigung:<br>
-                <input type="checkbox" name="check" value="check" id="donationCheck" required><div id="checkText">Hiermit erteile ich die Erlaubnis eines Bankeinzugs
-                über die oben genannte Summe.</div> 
+                <input type="checkbox" name="check" value="check" id="donationCheck" required>
+                <div id="checkText">Hiermit erteile ich die Erlaubnis eines Bankeinzugs
+                    über die oben genannte Summe.</div>
                 <br>
                 <button id="buy" type="button">Spenden</button>
             </div>

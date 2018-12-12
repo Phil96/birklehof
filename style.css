@@ -1,22 +1,22 @@
 @font-face {
-	font-family: 'MyriadPro-Regular';
+    font-family: 'MyriadPro-Regular';
     src: url('https://www.altbirkle.de/wordpress/wp-content/themes/altbirkle/fonts/myriad/MyriadPro-Regular.woff2') format('woff2'), url('https://www.altbirkle.de/wordpress/wp-content/themes/altbirkle/fonts/myriad/MyriadPro-Regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
+    font-weight: 400;
+    font-style: normal;
 }
 
 @font-face {
-	font-family: 'MyriadPro-Semibold';
+    font-family: 'MyriadPro-Semibold';
     src: url('https://www.altbirkle.de/wordpress/wp-content/themes/altbirkle/fonts/myriad/MyriadPro-Semibold.woff2') format('woff2'), url('https://www.altbirkle.de/wordpress/wp-content/themes/altbirkle/fonts/myriad/MyriadPro-Semibold.woff') format('woff');
-	font-weight: 500;
-	font-style: normal;
+    font-weight: 500;
+    font-style: normal;
 }
 
 @font-face {
-	font-family: 'MyriadPro-BoldCond';
+    font-family: 'MyriadPro-BoldCond';
     src: url('https://www.altbirkle.de/wordpress/wp-content/themes/altbirkle/fonts/myriad/MyriadPro-BoldCond.woff2') format('woff2'), url('https://www.altbirkle.de/wordpress/wp-content/themes/altbirkle/fonts/myriad/MyriadPro-BoldCond.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
+    font-weight: 700;
+    font-style: normal;
 }
 
 html, body {
@@ -42,7 +42,7 @@ input {
     width: 100%;
 }
 
-input + input {
+input+input {
     margin-top: 10px;
 }
 
@@ -95,6 +95,10 @@ input[type=checkbox] {
     margin: 5px;
 }
 
+#control {
+    cursor: help;
+}
+
 #renderCanvas {
     width: 79%;
     height: 100%;
@@ -105,20 +109,25 @@ input[type=checkbox] {
 #form {
     width: 20%;
     height: 100%;
-    overflow: auto;
     position: absolute;
+    overflow: scroll;
     padding: 1%;
     right: 0;
 }
 
-#_01{
+#_01 {
     position: relative;
 }
 
 #overview {
     width: 100%;
+    height: 100px;
+    cursor: default;
+    overflow: auto;
 }
 
 #personalData {
     width: 100%;
+    height: 100px;
+    overflow: auto;
 }
