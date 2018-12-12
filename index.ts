@@ -987,10 +987,12 @@ function createScene(): BABYLON.Scene {
     // console.log("income: " + income);
 
     let control = document.getElementById("control");
-    let controlText = "linke Maustaste:" + "\t" + "\t" + "Objekt auswählen (bei gedrückter Taste: rotieren)" + "\n" +
-        "linke Maustaste + STRG:" + "\t" + "bei gedrückten Tasten: Kamera schwenken" + "\n" +
-        "Mausrad:" + "\t" + "\t" + "\t" + "Zoom" + "\n" +
-        "Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
+    let controlText = "linke Maustaste, klick:" + "\t" + "\t" + "Objekt auswählen" + "\n" +
+        "linke Maustaste, gedrückt:" + "\t" + "Kamera neu positionieren und rotieren" + "\n" +
+        "linke Maustaste + STRG, gedrückt:" + "\t" + "Kamera schwenken" + "\n" +
+        "rechte Maustaste, klick:" + "\t" + "\t" + "Objekte unsichtbar machen" + "\n" +
+        "Mausrad:" + "\t" + "\t" + "\t" + "Zoom";
+    //"Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
     control.title = controlText;
 
     initCategorys();
@@ -1176,7 +1178,15 @@ function createScene(): BABYLON.Scene {
                     } else {
                         setMeshVisibility(pickResult.pickedMesh.id, false)
                     }
+                } else {
+                    if (pickResult.pickedMesh.id != "Stadtplanung Flurstücke") {
+                        animateCameraTo(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z, camera.position.x, camera.position.y, camera.position.z, 50, 15);
+
+                    }
                 }
+                //if(pointerinfo.event.button == 1){
+
+                //}
                 //BABYLON.PointerEventTypes.
                 //camera.target = pickResult.pickedPoint;
                 //camera.panningOriginTarget= pickResult.pickedPoint;
