@@ -987,11 +987,13 @@ function createScene(): BABYLON.Scene {
     // console.log("income: " + income);
 
     let control = document.getElementById("control");
-    let controlText = "linke Maustaste, klick:" + "\t" + "\t" + "Objekt auswählen" + "\n" +
-        "linke Maustaste, gedrückt:" + "\t" + "Kamera neu positionieren und rotieren" + "\n" +
-        "linke Maustaste + STRG, gedrückt:" + "\t" + "Kamera schwenken" + "\n" +
+    let controlText = "linke Maustaste, klick:" + "\t" + "\t" + "Objekt auswählen/abwählen" + "\n" +
+        "linke Maustaste, gedrückt:" + "\t" +"\t"+ "Kamera neu positionieren und rotieren" + "\n" +
+        //"linke Maustaste + STRG, gedrückt:" + "\t" + "Kamera schwenken" + "\n" +
         "rechte Maustaste, klick:" + "\t" + "\t" + "Objekte unsichtbar machen" + "\n" +
-        "Mausrad:" + "\t" + "\t" + "\t" + "Zoom";
+        "Mausrad:" + "\t" + "\t" + "\t" +"\t"+ "Zoom"+ "\n"+ "\n" + 
+        "Info: " +"\t" + "Um für ein Objekt zu spenden muss die jeweilige Checkbox in der Übersicht angeklickt werden." + "\n" + 
+        "\t" + "Mit den Augen-Symbolen in können Objekte ein/ausgeblendet werden."
     //"Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
     control.title = controlText;
 
@@ -1014,7 +1016,7 @@ function createScene(): BABYLON.Scene {
     camera.attachControl(canvas, true);
     //console.log(camera.inputs);
 
-    camera._useCtrlForPanning = true;
+    //camera._useCtrlForPanning = true;
     camera.wheelPrecision = 20;
     camera.checkCollisions = true;
     //camera.inputs.attached.mouse.button[0] = 2;
