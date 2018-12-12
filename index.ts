@@ -993,7 +993,7 @@ function createScene(): BABYLON.Scene {
         "rechte Maustaste, klick:" + "\t" + "\t" + "Objekte unsichtbar machen" + "\n" +
         "Mausrad:" + "\t" + "\t" + "\t" +"\t"+ "Zoom"+ "\n"+ "\n" + 
         "Info: " +"\t" + "Um für ein Objekt zu spenden muss die jeweilige Checkbox in der Übersicht angeklickt werden." + "\n" + 
-        "\t" + "Mit den Augen-Symbolen in können Objekte ein/ausgeblendet werden."
+        "\t" + "Mit den Augen-Symbolen können Objekte ein/ausgeblendet werden."
     //"Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
     control.title = controlText;
 
