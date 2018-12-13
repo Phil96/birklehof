@@ -1006,7 +1006,7 @@ function createScene(): BABYLON.Scene {
         "linke Maustaste, gedrückt:" + "\t" + "\t" + "Kamera neu positionieren und rotieren" + "\n" +
         //"linke Maustaste + STRG, gedrückt:" + "\t" + "Kamera schwenken" + "\n" +
         "rechte Maustaste, klick:" + "\t" + "\t" + "Objekte unsichtbar machen" + "\n" +
-        "Mausrad oder W/S Taste:" + "\t" + "\t" + "Zoom" + "\n" + "\n" +
+        "Mausrad oder Pfeiltaste hoch/runter:"  + "\t" + "Zoom" + "\n" + "\n" +
         "Info: " + "\t" + "Um für ein Objekt zu spenden muss die jeweilige Checkbox in der Übersicht angeklickt werden." + "\n" +
         "\t" + "Mit den Augen-Symbolen können Objekte ein/ausgeblendet werden."
     //"Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
@@ -1076,15 +1076,16 @@ function createScene(): BABYLON.Scene {
     //Then apply collisions and gravity to the active camera
     //camera.applyGravity = true;
 
-
+    camera.inputs.removeByType("ArcRotateCameraKeyboardMoveInput");
 
 
     scene.onKeyboardObservable.add((keyboardInfo: BABYLON.KeyboardInfo) => {
 
         if (keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN) {
-            if(keyboardInfo.event.keyCode == 83){
+            keyboardInfo.event.preventDefault();
+            if(keyboardInfo.event.keyCode == 40){
                 camera.radius += 0.5;
-            } else if(keyboardInfo.event.keyCode == 87){
+            } else if(keyboardInfo.event.keyCode == 38){
                 camera.radius -= 0.5;
             } else {
                 return;
