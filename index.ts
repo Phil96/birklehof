@@ -1193,7 +1193,7 @@ function createScene(): BABYLON.Scene {
                             infoBox.innerHTML = referenceToOverview.getElementsByTagName("label")[0].innerText + "<br>" + "Preis: " + referenceToOverview.getAttribute("price") + "€";
                         } else {
                             if (pickResult.pickedMesh.id == "Stadtplanung Flurstücke") {
-                                infoBox.innerHTML = "Boden (Gebäudestruktur)";
+                                infoBox.innerHTML = "Boden";
                             } else {
                                 infoBox.innerHTML = "Gebäudestruktur";
                             }
@@ -1214,7 +1214,7 @@ function createScene(): BABYLON.Scene {
                         } else {
 
                             if (pickResult.pickedMesh.id == "Stadtplanung Flurstücke") {
-                                infoBox.innerHTML = "Boden (Gebäudestruktur)";
+                                infoBox.innerHTML = "Boden";
                             } else {
                                 infoBox.innerHTML = "Gebäudestruktur";
                             }
