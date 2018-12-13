@@ -1244,8 +1244,10 @@ function createScene(): BABYLON.Scene {
                     infoBox.style.visibility = "hidden";
                 } */
 
-            } else {
-                return;
+            } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERWHEEL) {
+                pointerinfo.event.preventDefault();
+            } else{
+               return; 
             }
 
         }
