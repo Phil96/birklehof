@@ -1006,7 +1006,7 @@ function createScene(): BABYLON.Scene {
         "linke Maustaste, gedrückt:" + "\t" + "\t" + "Kamera neu positionieren und rotieren" + "\n" +
         //"linke Maustaste + STRG, gedrückt:" + "\t" + "Kamera schwenken" + "\n" +
         "rechte Maustaste, klick:" + "\t" + "\t" + "Objekte unsichtbar machen" + "\n" +
-        "Mausrad (W/S Taste):" + "\t" + "\t" + "Zoom" + "\n" + "\n" +
+        "Mausrad oder W/S Taste:" + "\t" + "\t" + "Zoom" + "\n" + "\n" +
         "Info: " + "\t" + "Um für ein Objekt zu spenden muss die jeweilige Checkbox in der Übersicht angeklickt werden." + "\n" +
         "\t" + "Mit den Augen-Symbolen können Objekte ein/ausgeblendet werden."
     //"Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
