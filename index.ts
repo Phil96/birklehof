@@ -28,6 +28,10 @@ overview.addEventListener("click", chooseObjectFromOverview);
 let personalData = document.getElementById("personalData");
 
 
+let infoBox = document.getElementById("infoBox");
+//infoBox.addEventListener("mouseleave", infoBoxOut);
+
+
 
 /* let categorys = document.getElementById("categorys");
 categorys.addEventListener("click", chooseCategory); */
@@ -35,6 +39,8 @@ categorys.addEventListener("click", chooseCategory); */
 var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
+
+canvas.addEventListener("mouseleave", infoBoxOut);
 
 let camera: BABYLON.ArcRotateCamera;
 
@@ -79,6 +85,11 @@ var posOld = BABYLON.Vector3.Zero();
 
 function userMessage(_message: string) {
 
+}
+
+function infoBoxOut(_event: MouseEvent) {
+
+    infoBox.style.visibility = "hidden";
 }
 
 function resetCameraPosition(_event: MouseEvent) {
@@ -341,19 +352,23 @@ function hideStructur() {
 
 function setMeshVisibility(_objID: string, _visibility: boolean) {
     let obj = scene.getMeshByID(_objID);
-    let objHTML = document.getElementById(_objID);
 
-    if (_visibility == true) {
-        objHTML.getElementsByTagName("span")[0].className = "glyphicon glyphicon-eye-open"
-    }
-    if (_visibility == false) {
-        objHTML.getElementsByTagName("span")[0].className = "glyphicon glyphicon-eye-close"
+    if (document.getElementById(_objID) != null) {
+        let objHTML = document.getElementById(_objID);
+
+        if (_visibility == true) {
+            objHTML.getElementsByTagName("span")[0].className = "glyphicon glyphicon-eye-open"
+        }
+        if (_visibility == false) {
+            objHTML.getElementsByTagName("span")[0].className = "glyphicon glyphicon-eye-close"
+        }
+
+        if ("Stadtplanung Flurstücke" == obj.id) {
+            obj.isVisible = true;
+            return;
+        }
     }
 
-    if ("Stadtplanung Flurstücke" == obj.id) {
-        obj.isVisible = true;
-        return;
-    }
 
     if (obj.parent != null) {
 
@@ -988,11 +1003,11 @@ function createScene(): BABYLON.Scene {
 
     let control = document.getElementById("control");
     let controlText = "linke Maustaste, klick:" + "\t" + "\t" + "Objekt auswählen/abwählen" + "\n" +
-        "linke Maustaste, gedrückt:" + "\t" +"\t"+ "Kamera neu positionieren und rotieren" + "\n" +
+        "linke Maustaste, gedrückt:" + "\t" + "\t" + "Kamera neu positionieren und rotieren" + "\n" +
         //"linke Maustaste + STRG, gedrückt:" + "\t" + "Kamera schwenken" + "\n" +
         "rechte Maustaste, klick:" + "\t" + "\t" + "Objekte unsichtbar machen" + "\n" +
-        "Mausrad:" + "\t" + "\t" + "\t" +"\t"+ "Zoom"+ "\n"+ "\n" + 
-        "Info: " +"\t" + "Um für ein Objekt zu spenden muss die jeweilige Checkbox in der Übersicht angeklickt werden." + "\n" + 
+        "Mausrad:" + "\t" + "\t" + "\t" + "\t" + "Zoom" + "\n" + "\n" +
+        "Info: " + "\t" + "Um für ein Objekt zu spenden muss die jeweilige Checkbox in der Übersicht angeklickt werden." + "\n" +
         "\t" + "Mit den Augen-Symbolen können Objekte ein/ausgeblendet werden."
     //"Info:" + "\t" + "\t" + "\t" + "Mit doppeltem Mausklick können Objekte des Modells unsichtbar gemacht werden";
     control.title = controlText;
@@ -1032,27 +1047,6 @@ function createScene(): BABYLON.Scene {
     });
 
 
-    //camera.inputs.add(new BABYLON.ArcRotateCameraKeyboardMoveInput());
-
-    /*  let cameraInput = new BABYLON.ArcRotateCameraKeyboardMoveInput();
-     cameraInput.keysUp.push(87);    //W
-     cameraInput.keysDown.push(83)   //D
-     cameraInput.keysLeft.push(65);  //A
-     cameraInput.keysRight.push(68); //S 
-     cameraInput.camera = camera; */
-
-
-    //camera.inputs.addKeyboard();
-
-    //camera.inputs.add(cameraInput);
-    // Positions the camera overwriting alpha, beta, radius
-    /* camera.setPosition(new BABYLON.Vector3(15, 8, -20));
-    scene.activeCamera = camera; */
-
-    // This attaches the camera to the canvas
-    //camera.attachControl(scene, true);
-
-
 
     /* var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
@@ -1062,19 +1056,6 @@ function createScene(): BABYLON.Scene {
     camera.keysLeft.push(65);  //A
     camera.keysRight.push(68); //S 
     camera.speed = 0.15; */
-
-    //var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 0.5, scene);
-    /* let box = BABYLON.Mesh.CreateBox('box', 0.5, scene);
-    box.visibility = 0;
-    let sphere = box;
-
-    sphere.position = new BABYLON.Vector3(15, 8, -18);
-
-    camera.panningSensibility = 1 / (camera.radius * Math.tan(camera.fov / 2) * 2) * engine.getRenderHeight(true)
-
-    camera.parent = sphere; */
-
-    //camera.setTarget(sphere);
 
 
     //var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
@@ -1171,7 +1152,7 @@ function createScene(): BABYLON.Scene {
                 }
             } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERDOWN) {
                 if (pointerinfo.event.button == 2) {
-                    var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+                    //var pickResult = scene.pick(scene.pointerX, scene.pointerY);
                     console.log(pickResult);
                     //let pickParent = pickResult.pickedMesh._cache.parent;
 
@@ -1198,6 +1179,64 @@ function createScene(): BABYLON.Scene {
 
 
                 //}
+
+            } else if (pointerinfo.type == BABYLON.PointerEventTypes.POINTERMOVE) {
+                //let referenceToOverview: HTMLElement = overview.querySelector("#" + selectedMesh);
+                let referenceToCanvas: HTMLElement = document.getElementById("renderCanvas");
+                if (pickResult.pickedMesh != null) {
+                    infoBox.style.visibility = "hidden";
+
+                    if (pickResult.pickedMesh.parent != null) {
+                        if (overview.querySelector("#" + pickResult.pickedMesh.parent.id) != null) {
+                            infoBox.style.visibility = "visible";
+                            let referenceToOverview: HTMLElement = overview.querySelector("#" + pickResult.pickedMesh.parent.id);
+                            infoBox.innerHTML = referenceToOverview.getElementsByTagName("label")[0].innerText + "<br>" + "Preis: " + referenceToOverview.getAttribute("price") + "€";
+                        } else {
+                            if (pickResult.pickedMesh.id == "Stadtplanung Flurstücke") {
+                                infoBox.innerHTML = "Boden (Gebäudestruktur)";
+                            } else {
+                                infoBox.innerHTML = "Gebäudestruktur";
+                            }
+
+                            infoBox.style.visibility = "visible";
+                            //let referenceToOverview: HTMLElement = overview.querySelector("#" + pickResult.pickedMesh.parent.id);
+
+                        }
+
+                    } else {
+
+                        if (overview.querySelector("#" + pickResult.pickedMesh.id) != null) {
+
+                            infoBox.style.visibility = "visible";
+                            let referenceToOverview: HTMLElement = overview.querySelector("#" + pickResult.pickedMesh.id);
+                            //infoBox.innerText = pickResult.pickedMesh.id;
+                            infoBox.innerHTML = referenceToOverview.getElementsByTagName("label")[0].innerText + "<br>" + "Preis: " + referenceToOverview.getAttribute("price") + "€";
+                        } else {
+
+                            if (pickResult.pickedMesh.id == "Stadtplanung Flurstücke") {
+                                infoBox.innerHTML = "Boden (Gebäudestruktur)";
+                            } else {
+                                infoBox.innerHTML = "Gebäudestruktur";
+                            }
+                            infoBox.style.visibility = "visible";
+                            //let referenceToOverview: HTMLElement = overview.querySelector("#" + pickResult.pickedMesh.parent.id);
+
+                        }
+                    }
+                    infoBox.style.left = (scene.pointerX + 3) + "px";
+                    infoBox.style.top = (scene.pointerY + 3) + "px";
+                    /* infoBox.style.left = pickResult.pickedPoint.x + "px";
+                    infoBox.style.top = pickResult.pickedPoint.y + "px"; */
+                } else {
+                    infoBox.style.visibility = "hidden";
+                }
+
+                /* if(scene.pointerX > parseInt(referenceToCanvas.style.width) || scene.pointerX < 0 ){
+                    infoBox.style.visibility = "hidden";
+                }
+                if(scene.pointerY > parseInt(referenceToCanvas.style.height) || scene.pointerY < 0 || scene.){
+                    infoBox.style.visibility = "hidden";
+                } */
 
             } else {
                 return;
