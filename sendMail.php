@@ -8,6 +8,16 @@
     $json = file_get_contents("php://input");
     $data = json_decode($json);
 
+    $header = "From: philip.gnann@hs-furtwangen.de\r\n"; 
+    //$header.= "CC: philipgnann@aol.com\r\n"; 
+    $header.= "MIME-Version: 1.0\r\n"; 
+    $header.= "Content-Type: text/plain; charset=utf-8\r\n"; 
+    $header.= "X-Priority: 1\r\n"; 
+
+    /* $header = 'From: philip.gnann@hs-furtwangen.de' . "\r\n" .
+    'Reply-To: philip.gnann@hs-furtwangen.de' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion(); */
+
     // create response- and mail-message
     print("Server received: \n");
     $message = $json;
@@ -19,5 +29,5 @@
     } */
 
     // send mail via the (usually built-in) php smtp-mailer
-    mail( "elisabeth.ilg@birklehof.de", "Birklehof Spende", $message, "From: elisabeth.ilg@birklehof.de");
+    mail( "philipgnann@aol.com", "[Test] Birklehof; Spende aus 3D-Modell", $message, $header);
 ?>

@@ -31,11 +31,6 @@ let personalData = document.getElementById("personalData");
 let infoBox = document.getElementById("infoBox");
 //infoBox.addEventListener("mouseleave", infoBoxOut);
 
-
-
-/* let categorys = document.getElementById("categorys");
-categorys.addEventListener("click", chooseCategory); */
-
 var canvas: any = document.getElementById("renderCanvas");
 var engine: BABYLON.Engine = new BABYLON.Engine(canvas, true);
 var scene: BABYLON.Scene = createScene();
@@ -43,8 +38,6 @@ var scene: BABYLON.Scene = createScene();
 canvas.addEventListener("mouseleave", infoBoxOut);
 
 let camera: BABYLON.ArcRotateCamera;
-
-let cameraT = BABYLON.Vector3.Zero();
 
 engine.loadingUIText = "Das Modell wird geladen, bitte haben Sie etwas Geduld";
 
@@ -67,25 +60,6 @@ testBuy.object_ids = ["Fassade_001", "Fassade_002", "Fassade_003"];
 let pickMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
 pickMaterial.diffuseColor = BABYLON.Color3.Red();
 pickMaterial.alpha = 0.5;
-
-let startAlpha;
-let startBeta;
-
-//testing camera
-var xRot;
-var yRot = 0;
-var zDist = 0;
-// var tCam : Transform;
-var bRot = false;
-var bPan = false;
-var fPan = 1;
-var fZoom = 1;
-var posOld = BABYLON.Vector3.Zero();
-
-
-function userMessage(_message: string) {
-
-}
 
 function infoBoxOut(_event: MouseEvent) {
 
@@ -963,34 +937,6 @@ function initCategorys() {
     }
 }
 
-function initData(category: string) {
-    for (let i = 0; i < DATA_CATEGORY.categorys.categorys.length; i++) {
-
-        if (DATA_CATEGORY.categorys.categorys[i].name == category) {
-            let currCat = DATA_CATEGORY.categorys.categorys[i];
-            for (let j = 0; j < currCat.items.length; j++) {
-                let currentObject = currCat.items[j];
-
-                let newDiv = document.createElement("div");
-                newDiv.id = currentObject.id;
-                newDiv.setAttribute("price", currentObject.price.toString());
-
-                let newInput = document.createElement("input");
-                newInput.type = "checkbox";
-                newInput.id = "_01";
-
-                let newLabel = document.createElement("label");
-                newLabel.innerText = currentObject.name;
-                newLabel.id = "_02";
-
-                newDiv.append(newInput);
-                newDiv.append(newLabel);
-                overview.append(newDiv);
-            }
-        }
-    }
-}
-
 function createScene(): BABYLON.Scene {
 
     SERVER.loadData();
@@ -1016,11 +962,8 @@ function createScene(): BABYLON.Scene {
 
     var scene: BABYLON.Scene = new BABYLON.Scene(engine);
 
-    //var cameraArc = new BABYLON.ArcRotateCamera("CameraArc", -Math.PI / 1,  Math.PI / 1, 50, new BABYLON.Vector3(15, 8, -20), scene);
-
-    // Parameters: alpha, beta, radius, target position, scene
     camera = new BABYLON.ArcRotateCamera("ArcCamera", 0, 0, 10, new BABYLON.Vector3(15, 8, -20), scene);
-    let inputManager = camera.inputs;
+
     scene.activeCamera = camera;
 
     // This targets the camera to scene origin
@@ -1035,27 +978,6 @@ function createScene(): BABYLON.Scene {
     camera.wheelPrecision = 20;
     camera.checkCollisions = true;
     //camera.inputs.attached.mouse.button[0] = 2;
-
-
-    let pointers = <BABYLON.ArcRotateCameraPointersInput>camera.inputs.attached["pointers"];
-    //BABYLON.ArcRotateCameraKeyboardMoveInput
-
-
-
-    scene.registerAfterRender(function () {
-        //cameraArc.setTarget(new BABYLON.Vector3(canvas.pointerX,canvas.pointerY,0));
-    });
-
-
-
-    /* var camera = new BABYLON.FreeCamera('freeCam', new BABYLON.Vector3(15, 8, -20), scene);
-    camera.setTarget(BABYLON.Vector3.Zero());
-    camera.attachControl(canvas, true);
-    camera.keysUp.push(87);    //W
-    camera.keysDown.push(83)   //D
-    camera.keysLeft.push(65);  //A
-    camera.keysRight.push(68); //S 
-    camera.speed = 0.15; */
 
 
     //var texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
@@ -1073,14 +995,10 @@ function createScene(): BABYLON.Scene {
 
     scene.collisionsEnabled = true;
 
-    //Then apply collisions and gravity to the active camera
-    //camera.applyGravity = true;
-
     camera.inputs.removeByType("ArcRotateCameraKeyboardMoveInput");
 
 
     scene.onKeyboardObservable.add((keyboardInfo: BABYLON.KeyboardInfo) => {
-
         if (keyboardInfo.type == BABYLON.KeyboardEventTypes.KEYDOWN) {
             keyboardInfo.event.preventDefault();
             if(keyboardInfo.event.keyCode == 40){
@@ -1095,8 +1013,6 @@ function createScene(): BABYLON.Scene {
 
 
     scene.onPointerObservable.add((pointerinfo: BABYLON.PointerInfo) => {
-
-
         if (scene.pick(scene.pointerX, scene.pointerY) != null) {
             var pickResult = scene.pick(scene.pointerX, scene.pointerY);
 
@@ -1255,7 +1171,7 @@ function createScene(): BABYLON.Scene {
     });
 
 
-    BABYLON.SceneLoader.Append("./babylon_export/", "birklehof.babylon", scene, function (scene) {
+    BABYLON.SceneLoader.Append("./birklehof_newExport/", "birklehof_new.babylon", scene, function (scene) {
         // do something with the scene
         SERVER.loadData();
 
@@ -1266,9 +1182,6 @@ function createScene(): BABYLON.Scene {
         ground.checkCollisions = true;
 
         iniBought();
-
-        //scene.getMeshByID("Sessel_000").isPickable = false;
-        //boughtLayer.addMesh(<BABYLON.Mesh>scene.getMeshByID("Sessel_000"), BABYLON.Color3.Red());
     });
 
     return scene;
@@ -1287,9 +1200,4 @@ function animateCameraTo(targetX, targetY, targetZ, locationX, locationY, locati
 
 engine.runRenderLoop(() => {
     scene.render();
-
-    if (camera.radius > 20) camera.radius = 20;
-    if (camera.radius < 2) camera.radius = 2;
-    //console.log(dir);
-    //console.log("Kameraposition: " + scene.getCameraByName("freeCam").position);
 });

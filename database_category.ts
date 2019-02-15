@@ -2059,7 +2059,7 @@ let roof: Category = {
 }
 
 let ofen: Category = {
-    "name": "Kachelofen",
+    "name": "Ofen",
     "items": [{
         "name": "Kachelofen",
         "id": "Kachelofen",
@@ -2169,6 +2169,6 @@ export let balken: Category = {
 export let categorys = {
     "categorys": [
         doorsOut,bathtub,balcony,benches,beds,roof,showers,electronics,fronts,
-        windows,windowShutters,floor,herrgott,doorsIn,ofen,kitchens,shelves,gutter,cupboards,armchairs,couches,steps,chairs,
+        windows,windowShutters,floor,herrgott,doorsIn,kitchens,ofen,shelves,gutter,cupboards,armchairs,couches,steps,chairs,
         tenne,tables,stairs,toilets,sinks,walls]
 }
